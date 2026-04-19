@@ -4,28 +4,27 @@
 {% block content %}
 <div style="max-width:680px;margin:0 auto;padding:0 16px">
 
-<!-- CENTERED COMPOSER -->
-<section id="inputSection" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 160px);padding:24px 0">
+<!-- COMPOSER SECTION — shifted up 15px from true center -->
+<section id="inputSection" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 160px);padding:24px 0;margin-top:-15px">
 
-  <!-- Headline — minimal, inside the flow -->
-  <div class="rv" style="text-align:center;margin-bottom:28px">
+  <div class="rv" style="text-align:center;margin-bottom:24px">
     <h1 class="fd" style="font-size:clamp(24px,4.5vw,34px);font-weight:700;color:var(--text);line-height:1.2">What are you deciding?</h1>
     <p style="margin-top:8px;color:var(--text2);font-size:13px">Describe it naturally. Our analysts will rank your options.</p>
   </div>
 
-  <!-- COMPOSER BOX -->
-  <div id="composer" class="rv rv1" style="width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:12px;transition:border-color 0.2s,box-shadow 0.3s">
+  <!-- COMPOSER -->
+  <div id="composer" class="rv rv1" style="width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:14px;transition:border-color 0.2s,box-shadow 0.3s;position:relative">
 
     <!-- Textarea -->
     <textarea id="inp" rows="3" maxlength="2000"
       placeholder="Should I buy Tesla Model 3 or Mach-E for commuting? Budget is $45k, range and tech matter most..."
-      style="width:100%;background:transparent;border:none;padding:16px 16px 8px;font-size:15px;color:var(--text);font-family:inherit;resize:none;outline:none;line-height:1.55;min-height:80px;transition:min-height 0.3s ease"></textarea>
+      style="width:100%;background:transparent;border:none;padding:16px 16px 8px;font-size:15px;color:var(--text);font-family:inherit;resize:none;outline:none;line-height:1.55;min-height:72px;transition:min-height 0.3s ease"></textarea>
 
-    <!-- Chips (appear while typing) -->
-    <div id="chipArea" style="min-height:0;padding:0 12px;display:flex;flex-wrap:wrap;gap:4px;transition:padding 0.2s"></div>
+    <!-- Chips inside composer -->
+    <div id="chipArea" style="min-height:0;padding:0 14px;display:flex;flex-wrap:wrap;gap:6px;transition:padding 0.2s"></div>
 
-    <!-- Extracted preview -->
-    <div id="exPrev" style="display:none;margin:0 12px;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">
+    <!-- Extracted preview inside composer -->
+    <div id="exPrev" style="display:none;margin:4px 12px 8px;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
         <span class="fm" style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px">Parsed</span>
         <button id="clearEx" class="fm" style="font-size:9px;color:var(--text3);background:none;border:none;cursor:pointer">clear</button>
@@ -35,55 +34,102 @@
       <div id="exC" style="font-size:11px;color:var(--text2);margin-top:1px"></div>
     </div>
 
-    <!-- Footer toolbar -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-top:1px solid var(--border)">
-      <div style="display:flex;align-items:center;gap:4px">
-        <!-- Settings button -->
-        <button id="settingsBtn" title="Settings" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid var(--border);border-radius:6px;cursor:pointer;color:var(--text3);transition:all 0.15s" onmouseover="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text3)'">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    <!-- Drop overlay (for drag-and-drop files) -->
+    <div id="dropOverlay" style="display:none;position:absolute;inset:0;background:rgba(77,208,200,0.06);border:2px dashed var(--accent);border-radius:14px;z-index:10;align-items:center;justify-content:center;pointer-events:none">
+      <span style="font-size:13px;font-weight:600;color:var(--accent);padding:12px 20px;background:var(--surface);border-radius:8px;border:1px solid var(--accent-border)">Drop files here</span>
+    </div>
+
+    <!-- Attached files list -->
+    <div id="attachList" style="display:none;padding:4px 14px 6px;display:none;flex-wrap:wrap;gap:4px"></div>
+
+    <!-- FOOTER TOOLBAR -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-top:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:2px">
+
+        <!-- Attach file -->
+        <button id="attachBtn" title="Attach files" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid transparent;border-radius:6px;cursor:pointer;color:var(--text3);transition:all 0.15s" onmouseover="this.style.background='var(--surface2)';this.style.color='var(--text2)'" onmouseout="this.style.background='none';this.style.color='var(--text3)'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
         </button>
-        <span class="fm hm" style="font-size:9px;color:var(--text4);margin-left:4px">3 independent analysts &middot; blind comparison</span>
+        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.csv,.txt,.json,.xlsx,.doc,.docx" style="display:none">
+
+        <!-- Settings popover trigger -->
+        <button id="settingsBtn" title="Analysis settings" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid transparent;border-radius:6px;cursor:pointer;color:var(--text3);transition:all 0.15s" onmouseover="this.style.background='var(--surface2)';this.style.color='var(--text2)'" onmouseout="this.style.background='none';this.style.color='var(--text3)'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+
+        <!-- Toolbar label — readable now -->
+        <span class="fm hm" style="font-size:10px;color:var(--text3);margin-left:6px">3 analysts &middot; blind evaluation</span>
       </div>
+
       <!-- Submit -->
-      <button id="goBtn" style="padding:6px 20px;background:var(--accent);color:var(--bg);font-weight:700;border:none;border-radius:6px;font-size:12px;cursor:pointer;transition:opacity 0.15s;font-family:inherit;letter-spacing:0.3px"
+      <button id="goBtn" style="padding:7px 22px;background:var(--accent);color:#1a1b1f;font-weight:700;border:none;border-radius:8px;font-size:12px;cursor:pointer;transition:opacity 0.15s;font-family:inherit;letter-spacing:0.3px"
         onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Analyze</button>
     </div>
-  </div>
 
-  <!-- Settings modal (hidden) -->
-  <div id="settingsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:none;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
-    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;width:90%;max-width:400px;padding:20px" onclick="event.stopPropagation()">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <span style="font-weight:600;color:var(--text)">Analysis Settings</span>
-        <button onclick="document.getElementById('settingsModal').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px">&times;</button>
+    <!-- SETTINGS POPOVER (anchored, not fullscreen) -->
+    <div id="settingsPop" style="display:none;position:absolute;bottom:52px;left:8px;width:320px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:14px;z-index:60;box-shadow:0 8px 32px rgba(0,0,0,0.4)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <span style="font-size:13px;font-weight:600;color:var(--text)">Analysis Settings</span>
+        <button onclick="document.getElementById('settingsPop').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;line-height:1">&times;</button>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px">
+
+      <!-- Depth -->
+      <div style="margin-bottom:14px">
+        <label class="fm" style="display:block;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px">Analysis depth</label>
+        <div style="display:flex;gap:4px">
+          <button class="depth-btn" data-v="quick" data-desc="1 analyst, fastest response. Good for simple A-vs-B choices. ~5 seconds." style="flex:1;padding:7px;font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s">Quick</button>
+          <button class="depth-btn active" data-v="standard" data-desc="3 analysts evaluate blindly. Best balance of speed and quality. ~15 seconds." style="flex:1;padding:7px;font-size:11px;background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:6px;color:var(--accent);cursor:pointer;font-weight:600;transition:all 0.15s">Standard</button>
+          <button class="depth-btn" data-v="deep" data-desc="3 analysts with stronger models and deeper rubric. Best for high-stakes decisions. ~30 seconds." style="flex:1;padding:7px;font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s">Deep</button>
+        </div>
+        <div id="depthDesc" style="margin-top:6px;font-size:11px;color:var(--text3);line-height:1.5">3 analysts evaluate blindly. Best balance of speed and quality. ~15 seconds.</div>
+      </div>
+
+      <!-- Output format -->
+      <div style="margin-bottom:14px">
+        <label class="fm" style="display:block;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px">Output focus</label>
+        <div style="display:flex;gap:4px">
+          <button class="focus-btn active" data-v="balanced" style="flex:1;padding:6px;font-size:10px;background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:6px;color:var(--accent);cursor:pointer;font-weight:600;transition:all 0.15s">Balanced</button>
+          <button class="focus-btn" data-v="risks" style="flex:1;padding:6px;font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s">Risk-focused</button>
+          <button class="focus-btn" data-v="practical" style="flex:1;padding:6px;font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s">Practical</button>
+        </div>
+      </div>
+
+      <!-- Response length -->
+      <div style="margin-bottom:14px">
+        <label class="fm" style="display:block;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px">Response length</label>
+        <div style="display:flex;gap:4px">
+          <button class="len-btn" data-v="concise" style="flex:1;padding:6px;font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s">Concise</button>
+          <button class="len-btn active" data-v="standard" style="flex:1;padding:6px;font-size:10px;background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:6px;color:var(--accent);cursor:pointer;font-weight:600;transition:all 0.15s">Standard</button>
+          <button class="len-btn" data-v="detailed" style="flex:1;padding:6px;font-size:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s">Detailed</button>
+        </div>
+      </div>
+
+      <!-- Web search toggle -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid var(--border)">
         <div>
-          <label class="fm" style="display:block;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">Analysis depth</label>
-          <div style="display:flex;gap:4px">
-            <button class="depth-btn" data-v="quick" style="flex:1;padding:6px;font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer">Quick</button>
-            <button class="depth-btn active" data-v="standard" style="flex:1;padding:6px;font-size:11px;background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:6px;color:var(--accent);cursor:pointer;font-weight:600">Standard</button>
-            <button class="depth-btn" data-v="deep" style="flex:1;padding:6px;font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer">Deep</button>
-          </div>
+          <div style="font-size:12px;color:var(--text)">Use web search</div>
+          <div style="font-size:10px;color:var(--text4)">Fetch current prices and data</div>
         </div>
-        <div style="font-size:11px;color:var(--text3);padding:8px;background:var(--surface);border-radius:6px;line-height:1.5">
-          <strong style="color:var(--text2)">Standard</strong> — 3 analysts evaluate blindly. Best balance of speed and thoroughness. ~15 seconds.
-        </div>
+        <label style="position:relative;width:36px;height:20px;cursor:pointer">
+          <input type="checkbox" id="webSearch" style="opacity:0;width:0;height:0">
+          <span style="position:absolute;inset:0;background:var(--surface);border:1px solid var(--border2);border-radius:10px;transition:background 0.2s"></span>
+          <span id="toggleDot" style="position:absolute;top:3px;left:3px;width:14px;height:14px;background:var(--text3);border-radius:50%;transition:transform 0.2s,background 0.2s"></span>
+        </label>
       </div>
     </div>
   </div>
 
-  <!-- Example prompts -->
+  <!-- EXAMPLE PILLS — spaced, aligned, wrapped -->
   <div id="examples" class="rv rv2" style="width:100%;margin-top:20px">
-    <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center" id="exGrid"></div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center" id="exGrid"></div>
   </div>
 
 </section>
 
 <!-- PROGRESS -->
 <div id="PS" style="display:none">
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 160px);padding:24px 0">
-    <div class="pc" id="pcEl" style="margin-bottom:20px">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 160px);padding:24px 0;margin-top:-15px">
+    <div class="pc" style="margin-bottom:20px">
       <svg viewBox="0 0 36 36"><circle class="trk" cx="18" cy="18" r="15.5"/><circle class="fl" cx="18" cy="18" r="15.5" stroke-dasharray="97.4" stroke-dashoffset="97.4" id="pFill"/></svg>
       <div class="pv" id="pPct">0%</div>
     </div>
@@ -104,7 +150,7 @@
 <!-- RESULTS -->
 <div id="RS" style="display:none;padding:24px 0"></div>
 
-<!-- BELOW-FOLD: minimal info -->
+<!-- BELOW FOLD -->
 <section id="belowFold" style="padding:40px 0;border-top:1px solid var(--border);margin-top:20px">
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;color:var(--text3);font-size:12px;line-height:1.6">
     <div><strong style="color:var(--text2)">Blind comparison</strong><br>Options are shuffled and anonymized. No analyst sees which is which.</div>
@@ -123,68 +169,122 @@ const inp=document.getElementById('inp'),composer=document.getElementById('compo
   PS=document.getElementById('PS'),SL=document.getElementById('SL'),ES=document.getElementById('ES'),
   ET=document.getElementById('ET'),RS=document.getElementById('RS'),EX=document.getElementById('examples'),
   pFill=document.getElementById('pFill'),pPct=document.getElementById('pPct'),pTitle=document.getElementById('pTitle'),
-  inputSection=document.getElementById('inputSection'),belowFold=document.getElementById('belowFold');
-const CIRC=97.4;let extractedData=null,suggestTimer=null;
+  inputSection=document.getElementById('inputSection'),belowFold=document.getElementById('belowFold'),
+  settingsPop=document.getElementById('settingsPop'),attachList=document.getElementById('attachList');
+const CIRC=97.4;let extractedData=null,suggestTimer=null,attachedFiles=[];
 
-/* Expand textarea on focus */
+/* Expand on focus */
 inp.addEventListener('focus',()=>{
   inp.style.minHeight='140px';
   composer.style.borderColor='var(--accent-border)';
-  composer.style.boxShadow='0 0 0 1px var(--accent-border),0 4px 24px -4px rgba(77,208,200,0.08)';
+  composer.style.boxShadow='0 0 0 1px var(--accent-border),0 4px 20px -4px rgba(77,208,200,0.07)';
 });
 inp.addEventListener('blur',()=>{
-  if(!inp.value.trim()){inp.style.minHeight='80px'}
+  if(!inp.value.trim())inp.style.minHeight='72px';
   composer.style.borderColor='var(--border2)';
   composer.style.boxShadow='none';
 });
-/* Auto-grow */
-inp.addEventListener('input',()=>{
-  inp.style.height='auto';
-  inp.style.height=Math.min(inp.scrollHeight,300)+'px';
+inp.addEventListener('input',()=>{inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,300)+'px'});
+
+/* Settings popover — anchored to button, not fullscreen */
+document.getElementById('settingsBtn').onclick=(e)=>{
+  e.stopPropagation();
+  settingsPop.style.display=settingsPop.style.display==='block'?'none':'block';
+};
+document.addEventListener('click',(e)=>{
+  if(!settingsPop.contains(e.target)&&e.target!==document.getElementById('settingsBtn'))
+    settingsPop.style.display='none';
 });
 
-/* Settings modal */
-document.getElementById('settingsBtn').onclick=()=>{
-  const m=document.getElementById('settingsModal');
-  m.style.display=m.style.display==='flex'?'none':'flex';
-};
+/* Depth buttons — each has unique description */
 document.querySelectorAll('.depth-btn').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('.depth-btn').forEach(x=>{x.style.background='var(--surface)';x.style.borderColor='var(--border)';x.style.color='var(--text2)';x.style.fontWeight='400'});
     b.style.background='var(--accent-dim)';b.style.borderColor='var(--accent-border)';b.style.color='var(--accent)';b.style.fontWeight='600';
+    document.getElementById('depthDesc').textContent=b.dataset.desc;
   };
 });
 
-/* Examples */
+/* Toggle group helper */
+function setupToggle(cls){
+  document.querySelectorAll('.'+cls).forEach(b=>{
+    b.onclick=()=>{
+      document.querySelectorAll('.'+cls).forEach(x=>{x.style.background='var(--surface)';x.style.borderColor='var(--border)';x.style.color='var(--text2)';x.style.fontWeight='400'});
+      b.style.background='var(--accent-dim)';b.style.borderColor='var(--accent-border)';b.style.color='var(--accent)';b.style.fontWeight='600';
+    };
+  });
+}
+setupToggle('focus-btn');
+setupToggle('len-btn');
+
+/* Web search toggle */
+document.getElementById('webSearch').onchange=function(){
+  const dot=document.getElementById('toggleDot');
+  if(this.checked){dot.style.transform='translateX(16px)';dot.style.background='var(--accent)'}
+  else{dot.style.transform='translateX(0)';dot.style.background='var(--text3)'}
+};
+
+/* File attachment */
+document.getElementById('attachBtn').onclick=()=>document.getElementById('fileInput').click();
+document.getElementById('fileInput').onchange=function(){handleFiles(this.files)};
+
+/* Drag and drop */
+composer.addEventListener('dragover',e=>{e.preventDefault();document.getElementById('dropOverlay').style.display='flex'});
+composer.addEventListener('dragleave',e=>{if(!composer.contains(e.relatedTarget))document.getElementById('dropOverlay').style.display='none'});
+composer.addEventListener('drop',e=>{e.preventDefault();document.getElementById('dropOverlay').style.display='none';handleFiles(e.dataTransfer.files)});
+
+function handleFiles(fileList){
+  if(!fileList||!fileList.length)return;
+  for(const f of fileList){
+    if(attachedFiles.length>=5)break;
+    attachedFiles.push(f);
+  }
+  renderAttachments();
+}
+function renderAttachments(){
+  if(!attachedFiles.length){attachList.style.display='none';return}
+  attachList.style.display='flex';attachList.innerHTML='';
+  attachedFiles.forEach((f,i)=>{
+    const chip=document.createElement('span');
+    chip.style.cssText='display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2)';
+    const icon=f.type.startsWith('image/')?'&#128247;':'&#128196;';
+    chip.innerHTML=`${icon} ${esc(f.name.length>20?f.name.slice(0,18)+'...':f.name)} <button onclick="removeFile(${i})" style="background:none;border:none;color:var(--text4);cursor:pointer;font-size:12px;padding:0 2px">&times;</button>`;
+    attachList.appendChild(chip);
+  });
+}
+function removeFile(i){attachedFiles.splice(i,1);renderAttachments()}
+
+/* Examples — spaced pills */
 const EXAMPS=[
-  "Should I buy Tesla Model 3 or Mach-E for commuting? Budget $45k, range and tech matter.",
-  "Compare HubSpot vs Salesforce vs Pipedrive for a 10-person sales team.",
-  "Which marketing strategy: content + SEO, paid ads, or cold outreach?",
-  "Best laptop under $1500 for software development.",
-  "Freemium vs flat subscription vs usage-based pricing for B2B SaaS.",
-  "Best training plan for weight loss + muscle: full body, PPL, or HIIT?",
+  "Should I buy Tesla Model 3 or Mach-E for commuting?",
+  "Compare HubSpot vs Salesforce vs Pipedrive for sales",
+  "Content + SEO vs paid ads vs cold outreach?",
+  "Best laptop under $1500 for development",
+  "Freemium vs subscription vs usage-based pricing",
+  "Full body vs PPL vs HIIT for weight loss + muscle",
 ];
 const exGrid=document.getElementById('exGrid');
 EXAMPS.forEach(t=>{
   const b=document.createElement('button');b.type='button';b.className='chip';
-  b.textContent=t.length>50?t.slice(0,48)+'...':t;
+  b.textContent=t;
   b.onclick=()=>{inp.value=t;inp.focus();inp.dispatchEvent(new Event('input'));triggerExtract()};
   exGrid.appendChild(b);
 });
 
-/* Suggest chips — debounced */
+/* Suggest chips */
+let inputHandler=null;
 inp.addEventListener('input',()=>{
   clearTimeout(suggestTimer);
   exPrev.style.display='none';extractedData=null;
   if(inp.value.trim().length>=25){suggestTimer=setTimeout(fetchChips,1500)}
-  else{chipArea.innerHTML='';chipArea.style.padding='0 12px'}
+  else{chipArea.innerHTML='';chipArea.style.padding='0 14px'}
 });
 async function fetchChips(){
   const text=inp.value.trim();if(text.length<25)return;
   try{
     const r=await fetch('/api/suggest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
     if(!r.ok)return;const{chips}=await r.json();
-    chipArea.innerHTML='';chipArea.style.padding=chips.length?'4px 12px 8px':'0 12px';
+    chipArea.innerHTML='';chipArea.style.padding=chips.length?'4px 14px 8px':'0 14px';
     chips.forEach(c=>{
       const el=document.createElement('span');el.className='chip';el.textContent=c;
       el.onclick=()=>{inp.value+='\n'+c+'.';el.remove();inp.focus();inp.dispatchEvent(new Event('input'))};
@@ -203,20 +303,17 @@ async function triggerExtract(){
     document.getElementById('exQ').textContent=extractedData.question||'';
     document.getElementById('exO').textContent=(extractedData.options||[]).join('  |  ');
     document.getElementById('exC').textContent=(extractedData.criteria||[]).map(c=>c.name).join(', ');
-    exPrev.style.display='block';chipArea.innerHTML='';chipArea.style.padding='0 12px';
+    exPrev.style.display='block';chipArea.innerHTML='';chipArea.style.padding='0 14px';
   }catch(e){}
 }
 document.getElementById('clearEx').onclick=()=>{exPrev.style.display='none';extractedData=null};
 
 /* Analyze */
 document.getElementById('goBtn').onclick=async()=>{
-  const text=inp.value.trim();
-  if(text.length<10){inp.focus();return}
-
+  const text=inp.value.trim();if(text.length<10){inp.focus();return}
   if(!extractedData){await triggerExtract()}
   if(!extractedData||!extractedData.options||extractedData.options.length<2){
-    alert('Could not parse options. Please add more detail about what you are comparing.');inp.focus();return;
-  }
+    alert('Could not parse options. Add more detail about what you are comparing.');inp.focus();return}
   runPipeline(extractedData);
 };
 
@@ -253,16 +350,15 @@ async function runPipeline(payload){
   }catch(err){PS.style.display='none';ES.style.display='block';ET.textContent=err.message||'Something went wrong.'}
 }
 
-/* Render */
+/* Render results */
 function renderResults(d){
   RS.style.display='block';RS.innerHTML='';
   const cM={high:{cls:'bdg-g',dot:'var(--green)'},moderate:{cls:'bdg-a',dot:'var(--accent)'},low:{cls:'bdg-r',dot:'var(--red)'}};
   const cf=cM[d.confidence_level]||cM.moderate;
 
-  // Winner
   RS.innerHTML+=`
   <div class="wc rv" style="padding:28px;text-align:center;margin-bottom:16px">
-    <div class="fm" style="font-size:9px;color:var(--accent);opacity:0.6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Recommended</div>
+    <div class="fm" style="font-size:9px;color:var(--accent);opacity:0.7;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Recommended</div>
     <h2 class="fd" style="font-size:clamp(22px,4vw,30px);font-weight:700;color:var(--text)">${esc(d.winner)}</h2>
     <p style="color:var(--text2);margin-top:10px;font-size:13px;line-height:1.6;max-width:440px;margin-left:auto;margin-right:auto">${esc(d.why_winner_won)}</p>
     <div style="display:flex;justify-content:center;gap:6px;margin-top:14px;flex-wrap:wrap">
@@ -271,7 +367,6 @@ function renderResults(d){
     </div>
   </div>`;
 
-  // Metrics
   const w=d.ranked_options[0],r2=d.ranked_options[1];
   const spread=w&&r2?(w.final_score-r2.final_score).toFixed(1):'--';
   RS.innerHTML+=`
@@ -281,14 +376,13 @@ function renderResults(d){
     <div class="mc"><div class="mc-l">Analyst Agreement</div><div class="mc-b"><div class="mc-f" style="width:${d.judges_agree?100:40}%;background:${d.judges_agree?'var(--green)':'var(--amber)'}"></div></div><div class="mc-v">${d.judges_agree?'Yes':'Split'}</div></div>
   </div>`;
 
-  // Ranked
   let cards='<div class="rv rv2" style="margin-bottom:16px">';
   d.ranked_options.forEach(opt=>{
     const isW=opt.rank===1;const pct=Math.round(opt.final_score*10);
     let dims='';Object.entries(opt.dimension_scores).forEach(([k,v])=>{if(k==='overall')return;
-      dims+=`<div style="display:flex;justify-content:space-between;padding:2px 0"><span style="font-size:10px;color:var(--text3)">${k.replace(/_/g,' ')}</span><span class="fm" style="font-size:10px;color:var(--text2)">${v.toFixed(1)}</span></div>`});
-    let pros=opt.strengths.map(s=>`<div style="font-size:11px;color:var(--green);opacity:0.85;padding:1px 0">+ ${esc(s)}</div>`).join('');
-    let cons=opt.weaknesses.map(w=>`<div style="font-size:11px;color:var(--red);opacity:0.8;padding:1px 0">- ${esc(w)}</div>`).join('');
+      dims+=`<div style="display:flex;justify-content:space-between;padding:2px 0"><span style="font-size:11px;color:var(--text3)">${k.replace(/_/g,' ')}</span><span class="fm" style="font-size:11px;color:var(--text2)">${v.toFixed(1)}</span></div>`});
+    let pros=opt.strengths.map(s=>`<div style="font-size:11px;color:var(--green);padding:1px 0">+ ${esc(s)}</div>`).join('');
+    let cons=opt.weaknesses.map(w=>`<div style="font-size:11px;color:var(--red);opacity:0.85;padding:1px 0">- ${esc(w)}</div>`).join('');
     cards+=`
     <div style="background:var(--surface);border:1px solid ${isW?'var(--accent-border)':'var(--border)'};border-radius:10px;padding:14px 16px;margin-bottom:6px;${isW?'box-shadow:0 0 40px -10px rgba(77,208,200,0.06)':''}">
       <div style="display:flex;align-items:center;gap:12px">
@@ -302,7 +396,6 @@ function renderResults(d){
   });
   cards+='</div>';RS.innerHTML+=cards;
 
-  // Share
   const shareUrl=location.origin+'/result/'+d.run_id;
   RS.innerHTML+=`
   <div class="rv rv3" style="text-align:center;padding-top:8px">
