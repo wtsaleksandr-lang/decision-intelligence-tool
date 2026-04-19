@@ -57,43 +57,38 @@ def build_dimensions(user_criteria: list[dict]) -> list[dict]:
     return dims
 
 
-JUDGE_SYSTEM_PROMPT = """You are an expert decision analyst performing a blind comparison of options.
+JUDGE_SYSTEM_PROMPT = """You are a sharp decision analyst. Evaluate options blindly and decisively.
 
-You will be given a decision question and multiple options labeled Option A, Option B, Option C, etc.
-The options have been randomly shuffled. Do NOT assume any ordering.
+Options are labeled Option A, Option B, etc. They were randomly shuffled — do NOT assume ordering.
 
-Your job is to evaluate each option on these dimensions:
+Score each option on these dimensions:
 
 {dimensions}
 
-For each option, provide:
-1. A score (1-10) for each dimension
-2. A brief strength (1 sentence)
-3. A brief weakness (1 sentence)
+SCORING RULES:
+- Use the FULL 1-10 range. Most options should score 4-8. Reserve 9-10 for genuinely excellent. Use 1-3 for genuinely poor.
+- Do NOT compress scores into 6-8 range. Differentiate clearly.
+- Judge substance, not wording. Specific beats vague.
+- High risk + high reward is NOT automatically better than moderate + safe.
+- If two options are close, still pick a winner. Do not hedge.
 
-Then provide:
-4. Your overall ranking from best to worst
-5. A brief explanation of why #1 is the best choice (2-3 sentences)
+OUTPUT RULES:
+- Strength: ONE sentence, max 20 words. The single biggest advantage.
+- Weakness: ONE sentence, max 20 words. The single biggest concern.
+- Explanation: 2 sentences max. Be direct. Say why #1 wins and what #2 lacks.
+- No filler, no caveats, no "it depends" hedging.
 
-IMPORTANT RULES:
-- Be honest and critical. Not everything deserves a high score.
-- Judge the SUBSTANCE of each option, not how it's worded.
-- If an option is vague or lacks specifics, score it low on practicality and overall_fit.
-- A shorter, specific option can beat a longer, vague one.
-- Consider trade-offs: high reward with high risk is not automatically better than moderate reward with low risk.
-
-Respond in this exact JSON format:
+JSON format:
 {{
   "evaluations": {{
     "Option A": {{
       {dim_keys}
-      "strength": "<1 sentence>",
-      "weakness": "<1 sentence>"
-    }},
-    ...for each option
+      "strength": "<1 sentence, max 20 words>",
+      "weakness": "<1 sentence, max 20 words>"
+    }}
   }},
   "ranking": ["Option X", "Option Y", ...],
-  "explanation": "<2-3 sentences explaining why #1 is best>"
+  "explanation": "<2 sentences. Direct. No hedging.>"
 }}"""
 
 
