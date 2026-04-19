@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 from config import settings
 from engine.types import DecisionInput
 from engine.pipeline import run_decision_pipeline
+from engine.extractor import extract_decision, suggest_chips
 from tracking.history import get_recent_decisions, get_decision_by_run_id
 
 app = FastAPI(title="Decision Intelligence Tool", version="0.2.0")
@@ -133,6 +134,32 @@ async def _stream_decision(input_data: DecisionInput):
             yield f"event: error\ndata: {json.dumps(item)}\n\n"
 
     await task
+
+
+# ─── API: Smart Input Extraction ───
+
+class ExtractRequest(BaseModel):
+    text: str = Field(min_length=10, max_length=2000)
+
+
+@app.post("/api/extract")
+async def extract(request: ExtractRequest):
+    """Extract structured decision from natural language."""
+    result = await extract_decision(request.text)
+    if not result:
+        return JSONResponse(status_code=422, content={"error": "Could not parse decision from input."})
+    return result
+
+
+class SuggestRequest(BaseModel):
+    text: str = Field(min_length=5, max_length=2000)
+
+
+@app.post("/api/suggest")
+async def suggest(request: SuggestRequest):
+    """Suggest refinement chips for partial input."""
+    chips = await suggest_chips(request.text)
+    return {"chips": chips}
 
 
 # ─── API: History ───
