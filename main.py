@@ -1,6 +1,6 @@
 """
-Decision Intelligence Tool — FastAPI Backend.
-Provides SSE-streaming decision evaluation endpoint.
+Decision Intelligence Tool — FastAPI Backend + Frontend.
+Single app, single port, single deploy.
 """
 
 import asyncio
@@ -11,16 +11,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, Request
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import StreamingResponse, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
 from config import settings
 from engine.types import DecisionInput
 from engine.pipeline import run_decision_pipeline
-from tracking.history import get_recent_decisions
+from tracking.history import get_recent_decisions, get_decision_by_run_id
 
-app = FastAPI(title="Decision Intelligence Tool", version="0.1.0")
+app = FastAPI(title="Decision Intelligence Tool", version="0.2.0")
+templates = Jinja2Templates(directory="templates")
 
 
 # ─── Request/Response Models ───
@@ -36,7 +38,27 @@ class DecisionRequest(BaseModel):
     criteria: list[CriterionModel] = Field(min_length=1, max_length=10)
 
 
-# ─── Health Check ───
+# ─── Pages ───
+
+@app.get("/", response_class=HTMLResponse)
+async def landing_page(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/decide", response_class=HTMLResponse)
+async def decide_page(request: Request):
+    return templates.TemplateResponse("decide.html", {"request": request})
+
+
+@app.get("/result/{run_id}", response_class=HTMLResponse)
+async def result_page(request: Request, run_id: str):
+    decision = get_decision_by_run_id(run_id)
+    if not decision:
+        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+    return templates.TemplateResponse("result.html", {"request": request, "result": decision})
+
+
+# ─── API: Health ───
 
 @app.get("/api/health")
 async def health():
@@ -47,7 +69,7 @@ async def health():
     }
 
 
-# ─── Decision Evaluation (SSE Stream) ───
+# ─── API: Decision Evaluation (SSE Stream) ───
 
 @app.post("/api/decide")
 async def decide(request: DecisionRequest, req: Request):
@@ -56,7 +78,7 @@ async def decide(request: DecisionRequest, req: Request):
     if not settings.has_any_api_key():
         return JSONResponse(
             status_code=503,
-            content={"error": "No AI judge API keys configured. Set at least one of: OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY"},
+            content={"error": "No AI judge API keys configured."},
         )
 
     input_data = DecisionInput(
@@ -65,7 +87,6 @@ async def decide(request: DecisionRequest, req: Request):
         criteria=[{"name": c.name, "weight": c.weight} for c in request.criteria],
     )
 
-    # Check Accept header for SSE
     accept = req.headers.get("accept", "")
     if "text/event-stream" in accept:
         return StreamingResponse(
@@ -74,10 +95,9 @@ async def decide(request: DecisionRequest, req: Request):
             headers={"Cache-Control": "no-cache", "Connection": "keep-alive"},
         )
 
-    # JSON fallback
     try:
         result = await run_decision_pipeline(input_data)
-        return _result_to_json(result)
+        return JSONResponse(content=_result_to_dict(result))
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)[:300]})
 
@@ -95,7 +115,7 @@ async def _stream_decision(input_data: DecisionInput):
             queue.put_nowait({"result": _result_to_dict(result)})
         except Exception as e:
             queue.put_nowait({"error": str(e)[:300]})
-        queue.put_nowait(None)  # sentinel
+        queue.put_nowait(None)
 
     task = asyncio.create_task(run())
 
@@ -113,11 +133,10 @@ async def _stream_decision(input_data: DecisionInput):
     await task
 
 
-# ─── History ───
+# ─── API: History ───
 
 @app.get("/api/history")
 async def history():
-    """Get recent decision evaluations."""
     return {"decisions": get_recent_decisions(limit=20)}
 
 
@@ -150,14 +169,9 @@ def _result_to_dict(result) -> dict:
     }
 
 
-def _result_to_json(result) -> JSONResponse:
-    return JSONResponse(content=_result_to_dict(result))
+# ─── Static Files ───
 
-
-# ─── Static Files (for Streamlit or other frontend) ───
-
-if os.path.exists("static"):
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 if __name__ == "__main__":

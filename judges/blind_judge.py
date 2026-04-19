@@ -87,27 +87,25 @@ JUDGE_MODELS = {
 }
 
 
-async def run_judge(
-    judge_name: str,
+# Fallback models for each judge (cheaper/faster alternatives)
+JUDGE_FALLBACKS = {
+    "judge_openai": "gpt-4o-mini",
+    "judge_anthropic": "claude-haiku-4-5-20251001",
+    "judge_google": "gemini-2.0-flash",
+}
+
+MAX_RETRIES = 1
+
+
+async def _call_judge_once(
+    config: dict,
     api_key: str,
-    question: str,
-    anonymized_options: dict[str, str],
-    dimensions: list[dict],
-    timeout: int = 300,
-    model_override: str | None = None,
+    model: str,
+    system: str,
+    user_prompt: str,
+    timeout: int,
 ) -> dict:
-    """Run a single judge evaluation on decision options.
-
-    Returns parsed JSON scores or error dict.
-    """
-    config = JUDGE_MODELS.get(judge_name)
-    if not config:
-        return {"error": f"Unknown judge: {judge_name}"}
-
-    system = build_judge_system(dimensions)
-    user_prompt = build_judge_prompt(question, anonymized_options)
-    model = model_override or config["model"]
-
+    """Single attempt to call a judge model. Returns parsed JSON or error dict."""
     if "url_fn" in config:
         url = config["url_fn"](model, api_key)
     else:
@@ -124,11 +122,59 @@ async def run_judge(
             data = resp.json()
             raw_text = config["extract_fn"](data)
 
-            # Parse JSON from response (may be wrapped in markdown)
             json_match = re.search(r'\{[\s\S]*\}', raw_text)
             if json_match:
                 return json.loads(json_match.group())
             return {"error": "Judge returned no valid JSON", "raw": raw_text[:500]}
 
     except Exception as e:
-        return {"error": str(e)[:200], "judge": judge_name}
+        return {"error": str(e)[:200]}
+
+
+async def run_judge(
+    judge_name: str,
+    api_key: str,
+    question: str,
+    anonymized_options: dict[str, str],
+    dimensions: list[dict],
+    timeout: int = 300,
+    model_override: str | None = None,
+) -> dict:
+    """Run a single judge evaluation with retry + fallback.
+
+    Strategy:
+    1. Try primary model
+    2. If it fails, retry once
+    3. If retry fails, try fallback (cheaper) model
+    4. If all fail, return error dict
+    """
+    config = JUDGE_MODELS.get(judge_name)
+    if not config:
+        return {"error": f"Unknown judge: {judge_name}"}
+
+    system = build_judge_system(dimensions)
+    user_prompt = build_judge_prompt(question, anonymized_options)
+    primary_model = model_override or config["model"]
+
+    # Attempt 1: primary model
+    result = await _call_judge_once(config, api_key, primary_model, system, user_prompt, timeout)
+    if "error" not in result:
+        return result
+
+    # Attempt 2: retry primary model
+    result = await _call_judge_once(config, api_key, primary_model, system, user_prompt, timeout)
+    if "error" not in result:
+        return result
+
+    # Attempt 3: fallback model
+    fallback_model = JUDGE_FALLBACKS.get(judge_name)
+    if fallback_model and fallback_model != primary_model:
+        result = await _call_judge_once(config, api_key, fallback_model, system, user_prompt, timeout)
+        if "error" not in result:
+            result["_used_fallback"] = fallback_model
+            return result
+
+    # All attempts failed
+    result["judge"] = judge_name
+    result["_degraded"] = True
+    return result

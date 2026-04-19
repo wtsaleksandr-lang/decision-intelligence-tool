@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Options. Make Smarter Decisions.{% endblock %}
+{% block meta_desc %}Compare any set of options with AI-powered analysis. Get ranked recommendations with scores, risks, confidence levels, and actionable insights.{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4">
+
+  <!-- Hero -->
+  <section class="py-20 text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+      Compare options.<br>
+      <span class="text-brand-600">Make smarter decisions.</span>
+    </h1>
+    <p class="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
+      Submit your options and criteria. Multiple independent AI judges evaluate them blindly, then rank your choices with scores, strengths, risks, and a clear recommendation.
+    </p>
+    <a href="/decide" class="mt-8 inline-block px-8 py-3.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition text-lg shadow-lg shadow-brand-600/20">
+      Analyze your decision &rarr;
+    </a>
+    <p class="mt-4 text-sm text-gray-400">Free to use. No signup required.</p>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-16">
+    <h2 class="text-2xl font-bold text-center mb-10">How it works</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white rounded-xl p-6 border shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg mb-4">1</div>
+        <h3 class="font-semibold text-lg">Describe your decision</h3>
+        <p class="text-gray-600 mt-2 text-sm">Enter your question, list 2-10 options, and define what matters most to you.</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 border shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg mb-4">2</div>
+        <h3 class="font-semibold text-lg">AI judges evaluate blindly</h3>
+        <p class="text-gray-600 mt-2 text-sm">Multiple independent AI systems score your options on every criterion — without seeing which option is which.</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 border shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg mb-4">3</div>
+        <h3 class="font-semibold text-lg">Get a ranked recommendation</h3>
+        <p class="text-gray-600 mt-2 text-sm">See ranked options with scores, strengths, weaknesses, confidence levels, and a shareable link.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use cases -->
+  <section class="py-16">
+    <h2 class="text-2xl font-bold text-center mb-10">Works for any decision</h2>
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+      {% for item in [
+        ("Business", "Best vendor, pricing plan, GTM strategy, hire decision"),
+        ("Consumer", "Best laptop, car, mortgage, subscription plan"),
+        ("Personal", "Best training plan, diet, course, career move"),
+        ("Creative", "Best logo concept, campaign idea, product name")
+      ] %}
+      <div class="bg-white rounded-xl p-5 border">
+        <h3 class="font-semibold text-brand-700">{{ item[0] }}</h3>
+        <p class="text-sm text-gray-600 mt-1">{{ item[1] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section class="py-16 text-center">
+    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-8 border shadow-sm">
+      <h2 class="text-xl font-bold mb-4">Why blind judging?</h2>
+      <p class="text-gray-600">
+        Single AI models have biases. DecideIQ runs <strong>multiple independent judges</strong> that never see which option is which. Options are shuffled randomly. Scores are aggregated with rank-point consensus. The result: fair, unbiased, defensible recommendations.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 text-center">
+    <a href="/decide" class="inline-block px-8 py-3.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition text-lg shadow-lg shadow-brand-600/20">
+      Try it now — it's free &rarr;
+    </a>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Your Decision{% endblock %}
+{% block meta_desc %}Enter your options and criteria. Get AI-powered ranked recommendations in seconds.{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12">
+
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-bold">Analyze your decision</h1>
+    <p class="text-gray-500 mt-2">Enter your options, define what matters, and let multiple AI judges rank them.</p>
+  </div>
+
+  <!-- Form -->
+  <form id="decisionForm" class="space-y-6">
+
+    <!-- Question -->
+    <div class="bg-white rounded-xl border p-5">
+      <label class="block font-semibold mb-2">What are you deciding?</label>
+      <input type="text" id="question" required minlength="5" maxlength="500"
+        placeholder="e.g. Which marketing strategy should we pursue this quarter?"
+        class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+    </div>
+
+    <!-- Options -->
+    <div class="bg-white rounded-xl border p-5">
+      <label class="block font-semibold mb-2">Options to compare <span class="text-gray-400 font-normal text-sm">(2-10)</span></label>
+      <div id="optionsList" class="space-y-2">
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-gray-400 w-5 shrink-0">1.</span>
+          <input type="text" name="option" required maxlength="200" placeholder="Option 1" class="flex-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 outline-none">
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-gray-400 w-5 shrink-0">2.</span>
+          <input type="text" name="option" required maxlength="200" placeholder="Option 2" class="flex-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 outline-none">
+        </div>
+      </div>
+      <button type="button" id="addOption" class="mt-3 text-sm text-brand-600 font-medium hover:text-brand-700">+ Add option</button>
+    </div>
+
+    <!-- Criteria -->
+    <div class="bg-white rounded-xl border p-5">
+      <label class="block font-semibold mb-1">What matters most?</label>
+      <p class="text-sm text-gray-400 mb-3">Add criteria and set importance (1 = low, 10 = critical).</p>
+      <div id="criteriaList" class="space-y-3">
+        <div class="flex gap-2 items-center bg-gray-50 rounded-lg p-3">
+          <input type="text" name="criterion" required maxlength="100" placeholder="e.g. Cost, Speed, Quality" class="flex-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 outline-none bg-white">
+          <label class="text-xs text-gray-400 shrink-0">Weight:</label>
+          <input type="range" name="weight" min="1" max="10" value="5" class="w-20" oninput="this.nextElementSibling.textContent=this.value">
+          <span class="text-sm font-medium w-4">5</span>
+        </div>
+      </div>
+      <button type="button" id="addCriterion" class="mt-3 text-sm text-brand-600 font-medium hover:text-brand-700">+ Add criterion</button>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" id="submitBtn"
+      class="w-full py-3.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition text-lg shadow-lg shadow-brand-600/20 disabled:opacity-50 disabled:cursor-not-allowed">
+      Analyze options
+    </button>
+  </form>
+
+  <!-- Progress -->
+  <div id="progressSection" class="hidden mt-8 fade-in">
+    <div class="bg-white rounded-xl border p-6 text-center">
+      <div class="inline-block w-8 h-8 border-3 border-brand-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p id="progressText" class="font-medium text-lg">Starting analysis...</p>
+      <p class="text-sm text-gray-400 mt-1">This usually takes 10-20 seconds</p>
+      <div class="mt-4 space-y-1" id="stepList"></div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div id="errorSection" class="hidden mt-8 fade-in">
+    <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+      <p class="text-red-800 font-medium" id="errorText"></p>
+      <button onclick="location.reload()" class="mt-3 text-sm text-red-600 underline">Try again</button>
+    </div>
+  </div>
+
+  <!-- Results (rendered by JS after SSE completes) -->
+  <div id="resultsSection" class="hidden mt-8 space-y-6 fade-in"></div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const form = document.getElementById('decisionForm');
+const optionsList = document.getElementById('optionsList');
+const criteriaList = document.getElementById('criteriaList');
+const progressSection = document.getElementById('progressSection');
+const progressText = document.getElementById('progressText');
+const stepList = document.getElementById('stepList');
+const errorSection = document.getElementById('errorSection');
+const errorText = document.getElementById('errorText');
+const resultsSection = document.getElementById('resultsSection');
+const submitBtn = document.getElementById('submitBtn');
+
+let optionCount = 2;
+let criterionCount = 1;
+
+// Add option
+document.getElementById('addOption').addEventListener('click', () => {
+  if (optionCount >= 10) return;
+  optionCount++;
+  const div = document.createElement('div');
+  div.className = 'flex gap-2 items-center';
+  div.innerHTML = `
+    <span class="text-sm text-gray-400 w-5 shrink-0">${optionCount}.</span>
+    <input type="text" name="option" maxlength="200" placeholder="Option ${optionCount}" class="flex-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 outline-none">
+    <button type="button" onclick="this.parentElement.remove(); optionCount--;" class="text-gray-400 hover:text-red-500 text-lg px-1">&times;</button>
+  `;
+  optionsList.appendChild(div);
+});
+
+// Add criterion
+document.getElementById('addCriterion').addEventListener('click', () => {
+  if (criterionCount >= 10) return;
+  criterionCount++;
+  const div = document.createElement('div');
+  div.className = 'flex gap-2 items-center bg-gray-50 rounded-lg p-3';
+  div.innerHTML = `
+    <input type="text" name="criterion" maxlength="100" placeholder="Another criterion" class="flex-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 outline-none bg-white">
+    <label class="text-xs text-gray-400 shrink-0">Weight:</label>
+    <input type="range" name="weight" min="1" max="10" value="5" class="w-20" oninput="this.nextElementSibling.textContent=this.value">
+    <span class="text-sm font-medium w-4">5</span>
+    <button type="button" onclick="this.parentElement.remove(); criterionCount--;" class="text-gray-400 hover:text-red-500 text-lg px-1">&times;</button>
+  `;
+  criteriaList.appendChild(div);
+});
+
+// Submit
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const question = document.getElementById('question').value.trim();
+  const optionInputs = document.querySelectorAll('input[name="option"]');
+  const criterionInputs = document.querySelectorAll('input[name="criterion"]');
+  const weightInputs = document.querySelectorAll('input[name="weight"]');
+
+  const options = Array.from(optionInputs).map(i => i.value.trim()).filter(Boolean);
+  const criteria = [];
+  criterionInputs.forEach((input, i) => {
+    const name = input.value.trim();
+    if (name) {
+      const weight = parseInt(weightInputs[i]?.value || '5');
+      criteria.push({ name, weight });
+    }
+  });
+
+  if (options.length < 2) { alert('Enter at least 2 options.'); return; }
+  if (criteria.length < 1) { alert('Enter at least 1 criterion.'); return; }
+
+  // Show progress
+  form.classList.add('hidden');
+  progressSection.classList.remove('hidden');
+  errorSection.classList.add('hidden');
+  resultsSection.classList.add('hidden');
+  stepList.innerHTML = '';
+  submitBtn.disabled = true;
+
+  try {
+    const resp = await fetch('/api/decide', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
+      body: JSON.stringify({ question, options, criteria }),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({ error: 'Request failed' }));
+      throw new Error(err.error || 'Request failed');
+    }
+
+    const contentType = resp.headers.get('content-type') || '';
+
+    if (contentType.includes('text/event-stream')) {
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(trimmed.slice(6));
+              if (data.step) {
+                progressText.textContent = data.detail || data.step;
+                const stepEl = document.createElement('p');
+                stepEl.className = 'text-sm text-gray-400';
+                stepEl.textContent = '\u2713 ' + (data.detail || data.step);
+                stepList.appendChild(stepEl);
+              } else if (data.run_id) {
+                progressSection.classList.add('hidden');
+                renderResults(data);
+              } else if (data.error) {
+                throw new Error(data.error);
+              }
+            } catch (parseErr) {
+              if (parseErr.message !== 'Unexpected end of JSON input') throw parseErr;
+            }
+          }
+        }
+      }
+    } else {
+      const data = await resp.json();
+      progressSection.classList.add('hidden');
+      renderResults(data);
+    }
+
+  } catch (err) {
+    progressSection.classList.add('hidden');
+    errorSection.classList.remove('hidden');
+    errorText.textContent = err.message || 'Something went wrong.';
+  }
+});
+
+function renderResults(data) {
+  resultsSection.classList.remove('hidden');
+  resultsSection.innerHTML = '';
+
+  const confColors = { high: 'text-green-700 bg-green-50 border-green-200', moderate: 'text-yellow-700 bg-yellow-50 border-yellow-200', low: 'text-red-700 bg-red-50 border-red-200' };
+  const confClass = confColors[data.confidence_level] || confColors.moderate;
+
+  // Winner hero
+  resultsSection.innerHTML += `
+    <div class="bg-brand-50 border border-brand-200 rounded-2xl p-8 text-center fade-in">
+      <div class="text-4xl mb-3">&#127942;</div>
+      <h2 class="text-2xl font-bold">${esc(data.winner)}</h2>
+      <p class="text-gray-600 mt-2 max-w-lg mx-auto">${esc(data.why_winner_won)}</p>
+      <div class="flex items-center justify-center gap-3 mt-4 flex-wrap">
+        <span class="text-sm border rounded-full px-3 py-1 font-medium ${confClass}">
+          ${data.confidence_score.toFixed(0)}% confidence (${data.confidence_level})
+        </span>
+        <span class="text-sm border rounded-full px-3 py-1 text-gray-500">
+          ${data.judges_agree ? 'Judges agree' : 'Judges split'} &middot; ${data.judge_count} judge${data.judge_count !== 1 ? 's' : ''}
+        </span>
+      </div>
+    </div>
+  `;
+
+  // Ranked options
+  let optionsHTML = '<h3 class="text-xl font-bold mt-2">Ranked Options</h3>';
+  for (const opt of data.ranked_options) {
+    const isWinner = opt.rank === 1;
+    const pct = Math.round(opt.final_score * 10);
+    const ringClass = isWinner ? 'ring-2 ring-brand-500 shadow-lg' : '';
+
+    let dimHTML = '';
+    for (const [dim, score] of Object.entries(opt.dimension_scores)) {
+      if (dim === 'overall') continue;
+      const label = dim.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      dimHTML += `<div class="text-center"><div class="text-xs text-gray-400">${esc(label)}</div><div class="font-semibold">${score.toFixed(1)}</div></div>`;
+    }
+
+    let strengthsHTML = opt.strengths.map(s => `<li class="text-green-700">+ ${esc(s)}</li>`).join('');
+    let weaknessesHTML = opt.weaknesses.map(w => `<li class="text-red-600">- ${esc(w)}</li>`).join('');
+
+    optionsHTML += `
+      <div class="bg-white rounded-xl border p-5 ${ringClass} fade-in">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0 ${isWinner ? 'bg-brand-600 text-white' : 'bg-gray-100 text-gray-500'}">
+            ${isWinner ? '&#127942;' : '#' + opt.rank}
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold">${esc(opt.option)}</div>
+            <div class="flex items-center gap-2 mt-1">
+              <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-brand-500 rounded-full score-bar" style="width:${pct}%"></div></div>
+              <span class="text-sm font-medium w-10">${opt.final_score.toFixed(1)}/10</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t">${dimHTML}</div>
+        ${(strengthsHTML || weaknessesHTML) ? `<ul class="mt-3 pt-3 border-t text-sm space-y-0.5">${strengthsHTML}${weaknessesHTML}</ul>` : ''}
+      </div>
+    `;
+  }
+  resultsSection.innerHTML += `<div class="space-y-3">${optionsHTML}</div>`;
+
+  // Share + meta
+  const shareUrl = window.location.origin + '/result/' + data.run_id;
+  resultsSection.innerHTML += `
+    <div class="flex flex-col items-center gap-3 pt-4">
+      <button onclick="navigator.clipboard.writeText('${shareUrl}').then(()=>{this.textContent='Link copied!'; setTimeout(()=>{this.textContent='Share results'},2000)})"
+        class="px-5 py-2 border rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
+        Share results
+      </button>
+      <p class="text-xs text-gray-400">Analyzed in ${(data.latency_ms/1000).toFixed(1)}s &middot; Est. cost $${data.total_cost_usd.toFixed(4)} &middot; Run ${data.run_id}</p>
+    </div>
+    <div class="text-center">
+      <a href="/decide" class="text-sm text-brand-600 font-medium hover:underline">New decision &rarr;</a>
+    </div>
+  `;
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+</script>
+{% endblock %}

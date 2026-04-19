@@ -42,3 +42,24 @@ def get_recent_decisions(limit: int = 20) -> list[dict]:
                     continue
 
     return entries[-limit:][::-1]  # newest first
+
+
+def get_decision_by_run_id(run_id: str) -> dict | None:
+    """Look up a single decision by run_id."""
+    path = HISTORY_DIR / "decisions.jsonl"
+    if not path.exists():
+        return None
+
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+                if entry.get("run_id") == run_id:
+                    return entry
+            except json.JSONDecodeError:
+                continue
+
+    return None
