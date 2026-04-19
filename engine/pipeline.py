@@ -1,6 +1,7 @@
 """
 Decision Intelligence Engine — Main Pipeline.
 Orchestrates: input → anonymize → blind judge (parallel) → aggregate → verdict.
+Settings-aware: depth, focus, length, web_search all affect behavior.
 """
 
 import asyncio
@@ -8,38 +9,68 @@ import os
 import time
 import uuid
 
-from engine.types import DecisionInput, DecisionResult, RankedOption
+from engine.types import DecisionInput, DecisionResult, RankedOption, AnalysisSettings
 from engine.verdict import compute_confidence, build_recommendation
 from judges.rubric import build_dimensions
 from judges.blind_judge import anonymize_options, run_judge, JUDGE_MODELS
 from judges.aggregator import aggregate_decision_results
-from tracking.cost_tracking import CostTracker, get_cost_profile
+from tracking.cost_tracking import CostTracker
 from tracking.history import save_decision
+
+
+# ─── Depth → model tier mapping ───
+
+DEPTH_CONFIGS = {
+    "quick": {
+        "max_judges": 1,
+        "models": {
+            "judge_openai": "gpt-4o-mini",
+            "judge_anthropic": "claude-haiku-4-5-20251001",
+            "judge_google": "gemini-2.5-flash",
+        },
+        "timeout": 60,
+    },
+    "standard": {
+        "max_judges": 3,
+        "models": {
+            "judge_openai": "gpt-4o-mini",
+            "judge_anthropic": "claude-haiku-4-5-20251001",
+            "judge_google": "gemini-2.5-flash",
+        },
+        "timeout": 300,
+    },
+    "deep": {
+        "max_judges": 3,
+        "models": {
+            "judge_openai": "gpt-4o",
+            "judge_anthropic": "claude-sonnet-4-6",
+            "judge_google": "gemini-2.5-flash",
+        },
+        "timeout": 600,
+    },
+}
 
 
 async def run_decision_pipeline(
     input_data: DecisionInput,
     on_step: callable = None,
 ) -> DecisionResult:
-    """Run the full decision evaluation pipeline.
+    """Run the full decision evaluation pipeline with settings support."""
 
-    Steps:
-    1. Build dimensions from user criteria
-    2. Anonymize and shuffle options
-    3. Run 3 AI judges in parallel (blind)
-    4. Aggregate scores
-    5. Compute confidence
-    6. Build result
-
-    on_step: optional callback(step_name, detail) for SSE progress
-    """
     run_id = str(uuid.uuid4())[:8]
     pipeline_start = time.time()
     cost_tracker = CostTracker()
+    settings = input_data.settings
 
     def emit(step: str, detail: str = ""):
         if on_step:
             on_step(step, detail)
+
+    # Resolve depth config
+    depth_cfg = DEPTH_CONFIGS.get(settings.depth, DEPTH_CONFIGS["standard"])
+    max_judges = depth_cfg["max_judges"]
+    model_overrides = depth_cfg["models"]
+    judge_timeout = depth_cfg["timeout"]
 
     # Step 1: Build scoring dimensions
     emit("dimensions", "Building evaluation criteria...")
@@ -49,13 +80,15 @@ async def run_decision_pipeline(
     emit("anonymize", "Shuffling options to prevent bias...")
     anonymized, key_map = anonymize_options(input_data.options)
 
-    # Step 3: Run judges in parallel
-    emit("judging", "Running independent AI judges...")
-    cost_profile = get_cost_profile()
+    # Step 3: Run judges
+    analyst_word = "analyst" if max_judges == 1 else "analysts"
+    emit("judging", f"Running {max_judges} independent {analyst_word}...")
 
     judge_tasks = []
     judge_names = []
     for judge_name, config in JUDGE_MODELS.items():
+        if len(judge_tasks) >= max_judges:
+            break
         api_key = None
         for env_key in config["env_keys"]:
             api_key = os.environ.get(env_key)
@@ -63,7 +96,9 @@ async def run_decision_pipeline(
                 break
         if not api_key:
             continue
-        model_override = cost_profile.get(judge_name)
+
+        model_override = model_overrides.get(judge_name, config["model"])
+
         judge_tasks.append(
             run_judge(
                 judge_name=judge_name,
@@ -71,36 +106,38 @@ async def run_decision_pipeline(
                 question=input_data.question,
                 anonymized_options=anonymized,
                 dimensions=dimensions,
-                timeout=300,
+                timeout=judge_timeout,
                 model_override=model_override,
+                focus=settings.focus,
+                length=settings.length,
+                attachments=input_data.attachments or None,
             )
         )
         judge_names.append(judge_name)
 
     if not judge_tasks:
-        raise RuntimeError("No AI judges available. Check API keys (OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY).")
+        raise RuntimeError("No AI analysts available. Check API keys.")
 
-    emit("judging", f"Waiting for {len(judge_tasks)} judges...")
+    emit("judging", f"Waiting for {len(judge_tasks)} {analyst_word}...")
     judge_results = await asyncio.gather(*judge_tasks, return_exceptions=True)
 
-    # Process results (convert exceptions to error dicts)
+    # Process results
     processed_results = []
     for i, result in enumerate(judge_results):
         if isinstance(result, Exception):
             processed_results.append({"error": str(result)[:200], "judge": judge_names[i]})
         else:
             processed_results.append(result)
-            # Track cost (estimate)
-            model = cost_profile.get(judge_names[i], JUDGE_MODELS[judge_names[i]]["model"])
+            model = model_overrides.get(judge_names[i], JUDGE_MODELS[judge_names[i]]["model"])
             cost_tracker.record(
                 judge=judge_names[i],
                 model=model,
-                input_chars=len(str(anonymized)) + 2000,  # rough estimate
+                input_chars=len(str(anonymized)) + 2000,
                 output_chars=len(str(result)),
             )
 
     # Step 4: Aggregate
-    emit("aggregating", "Aggregating judge scores...")
+    emit("aggregating", "Aggregating analyst scores...")
     aggregated = aggregate_decision_results(
         question=input_data.question,
         judge_results=processed_results,
@@ -121,7 +158,6 @@ async def run_decision_pipeline(
             rank_points=data.get("rank_points", 0),
         ))
 
-    # Sort by score, tiebreak by rank_points
     ranked_options.sort(key=lambda o: (o.final_score, o.rank_points), reverse=True)
     for i, opt in enumerate(ranked_options):
         opt.rank = i + 1
@@ -158,6 +194,12 @@ async def run_decision_pipeline(
         "question": input_data.question,
         "options": input_data.options,
         "criteria": input_data.criteria,
+        "settings": {
+            "depth": settings.depth,
+            "focus": settings.focus,
+            "length": settings.length,
+            "web_search": settings.web_search,
+        },
         "winner": result.winner,
         "confidence": confidence_level,
         "confidence_score": confidence_score,

@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 venv/
 history/*.jsonl
+uploads/
 logs/
 *.egg-info/
 dist/

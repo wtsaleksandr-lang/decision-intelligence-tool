@@ -6,11 +6,22 @@ from dataclasses import dataclass, field
 
 
 @dataclass
+class AnalysisSettings:
+    """User-configurable analysis settings."""
+    depth: str = "standard"       # quick | standard | deep
+    focus: str = "balanced"       # balanced | risks | practical
+    length: str = "standard"      # concise | standard | detailed
+    web_search: bool = False
+
+
+@dataclass
 class DecisionInput:
     """User-submitted decision request."""
     question: str
     options: list[str]           # 2-10 options
     criteria: list[dict]         # [{"name": "Cost", "weight": 8}, ...]
+    settings: AnalysisSettings = field(default_factory=AnalysisSettings)
+    attachments: list[str] = field(default_factory=list)  # filenames (context only for now)
 
 
 @dataclass

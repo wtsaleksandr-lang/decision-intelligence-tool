@@ -17,10 +17,16 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
 from config import settings
-from engine.types import DecisionInput
+from engine.types import DecisionInput, AnalysisSettings
 from engine.pipeline import run_decision_pipeline
 from engine.extractor import extract_decision, suggest_chips
 from tracking.history import get_recent_decisions, get_decision_by_run_id
+
+import shutil
+from pathlib import Path
+
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 app = FastAPI(title="Decision Intelligence Tool", version="0.2.0")
 templates = Jinja2Templates(directory="templates")
@@ -33,10 +39,19 @@ class CriterionModel(BaseModel):
     weight: int = Field(ge=1, le=10, default=5)
 
 
+class SettingsModel(BaseModel):
+    depth: str = Field(default="standard", pattern="^(quick|standard|deep)$")
+    focus: str = Field(default="balanced", pattern="^(balanced|risks|practical)$")
+    length: str = Field(default="standard", pattern="^(concise|standard|detailed)$")
+    web_search: bool = False
+
+
 class DecisionRequest(BaseModel):
     question: str = Field(min_length=5, max_length=500)
     options: list[str] = Field(min_length=2, max_length=10)
     criteria: list[CriterionModel] = Field(min_length=1, max_length=10)
+    settings: SettingsModel = Field(default_factory=SettingsModel)
+    attachments: list[str] = Field(default_factory=list)
 
 
 # ─── Pages ───
@@ -88,6 +103,13 @@ async def decide(request: DecisionRequest, req: Request):
         question=request.question,
         options=request.options,
         criteria=[{"name": c.name, "weight": c.weight} for c in request.criteria],
+        settings=AnalysisSettings(
+            depth=request.settings.depth,
+            focus=request.settings.focus,
+            length=request.settings.length,
+            web_search=request.settings.web_search,
+        ),
+        attachments=request.attachments,
     )
 
     accept = req.headers.get("accept", "")
@@ -134,6 +156,31 @@ async def _stream_decision(input_data: DecisionInput):
             yield f"event: error\ndata: {json.dumps(item)}\n\n"
 
     await task
+
+
+# ─── API: File Upload ───
+
+from fastapi import UploadFile, File
+
+@app.post("/api/upload")
+async def upload_file(file: UploadFile = File(...)):
+    """Upload a file attachment. Returns filename for reference."""
+    if not file.filename:
+        return JSONResponse(status_code=400, content={"error": "No file provided"})
+
+    # Limit: 5MB
+    contents = await file.read()
+    if len(contents) > 5 * 1024 * 1024:
+        return JSONResponse(status_code=413, content={"error": "File too large (max 5MB)"})
+
+    # Save with unique prefix
+    import uuid as _uuid
+    safe_name = f"{_uuid.uuid4().hex[:8]}_{file.filename}"
+    path = UPLOAD_DIR / safe_name
+    with open(path, "wb") as f:
+        f.write(contents)
+
+    return {"filename": safe_name, "original": file.filename, "size": len(contents)}
 
 
 # ─── API: Smart Input Extraction ───

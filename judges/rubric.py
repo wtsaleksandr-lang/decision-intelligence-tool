@@ -1,7 +1,7 @@
 """
 Scoring rubric for decision evaluation.
 Builds dynamic rubrics from user-defined criteria + built-in dimensions.
-Ported from ai-orchestrator evaluation/rubric.py — adapted for option comparison.
+Supports focus modes and response length settings.
 """
 
 # Built-in dimensions always scored (the baseline)
@@ -34,13 +34,8 @@ BUILT_IN_DIMENSIONS = [
 
 
 def build_dimensions(user_criteria: list[dict]) -> list[dict]:
-    """Build the full dimensions list from user criteria + built-in dimensions.
-
-    user_criteria: [{"name": "Cost", "weight": 8}, {"name": "Speed", "weight": 6}, ...]
-    """
+    """Build the full dimensions list from user criteria + built-in dimensions."""
     dims = []
-
-    # User criteria become dimensions
     for c in user_criteria:
         dims.append({
             "name": c["name"].lower().replace(" ", "_"),
@@ -49,12 +44,52 @@ def build_dimensions(user_criteria: list[dict]) -> list[dict]:
             "scale": "1-10 (1=very poor, 10=excellent)",
             "weight": c.get("weight", 5),
         })
-
-    # Add built-in dimensions
     for dim in BUILT_IN_DIMENSIONS:
-        dims.append({**dim, "weight": 5})  # built-in gets neutral weight
-
+        dims.append({**dim, "weight": 5})
     return dims
+
+
+# ─── Focus mode instructions ───
+
+FOCUS_INSTRUCTIONS = {
+    "balanced": "Evaluate all dimensions equally. Give a balanced assessment of each option.",
+    "risks": (
+        "Emphasize risk analysis. Weight risk_level heavily. "
+        "For each option, explicitly identify deal-breakers, hidden costs, and worst-case scenarios. "
+        "The weakness field MUST describe a concrete risk, not a generic concern."
+    ),
+    "practical": (
+        "Emphasize practicality and execution. Weight practicality heavily. "
+        "Focus on what can be done TODAY with existing resources. "
+        "Penalize options that require significant setup, expertise, or capital that isn't mentioned. "
+        "The strength field MUST describe a concrete execution advantage."
+    ),
+}
+
+# ─── Length instructions ───
+
+LENGTH_INSTRUCTIONS = {
+    "concise": (
+        "OUTPUT RULES:\n"
+        "- Strength: ONE sentence, max 12 words.\n"
+        "- Weakness: ONE sentence, max 12 words.\n"
+        "- Explanation: 1 sentence only. Ultra-direct."
+    ),
+    "standard": (
+        "OUTPUT RULES:\n"
+        "- Strength: ONE sentence, max 20 words. The single biggest advantage.\n"
+        "- Weakness: ONE sentence, max 20 words. The single biggest concern.\n"
+        "- Explanation: 2 sentences max. Be direct. Say why #1 wins and what #2 lacks.\n"
+        "- No filler, no caveats, no hedging."
+    ),
+    "detailed": (
+        "OUTPUT RULES:\n"
+        "- Strength: 2-3 sentences. Explain the advantage with specific reasoning.\n"
+        "- Weakness: 2-3 sentences. Explain the risk with concrete examples.\n"
+        "- Explanation: 3-4 sentences. Compare top options directly. Mention specific tradeoffs.\n"
+        "- Be thorough but not repetitive."
+    ),
+}
 
 
 JUDGE_SYSTEM_PROMPT = """You are a sharp decision analyst. Evaluate options blindly and decisively.
@@ -72,43 +107,59 @@ SCORING RULES:
 - High risk + high reward is NOT automatically better than moderate + safe.
 - If two options are close, still pick a winner. Do not hedge.
 
-OUTPUT RULES:
-- Strength: ONE sentence, max 20 words. The single biggest advantage.
-- Weakness: ONE sentence, max 20 words. The single biggest concern.
-- Explanation: 2 sentences max. Be direct. Say why #1 wins and what #2 lacks.
-- No filler, no caveats, no "it depends" hedging.
+{focus_instruction}
+
+{length_instruction}
 
 JSON format:
 {{
   "evaluations": {{
     "Option A": {{
       {dim_keys}
-      "strength": "<1 sentence, max 20 words>",
-      "weakness": "<1 sentence, max 20 words>"
+      "strength": "<strength text>",
+      "weakness": "<weakness text>"
     }}
   }},
   "ranking": ["Option X", "Option Y", ...],
-  "explanation": "<2 sentences. Direct. No hedging.>"
+  "explanation": "<explanation text>"
 }}"""
 
 
-def build_judge_system(dimensions: list[dict]) -> str:
-    """Build the system prompt for judge models."""
+def build_judge_system(
+    dimensions: list[dict],
+    focus: str = "balanced",
+    length: str = "standard",
+) -> str:
+    """Build the system prompt for judge models with focus/length modes."""
     dim_text = "\n".join(
         f"- {d['label']}: {d['description']} ({d['scale']})"
         for d in dimensions
     )
     dim_keys = "\n      ".join(f'"{d["name"]}": "<int>",' for d in dimensions)
-    return JUDGE_SYSTEM_PROMPT.format(dimensions=dim_text, dim_keys=dim_keys)
+    focus_instruction = FOCUS_INSTRUCTIONS.get(focus, FOCUS_INSTRUCTIONS["balanced"])
+    length_instruction = LENGTH_INSTRUCTIONS.get(length, LENGTH_INSTRUCTIONS["standard"])
+
+    return JUDGE_SYSTEM_PROMPT.format(
+        dimensions=dim_text,
+        dim_keys=dim_keys,
+        focus_instruction=focus_instruction,
+        length_instruction=length_instruction,
+    )
 
 
-def build_judge_prompt(question: str, anonymized_options: dict[str, str]) -> str:
-    """Build the user prompt for judge models.
-
-    anonymized_options: {"Option A": "description...", "Option B": "description...", ...}
-    """
+def build_judge_prompt(
+    question: str,
+    anonymized_options: dict[str, str],
+    attachments: list[str] | None = None,
+) -> str:
+    """Build the user prompt for judge models."""
     parts = [f"## Decision Question\n{question}\n"]
+
+    if attachments:
+        parts.append("## Attached Context\nThe user attached: " + ", ".join(attachments) + "\n")
+
     for label, description in anonymized_options.items():
         parts.append(f"## {label}\n{description}\n")
+
     parts.append("\nEvaluate all options using the rubric. Respond in JSON only.")
     return "\n".join(parts)

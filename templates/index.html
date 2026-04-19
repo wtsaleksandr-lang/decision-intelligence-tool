@@ -233,11 +233,19 @@ composer.addEventListener('dragover',e=>{e.preventDefault();document.getElementB
 composer.addEventListener('dragleave',e=>{if(!composer.contains(e.relatedTarget))document.getElementById('dropOverlay').style.display='none'});
 composer.addEventListener('drop',e=>{e.preventDefault();document.getElementById('dropOverlay').style.display='none';handleFiles(e.dataTransfer.files)});
 
-function handleFiles(fileList){
+async function handleFiles(fileList){
   if(!fileList||!fileList.length)return;
   for(const f of fileList){
     if(attachedFiles.length>=5)break;
-    attachedFiles.push(f);
+    // Upload to server
+    const fd=new FormData();fd.append('file',f);
+    try{
+      const r=await fetch('/api/upload',{method:'POST',body:fd});
+      if(r.ok){
+        const data=await r.json();
+        attachedFiles.push({name:data.filename,original:data.original,size:data.size});
+      }
+    }catch(e){}
   }
   renderAttachments();
 }
@@ -247,8 +255,8 @@ function renderAttachments(){
   attachedFiles.forEach((f,i)=>{
     const chip=document.createElement('span');
     chip.style.cssText='display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2)';
-    const icon=f.type.startsWith('image/')?'&#128247;':'&#128196;';
-    chip.innerHTML=`${icon} ${esc(f.name.length>20?f.name.slice(0,18)+'...':f.name)} <button onclick="removeFile(${i})" style="background:none;border:none;color:var(--text4);cursor:pointer;font-size:12px;padding:0 2px">&times;</button>`;
+    const dispName=f.original||f.name;
+    chip.innerHTML=`&#128196; ${esc(dispName.length>20?dispName.slice(0,18)+'...':dispName)} <button onclick="removeFile(${i})" style="background:none;border:none;color:var(--text4);cursor:pointer;font-size:12px;padding:0 2px">&times;</button>`;
     attachList.appendChild(chip);
   });
 }
@@ -308,13 +316,31 @@ async function triggerExtract(){
 }
 document.getElementById('clearEx').onclick=()=>{exPrev.style.display='none';extractedData=null};
 
+/* Read settings from UI */
+function getSettings(){
+  const active=(cls)=>{const b=document.querySelector('.'+cls+'.active')||document.querySelector('.'+cls+'[style*="accent"]');return b?b.dataset.v:'standard'};
+  // Find active by checking style since we toggle via inline styles
+  const getActive=(cls)=>{
+    let val='standard';
+    document.querySelectorAll('.'+cls).forEach(b=>{if(b.style.color&&b.style.color.includes('accent')||b.style.fontWeight==='600')val=b.dataset.v});
+    return val;
+  };
+  return {
+    depth: getActive('depth-btn'),
+    focus: getActive('focus-btn'),
+    length: getActive('len-btn'),
+    web_search: document.getElementById('webSearch')?.checked||false,
+  };
+}
+
 /* Analyze */
 document.getElementById('goBtn').onclick=async()=>{
   const text=inp.value.trim();if(text.length<10){inp.focus();return}
   if(!extractedData){await triggerExtract()}
   if(!extractedData||!extractedData.options||extractedData.options.length<2){
     alert('Could not parse options. Add more detail about what you are comparing.');inp.focus();return}
-  runPipeline(extractedData);
+  const payload={...extractedData, settings:getSettings(), attachments:attachedFiles.map(f=>f.name)};
+  runPipeline(payload);
 };
 
 /* Pipeline */
