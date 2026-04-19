@@ -1,67 +1,79 @@
 {% extends "base.html" %}
 
 {% block title %}{{ result.winner }} — Decision Analysis{% endblock %}
-{% block meta_desc %}AI-powered analysis: {{ result.question[:120] }}. Winner: {{ result.winner }}.{% endblock %}
+{% block meta_desc %}AI-powered analysis: {{ result.question[:120] }}. Winner: {{ result.winner }}. {{ result.confidence_level }} confidence.{% endblock %}
 {% block og_title %}{{ result.winner }} — Best choice for: {{ result.question[:80] }}{% endblock %}
 {% block og_desc %}Ranked {{ result.ranked_options|length }} options with {{ result.judge_count }} independent AI judges. Confidence: {{ result.confidence_level }}.{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto px-4 py-12">
+<div class="max-w-4xl mx-auto px-5 py-12">
 
-  <p class="text-sm text-gray-400 mb-2">Decision Analysis</p>
-  <h1 class="text-2xl font-bold mb-6">{{ result.question }}</h1>
+  <div class="font-mono text-xs text-surface-200/30 uppercase tracking-widest mb-2">Decision Analysis</div>
+  <h1 class="font-display text-2xl font-bold text-surface-100 mb-8">{{ result.question }}</h1>
 
   <!-- Winner -->
-  <div class="bg-green-50 border border-green-200 rounded-2xl p-8 text-center mb-6">
-    <div class="text-4xl mb-3">&#127942;</div>
-    <h2 class="text-2xl font-bold">{{ result.winner }}</h2>
-    <p class="text-gray-600 mt-2 max-w-lg mx-auto">{{ result.why_winner_won }}</p>
-    <div class="flex items-center justify-center gap-3 mt-4 flex-wrap">
-      {% set conf_class = {'high':'text-green-700 bg-green-50 border-green-200','moderate':'text-yellow-700 bg-yellow-50 border-yellow-200','low':'text-red-700 bg-red-50 border-red-200'} %}
-      <span class="text-sm border rounded-full px-3 py-1 font-medium {{ conf_class.get(result.confidence_level, '') }}">
-        {{ result.confidence_score }}% confidence ({{ result.confidence_level }})
+  {% set conf_map = {'high': {'bg':'bg-green-500/10','border':'border-green-500/20','text':'text-green-400','dot':'bg-green-500'}, 'moderate': {'bg':'bg-amber-500/10','border':'border-amber-500/20','text':'text-amber-400','dot':'bg-amber-500'}, 'low': {'bg':'bg-red-500/10','border':'border-red-500/20','text':'text-red-400','dot':'bg-red-500'}} %}
+  {% set conf = conf_map.get(result.confidence_level, conf_map.moderate) %}
+
+  <div class="rounded-2xl border border-amber-500/15 bg-amber-500/[0.04] p-8 text-center winner-glow mb-6 reveal">
+    <div class="font-mono text-xs text-amber-500/50 uppercase tracking-widest mb-3">Recommended</div>
+    <h2 class="font-display text-3xl font-bold text-surface-100">{{ result.winner }}</h2>
+    {% if result.get('why_winner_won') %}
+    <p class="text-surface-200/50 mt-3 max-w-md mx-auto text-sm leading-relaxed">{{ result.why_winner_won }}</p>
+    {% endif %}
+    <div class="flex items-center justify-center gap-3 mt-5 flex-wrap">
+      <span class="text-xs border rounded-full px-3 py-1 font-mono {{ conf.bg }} {{ conf.border }} {{ conf.text }}">
+        <span class="inline-block w-1.5 h-1.5 rounded-full {{ conf.dot }} mr-1"></span>{{ result.confidence_score }}% confidence
       </span>
-      <span class="text-sm border rounded-full px-3 py-1 text-gray-500">
-        {{ 'Judges agree' if result.judges_agree else 'Judges split' }} &middot; {{ result.judge_count }} judge{{ 's' if result.judge_count != 1 }}
+      <span class="text-xs border border-white/5 rounded-full px-3 py-1 text-surface-200/30 font-mono">
+        {{ 'unanimous' if result.judges_agree else 'split' }} &middot; {{ result.judge_count }} judges
       </span>
     </div>
   </div>
 
   <!-- Ranked options -->
-  <h3 class="text-xl font-bold mb-3">Ranked Options</h3>
-  <div class="space-y-3 mb-8">
-    {% for opt in result.ranked_options %}
-    {% set is_winner = opt.rank == 1 %}
-    {% set pct = (opt.score * 10)|round|int %}
-    <div class="bg-white rounded-xl border p-5 {{ 'ring-2 ring-green-500 shadow-lg' if is_winner }}">
-      <div class="flex items-center gap-4">
-        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0 {{ 'bg-green-600 text-white' if is_winner else 'bg-gray-100 text-gray-500' }}">
-          {{ '&#127942;' if is_winner else '#' ~ opt.rank }}
-        </div>
-        <div class="flex-1">
-          <div class="font-semibold">{{ opt.option }}</div>
-          <div class="flex items-center gap-2 mt-1">
-            <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full" style="width:{{ pct }}%"></div></div>
-            <span class="text-sm font-medium w-10">{{ '%.1f'|format(opt.score) }}/10</span>
+  <div class="mb-8 reveal reveal-d1">
+    <h3 class="font-mono text-xs uppercase tracking-widest text-surface-200/30 mb-3">Ranked options</h3>
+    <div class="space-y-2">
+      {% for opt in result.ranked_options %}
+      {% set is_winner = opt.rank == 1 %}
+      {% set pct = (opt.score * 10)|round|int %}
+      <div class="rounded-xl border {{ 'border-amber-500/20 winner-glow' if is_winner else 'border-white/5' }} bg-white/[0.02] p-4">
+        <div class="flex items-center gap-4">
+          <div class="w-8 shrink-0 text-center">
+            {% if is_winner %}
+            <span class="text-amber-400 font-mono text-sm font-bold">01</span>
+            {% else %}
+            <span class="text-surface-200/20 font-mono text-sm">{{ '%02d'|format(opt.rank) }}</span>
+            {% endif %}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-sm text-surface-100 truncate">{{ opt.option }}</div>
+            <div class="flex items-center gap-2 mt-1.5">
+              <div class="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full rounded-full score-fill {{ 'bg-amber-500' if is_winner else 'bg-surface-200/20' }}" style="width:{{ pct }}%"></div>
+              </div>
+              <span class="font-mono text-xs {{ 'text-amber-400' if is_winner else 'text-surface-200/40' }}">{{ '%.1f'|format(opt.score) }}</span>
+            </div>
           </div>
         </div>
+        {% if opt.strengths or opt.weaknesses %}
+        <div class="mt-3 pt-3 border-t border-white/5 space-y-0.5">
+          {% for s in opt.strengths %}<div class="text-green-400/70 text-xs">+ {{ s }}</div>{% endfor %}
+          {% for w in opt.weaknesses %}<div class="text-red-400/60 text-xs">- {{ w }}</div>{% endfor %}
+        </div>
+        {% endif %}
       </div>
-      {% if opt.strengths or opt.weaknesses %}
-      <ul class="mt-3 pt-3 border-t text-sm space-y-0.5">
-        {% for s in opt.strengths %}<li class="text-green-700">+ {{ s }}</li>{% endfor %}
-        {% for w in opt.weaknesses %}<li class="text-red-600">- {{ w }}</li>{% endfor %}
-      </ul>
-      {% endif %}
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 
   <!-- CTA -->
-  <div class="text-center space-y-3">
-    <a href="/decide" class="inline-block px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition">
-      Make your own decision &rarr;
+  <div class="text-center space-y-3 reveal reveal-d2">
+    <a href="/#tool" class="inline-block px-6 py-3 bg-amber-500 text-surface-950 font-bold rounded-xl hover:bg-amber-400 transition text-sm tracking-wide uppercase shadow-lg shadow-amber-500/10">
+      Make your own decision
     </a>
-    <p class="text-xs text-gray-400">Run {{ result.run_id }} &middot; {{ result.judge_count }} judges &middot; {{ result.confidence_level }} confidence</p>
+    <p class="text-xs text-surface-200/15 font-mono">{{ result.run_id }} &middot; {{ result.judge_count }} judges &middot; {{ result.confidence_level }} confidence</p>
   </div>
 
 </div>

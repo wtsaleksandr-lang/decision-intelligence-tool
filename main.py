@@ -45,9 +45,11 @@ async def landing_page(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.get("/decide", response_class=HTMLResponse)
-async def decide_page(request: Request):
-    return templates.TemplateResponse("decide.html", {"request": request})
+@app.get("/decide")
+async def decide_redirect():
+    """Redirect /decide to homepage tool section."""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/#tool", status_code=302)
 
 
 @app.get("/result/{run_id}", response_class=HTMLResponse)

@@ -4,61 +4,114 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Decision Intelligence{% endblock %} | DecideIQ</title>
-  <meta name="description" content="{% block meta_desc %}Compare options and make smarter decisions with AI-powered analysis. Get ranked recommendations with scores, risks, and confidence levels.{% endblock %}">
-
-  <!-- OG Tags -->
-  <meta property="og:title" content="{% block og_title %}DecideIQ — AI-Powered Decision Intelligence{% endblock %}">
-  <meta property="og:description" content="{% block og_desc %}Compare options. Get ranked recommendations backed by multiple independent AI judges.{% endblock %}">
+  <meta name="description" content="{% block meta_desc %}Compare options and make smarter decisions with AI-powered blind analysis. Multiple independent judges rank your choices.{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}DecideIQ — Compare options. Make smarter decisions.{% endblock %}">
+  <meta property="og:description" content="{% block og_desc %}AI-powered blind comparison. Multiple judges rank your options with scores, risks, and confidence.{% endblock %}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ request.url }}">
   <meta property="og:site_name" content="DecideIQ">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{% block tw_title %}DecideIQ — AI-Powered Decision Intelligence{% endblock %}">
-  <meta name="twitter:description" content="Compare options. Get ranked recommendations backed by AI judges.">
-
-  <!-- Tailwind CDN -->
+  <meta name="twitter:title" content="{% block tw_title %}DecideIQ — Compare options. Make smarter decisions.{% endblock %}">
+  <meta name="twitter:description" content="AI-powered blind comparison. Multiple judges rank your options.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: { 50:'#f0fdf4', 100:'#dcfce7', 500:'#22c55e', 600:'#16a34a', 700:'#15803d', 800:'#166534', 900:'#14532d' },
+            surface: { 50:'#fafaf9', 100:'#f5f5f4', 200:'#e7e5e4', 800:'#1c1917', 900:'#0f0e0d', 950:'#0a0908' },
+            amber:   { 300:'#fcd34d', 400:'#fbbf24', 500:'#f59e0b', 600:'#d97706' },
+            verdict: { win:'#22c55e', risk:'#ef4444', neutral:'#a8a29e' },
+          },
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+            body: ['DM Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
           }
         }
       }
     }
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .fade-in { animation: fadeIn 0.4s ease-out; }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-    .score-bar { transition: width 0.6s ease-out; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #0f0e0d; color: #e7e5e4; }
+
+    /* Grain overlay */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Score bar animation */
+    .score-fill { transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* Fade-up entrance */
+    .reveal { opacity: 0; transform: translateY(16px); animation: revealUp 0.5s ease-out forwards; }
+    .reveal-d1 { animation-delay: 0.08s; }
+    .reveal-d2 { animation-delay: 0.16s; }
+    .reveal-d3 { animation-delay: 0.24s; }
+    .reveal-d4 { animation-delay: 0.32s; }
+    @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* Pulse ring for progress */
+    .pulse-ring { animation: pulseRing 2s ease-in-out infinite; }
+    @keyframes pulseRing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(251,191,36,0); }
+    }
+
+    /* Step check animation */
+    .step-done { animation: stepIn 0.3s ease-out forwards; }
+    @keyframes stepIn { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+
+    /* Glow for winner card */
+    .winner-glow { box-shadow: 0 0 40px -8px rgba(251,191,36,0.15), 0 0 80px -16px rgba(251,191,36,0.08); }
+
+    /* Custom range slider */
+    input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+    input[type=range]::-webkit-slider-track { height: 4px; background: #292524; border-radius: 2px; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fbbf24; margin-top: -6px; border: 2px solid #0f0e0d; }
+    input[type=range]::-moz-range-track { height: 4px; background: #292524; border-radius: 2px; border: none; }
+    input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fbbf24; border: 2px solid #0f0e0d; }
+
+    /* Accordion */
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .chevron { transform: rotate(180deg); }
+    .chevron { transition: transform 0.2s ease; }
   </style>
+  {% block head %}{% endblock %}
 </head>
-<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
   <!-- Nav -->
-  <nav class="border-b bg-white/80 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-      <a href="/" class="font-bold text-lg tracking-tight">Decide<span class="text-brand-600">IQ</span></a>
-      <a href="/decide" class="text-sm font-medium px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700 transition">Try it free</a>
+  <nav class="border-b border-white/5 sticky top-0 z-50 backdrop-blur bg-surface-950/80">
+    <div class="max-w-4xl mx-auto px-5 h-12 flex items-center justify-between">
+      <a href="/" class="font-display font-bold text-lg tracking-tight text-surface-200">Decide<span class="text-amber-400">IQ</span></a>
+      <div class="flex items-center gap-4 text-sm">
+        <span class="text-surface-200/40 font-mono text-xs hidden sm:inline">blind multi-judge analysis</span>
+        <a href="/#tool" class="font-medium px-3.5 py-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition text-xs tracking-wide uppercase">Analyze</a>
+      </div>
     </div>
   </nav>
 
-  <!-- Content -->
-  <main class="flex-1">
-    {% block content %}{% endblock %}
-  </main>
+  <main class="flex-1">{% block content %}{% endblock %}</main>
 
   <!-- Footer -->
-  <footer class="border-t bg-white mt-16">
-    <div class="max-w-5xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
-      <p>DecideIQ — AI-powered decision intelligence. Multiple independent AI judges evaluate your options blindly.</p>
-      <p class="mt-2">&copy; 2026 DecideIQ. All rights reserved.</p>
+  <footer class="border-t border-white/5 mt-20">
+    <div class="max-w-4xl mx-auto px-5 py-10">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-surface-200/30">
+        <div>
+          <span class="font-display font-bold text-sm text-surface-200/50">Decide<span class="text-amber-500/50">IQ</span></span>
+          <span class="ml-3">AI-powered decision intelligence</span>
+        </div>
+        <div class="flex gap-6">
+          <a href="/privacy" class="hover:text-surface-200/60 transition">Privacy</a>
+          <a href="/terms" class="hover:text-surface-200/60 transition">Terms</a>
+        </div>
+      </div>
     </div>
   </footer>
 

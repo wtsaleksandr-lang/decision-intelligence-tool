@@ -1,82 +1,454 @@
 {% extends "base.html" %}
 
 {% block title %}Compare Options. Make Smarter Decisions.{% endblock %}
-{% block meta_desc %}Compare any set of options with AI-powered analysis. Get ranked recommendations with scores, risks, confidence levels, and actionable insights.{% endblock %}
+{% block meta_desc %}Compare any set of options with AI-powered blind analysis. Multiple independent judges rank your choices with scores, risks, and confidence levels.{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-4">
+<div class="max-w-4xl mx-auto px-5">
 
-  <!-- Hero -->
-  <section class="py-20 text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+  <!-- ═══ HERO STRIP ═══ -->
+  <section class="pt-16 pb-10 text-center reveal">
+    <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] text-surface-100">
       Compare options.<br>
-      <span class="text-brand-600">Make smarter decisions.</span>
+      <span class="text-amber-400">Make smarter decisions.</span>
     </h1>
-    <p class="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-      Submit your options and criteria. Multiple independent AI judges evaluate them blindly, then rank your choices with scores, strengths, risks, and a clear recommendation.
+    <p class="mt-4 text-surface-200/50 text-base max-w-xl mx-auto leading-relaxed">
+      Multiple independent AI judges evaluate your options blindly &mdash; no bias, no guessing. Ranked results with scores, strengths, risks, and confidence.
     </p>
-    <a href="/decide" class="mt-8 inline-block px-8 py-3.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition text-lg shadow-lg shadow-brand-600/20">
-      Analyze your decision &rarr;
-    </a>
-    <p class="mt-4 text-sm text-gray-400">Free to use. No signup required.</p>
+    <div class="mt-5 flex items-center justify-center gap-6 text-xs text-surface-200/30 font-mono">
+      <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500/60"></span>Blind comparison</span>
+      <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500/60"></span>3 independent judges</span>
+      <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500/60"></span>Ranked output</span>
+    </div>
   </section>
 
-  <!-- How it works -->
-  <section class="py-16">
-    <h2 class="text-2xl font-bold text-center mb-10">How it works</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white rounded-xl p-6 border shadow-sm">
-        <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg mb-4">1</div>
-        <h3 class="font-semibold text-lg">Describe your decision</h3>
-        <p class="text-gray-600 mt-2 text-sm">Enter your question, list 2-10 options, and define what matters most to you.</p>
+  <!-- ═══ TOOL ═══ -->
+  <section id="tool" class="pb-12">
+
+    <!-- Form -->
+    <form id="decisionForm" class="space-y-4 reveal reveal-d1">
+
+      <!-- Question -->
+      <div class="rounded-xl border border-white/8 bg-white/[0.03] p-5">
+        <label class="block text-xs font-mono uppercase tracking-widest text-surface-200/40 mb-2">Decision question</label>
+        <input type="text" id="question" required minlength="5" maxlength="500"
+          placeholder="Which marketing strategy should we pursue this quarter?"
+          class="w-full bg-transparent border-b border-white/10 pb-2 text-lg text-surface-100 placeholder:text-surface-200/20 focus:border-amber-500/50 outline-none transition">
       </div>
-      <div class="bg-white rounded-xl p-6 border shadow-sm">
-        <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg mb-4">2</div>
-        <h3 class="font-semibold text-lg">AI judges evaluate blindly</h3>
-        <p class="text-gray-600 mt-2 text-sm">Multiple independent AI systems score your options on every criterion — without seeing which option is which.</p>
+
+      <!-- Options -->
+      <div class="rounded-xl border border-white/8 bg-white/[0.03] p-5">
+        <label class="block text-xs font-mono uppercase tracking-widest text-surface-200/40 mb-3">Options to compare <span class="text-surface-200/20">(2&ndash;10)</span></label>
+        <div id="optionsList" class="space-y-2">
+          <div class="flex gap-3 items-center group">
+            <span class="font-mono text-xs text-amber-500/50 w-5 shrink-0 text-right">01</span>
+            <input type="text" name="option" required maxlength="200" placeholder="First option"
+              class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">
+          </div>
+          <div class="flex gap-3 items-center group">
+            <span class="font-mono text-xs text-amber-500/50 w-5 shrink-0 text-right">02</span>
+            <input type="text" name="option" required maxlength="200" placeholder="Second option"
+              class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">
+          </div>
+        </div>
+        <button type="button" id="addOption" class="mt-3 text-xs text-amber-500/60 font-mono hover:text-amber-400 transition">+ add option</button>
       </div>
-      <div class="bg-white rounded-xl p-6 border shadow-sm">
-        <div class="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg mb-4">3</div>
-        <h3 class="font-semibold text-lg">Get a ranked recommendation</h3>
-        <p class="text-gray-600 mt-2 text-sm">See ranked options with scores, strengths, weaknesses, confidence levels, and a shareable link.</p>
+
+      <!-- Criteria -->
+      <div class="rounded-xl border border-white/8 bg-white/[0.03] p-5">
+        <label class="block text-xs font-mono uppercase tracking-widest text-surface-200/40 mb-1">Evaluation criteria</label>
+        <p class="text-xs text-surface-200/25 mb-3">What matters most? Drag weight to set priority.</p>
+        <div id="criteriaList" class="space-y-2">
+          <div class="flex gap-3 items-center">
+            <input type="text" name="criterion" required maxlength="100" placeholder="e.g. Cost, Speed, Quality"
+              class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">
+            <div class="flex items-center gap-2 shrink-0">
+              <input type="range" name="weight" min="1" max="10" value="5" class="w-16" oninput="this.nextElementSibling.textContent=this.value">
+              <span class="font-mono text-xs text-amber-400 w-4 text-center">5</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="addCriterion" class="mt-3 text-xs text-amber-500/60 font-mono hover:text-amber-400 transition">+ add criterion</button>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" id="submitBtn"
+        class="w-full py-3.5 bg-amber-500 text-surface-950 font-bold rounded-xl hover:bg-amber-400 transition text-sm tracking-wide uppercase disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-amber-500/10">
+        Analyze Decision
+      </button>
+    </form>
+
+    <!-- Progress -->
+    <div id="progressSection" class="hidden reveal">
+      <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.03] p-8 text-center">
+        <div class="w-12 h-12 rounded-full border-2 border-amber-500 border-t-transparent animate-spin mx-auto mb-5 pulse-ring"></div>
+        <p id="progressText" class="font-display text-xl font-semibold text-surface-100">Preparing analysis...</p>
+        <p class="text-xs text-surface-200/30 font-mono mt-2">Usually 10&ndash;20 seconds</p>
+        <div class="mt-5 space-y-1.5 text-left max-w-xs mx-auto" id="stepList"></div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div id="errorSection" class="hidden reveal">
+      <div class="rounded-xl border border-red-500/20 bg-red-500/[0.05] p-6 text-center">
+        <p class="text-red-400 font-medium" id="errorText"></p>
+        <button onclick="location.reload()" class="mt-3 text-xs text-red-400/60 font-mono underline hover:text-red-400 transition">Try again</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="resultsSection" class="hidden space-y-5"></div>
+
+  </section>
+
+  <!-- ═══ EXAMPLE TEMPLATES ═══ -->
+  <section class="pb-16 reveal reveal-d2" id="examples">
+    <h2 class="font-display text-lg font-semibold text-surface-200/50 mb-4">Try an example</h2>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-2" id="templateGrid">
+      <button class="tmpl text-left rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:border-amber-500/20 hover:bg-amber-500/[0.03] transition group"
+        data-q="Which business idea should I pursue?" data-o="E-commerce store|SaaS product|Consulting agency" data-c="Revenue potential:8|Startup cost:7|Scalability:6">
+        <span class="text-sm text-surface-200/60 group-hover:text-surface-100 transition">Which business idea should I pursue?</span>
+        <span class="block text-xs text-surface-200/20 mt-0.5 font-mono">3 options &middot; 3 criteria</span>
+      </button>
+      <button class="tmpl text-left rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:border-amber-500/20 hover:bg-amber-500/[0.03] transition group"
+        data-q="Best laptop under $1500 for software development" data-o="MacBook Air M3|ThinkPad X1 Carbon|Framework Laptop 16" data-c="Performance:9|Build quality:7|Value for money:8">
+        <span class="text-sm text-surface-200/60 group-hover:text-surface-100 transition">Best laptop under $1500</span>
+        <span class="block text-xs text-surface-200/20 mt-0.5 font-mono">3 options &middot; 3 criteria</span>
+      </button>
+      <button class="tmpl text-left rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:border-amber-500/20 hover:bg-amber-500/[0.03] transition group"
+        data-q="Which marketing strategy should we choose this quarter?" data-o="Content marketing & SEO|Paid ads (Google + Meta)|Cold email outreach" data-c="Cost efficiency:8|Speed to results:7|Long-term value:6">
+        <span class="text-sm text-surface-200/60 group-hover:text-surface-100 transition">Best marketing strategy</span>
+        <span class="block text-xs text-surface-200/20 mt-0.5 font-mono">3 options &middot; 3 criteria</span>
+      </button>
+      <button class="tmpl text-left rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:border-amber-500/20 hover:bg-amber-500/[0.03] transition group"
+        data-q="Which CRM should we use for our sales team?" data-o="HubSpot|Salesforce|Pipedrive|Close.io" data-c="Ease of use:9|Integrations:7|Price:8|Reporting:6">
+        <span class="text-sm text-surface-200/60 group-hover:text-surface-100 transition">Which CRM to use?</span>
+        <span class="block text-xs text-surface-200/20 mt-0.5 font-mono">4 options &middot; 4 criteria</span>
+      </button>
+      <button class="tmpl text-left rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:border-amber-500/20 hover:bg-amber-500/[0.03] transition group"
+        data-q="Best pricing plan for my SaaS product" data-o="Freemium with paid tiers|Flat monthly subscription|Usage-based pricing" data-c="Revenue potential:9|User acquisition:8|Simplicity:6">
+        <span class="text-sm text-surface-200/60 group-hover:text-surface-100 transition">Best SaaS pricing plan</span>
+        <span class="block text-xs text-surface-200/20 mt-0.5 font-mono">3 options &middot; 3 criteria</span>
+      </button>
+      <button class="tmpl text-left rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:border-amber-500/20 hover:bg-amber-500/[0.03] transition group"
+        data-q="Which training plan is best for losing weight and building muscle?" data-o="3-day full body lifting|5-day push/pull/legs split|Daily 30-min HIIT" data-c="Effectiveness:9|Time commitment:7|Sustainability:8">
+        <span class="text-sm text-surface-200/60 group-hover:text-surface-100 transition">Best training plan</span>
+        <span class="block text-xs text-surface-200/20 mt-0.5 font-mono">3 options &middot; 3 criteria</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section class="pb-16 reveal reveal-d3">
+    <h2 class="font-display text-lg font-semibold text-surface-200/50 mb-6">How it works</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+        <div class="font-mono text-amber-500/60 text-xs mb-2">01</div>
+        <h3 class="font-semibold text-surface-100 text-sm">Describe your decision</h3>
+        <p class="text-xs text-surface-200/30 mt-1 leading-relaxed">Enter your question, list options, and define what matters most with weighted criteria.</p>
+      </div>
+      <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+        <div class="font-mono text-amber-500/60 text-xs mb-2">02</div>
+        <h3 class="font-semibold text-surface-100 text-sm">AI judges evaluate blindly</h3>
+        <p class="text-xs text-surface-200/30 mt-1 leading-relaxed">Multiple independent AI systems score your options on every criterion. Options are shuffled &mdash; no judge sees which is which.</p>
+      </div>
+      <div class="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+        <div class="font-mono text-amber-500/60 text-xs mb-2">03</div>
+        <h3 class="font-semibold text-surface-100 text-sm">Get ranked results</h3>
+        <p class="text-xs text-surface-200/30 mt-1 leading-relaxed">See ranked options with scores, strengths, weaknesses, confidence levels, and a shareable result link.</p>
       </div>
     </div>
   </section>
 
-  <!-- Use cases -->
-  <section class="py-16">
-    <h2 class="text-2xl font-bold text-center mb-10">Works for any decision</h2>
-    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-      {% for item in [
-        ("Business", "Best vendor, pricing plan, GTM strategy, hire decision"),
-        ("Consumer", "Best laptop, car, mortgage, subscription plan"),
-        ("Personal", "Best training plan, diet, course, career move"),
-        ("Creative", "Best logo concept, campaign idea, product name")
-      ] %}
-      <div class="bg-white rounded-xl p-5 border">
-        <h3 class="font-semibold text-brand-700">{{ item[0] }}</h3>
-        <p class="text-sm text-gray-600 mt-1">{{ item[1] }}</p>
-      </div>
-      {% endfor %}
+  <!-- ═══ FAQ ═══ -->
+  <section class="pb-16 reveal reveal-d4">
+    <h2 class="font-display text-lg font-semibold text-surface-200/50 mb-4">FAQ</h2>
+    <div class="space-y-1">
+      <details class="rounded-lg border border-white/5 bg-white/[0.02] group">
+        <summary class="flex items-center justify-between px-5 py-3.5 text-sm text-surface-200/60 hover:text-surface-100 transition">
+          What is blind judging?
+          <svg class="w-4 h-4 shrink-0 chevron text-surface-200/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-xs text-surface-200/30 leading-relaxed">Options are randomly shuffled and anonymized before any AI judge sees them. No judge knows which option is A, B, or C. This eliminates position bias and ensures fair evaluation.</div>
+      </details>
+      <details class="rounded-lg border border-white/5 bg-white/[0.02] group">
+        <summary class="flex items-center justify-between px-5 py-3.5 text-sm text-surface-200/60 hover:text-surface-100 transition">
+          How many judges evaluate my decision?
+          <svg class="w-4 h-4 shrink-0 chevron text-surface-200/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-xs text-surface-200/30 leading-relaxed">Up to 3 independent AI judges (GPT-4o, Claude, Gemini) evaluate every decision. Their scores are aggregated using a rank-point consensus system. Judge agreement is reported in the confidence score.</div>
+      </details>
+      <details class="rounded-lg border border-white/5 bg-white/[0.02] group">
+        <summary class="flex items-center justify-between px-5 py-3.5 text-sm text-surface-200/60 hover:text-surface-100 transition">
+          Is it free?
+          <svg class="w-4 h-4 shrink-0 chevron text-surface-200/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-xs text-surface-200/30 leading-relaxed">Yes. DecideIQ is free during the public beta. No signup required. Just enter your decision and get results.</div>
+      </details>
+      <details class="rounded-lg border border-white/5 bg-white/[0.02] group">
+        <summary class="flex items-center justify-between px-5 py-3.5 text-sm text-surface-200/60 hover:text-surface-100 transition">
+          Can I share results?
+          <svg class="w-4 h-4 shrink-0 chevron text-surface-200/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-5 pb-4 text-xs text-surface-200/30 leading-relaxed">Every analysis generates a unique shareable link. Send it to colleagues, clients, or friends. The result page includes full scores, rankings, and judge consensus data.</div>
+      </details>
     </div>
-  </section>
-
-  <!-- Trust -->
-  <section class="py-16 text-center">
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-8 border shadow-sm">
-      <h2 class="text-xl font-bold mb-4">Why blind judging?</h2>
-      <p class="text-gray-600">
-        Single AI models have biases. DecideIQ runs <strong>multiple independent judges</strong> that never see which option is which. Options are shuffled randomly. Scores are aggregated with rank-point consensus. The result: fair, unbiased, defensible recommendations.
-      </p>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-16 text-center">
-    <a href="/decide" class="inline-block px-8 py-3.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition text-lg shadow-lg shadow-brand-600/20">
-      Try it now — it's free &rarr;
-    </a>
   </section>
 
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const form = document.getElementById('decisionForm');
+const optionsList = document.getElementById('optionsList');
+const criteriaList = document.getElementById('criteriaList');
+const progressSection = document.getElementById('progressSection');
+const progressText = document.getElementById('progressText');
+const stepList = document.getElementById('stepList');
+const errorSection = document.getElementById('errorSection');
+const errorText = document.getElementById('errorText');
+const resultsSection = document.getElementById('resultsSection');
+const submitBtn = document.getElementById('submitBtn');
+
+let optionCount = 2;
+let criterionCount = 1;
+
+/* ── Add option ── */
+document.getElementById('addOption').addEventListener('click', () => {
+  if (optionCount >= 10) return;
+  optionCount++;
+  const div = document.createElement('div');
+  div.className = 'flex gap-3 items-center group';
+  div.innerHTML = `
+    <span class="font-mono text-xs text-amber-500/50 w-5 shrink-0 text-right">${String(optionCount).padStart(2,'0')}</span>
+    <input type="text" name="option" maxlength="200" placeholder="Option ${optionCount}"
+      class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">
+    <button type="button" onclick="this.parentElement.remove();optionCount--;" class="text-surface-200/20 hover:text-red-400 text-sm transition">&times;</button>`;
+  optionsList.appendChild(div);
+});
+
+/* ── Add criterion ── */
+document.getElementById('addCriterion').addEventListener('click', () => {
+  if (criterionCount >= 10) return;
+  criterionCount++;
+  const div = document.createElement('div');
+  div.className = 'flex gap-3 items-center';
+  div.innerHTML = `
+    <input type="text" name="criterion" maxlength="100" placeholder="Another criterion"
+      class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">
+    <div class="flex items-center gap-2 shrink-0">
+      <input type="range" name="weight" min="1" max="10" value="5" class="w-16" oninput="this.nextElementSibling.textContent=this.value">
+      <span class="font-mono text-xs text-amber-400 w-4 text-center">5</span>
+    </div>
+    <button type="button" onclick="this.parentElement.remove();criterionCount--;" class="text-surface-200/20 hover:text-red-400 text-sm transition">&times;</button>`;
+  criteriaList.appendChild(div);
+});
+
+/* ── Templates ── */
+document.querySelectorAll('.tmpl').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('question').value = btn.dataset.q;
+    const opts = btn.dataset.o.split('|');
+    const crits = btn.dataset.c.split('|');
+
+    // Reset options
+    optionsList.innerHTML = '';
+    optionCount = 0;
+    opts.forEach((o, i) => {
+      optionCount++;
+      const div = document.createElement('div');
+      div.className = 'flex gap-3 items-center group';
+      div.innerHTML = `
+        <span class="font-mono text-xs text-amber-500/50 w-5 shrink-0 text-right">${String(i+1).padStart(2,'0')}</span>
+        <input type="text" name="option" required maxlength="200" value="${esc(o)}"
+          class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">`;
+      optionsList.appendChild(div);
+    });
+
+    // Reset criteria
+    criteriaList.innerHTML = '';
+    criterionCount = 0;
+    crits.forEach(c => {
+      const [name, weight] = c.split(':');
+      criterionCount++;
+      const div = document.createElement('div');
+      div.className = 'flex gap-3 items-center';
+      div.innerHTML = `
+        <input type="text" name="criterion" required maxlength="100" value="${esc(name)}"
+          class="flex-1 bg-transparent border-b border-white/8 pb-1.5 text-surface-100 placeholder:text-surface-200/15 focus:border-amber-500/40 outline-none transition text-sm">
+        <div class="flex items-center gap-2 shrink-0">
+          <input type="range" name="weight" min="1" max="10" value="${weight}" class="w-16" oninput="this.nextElementSibling.textContent=this.value">
+          <span class="font-mono text-xs text-amber-400 w-4 text-center">${weight}</span>
+        </div>`;
+      criteriaList.appendChild(div);
+    });
+
+    document.getElementById('tool').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* ── Submit ── */
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const question = document.getElementById('question').value.trim();
+  const options = Array.from(document.querySelectorAll('input[name="option"]')).map(i => i.value.trim()).filter(Boolean);
+  const criterionInputs = document.querySelectorAll('input[name="criterion"]');
+  const weightInputs = document.querySelectorAll('input[name="weight"]');
+  const criteria = [];
+  criterionInputs.forEach((input, i) => {
+    const name = input.value.trim();
+    if (name) criteria.push({ name, weight: parseInt(weightInputs[i]?.value || '5') });
+  });
+
+  if (options.length < 2) { alert('Enter at least 2 options.'); return; }
+  if (criteria.length < 1) { alert('Enter at least 1 criterion.'); return; }
+
+  form.classList.add('hidden');
+  document.getElementById('examples')?.classList.add('hidden');
+  progressSection.classList.remove('hidden');
+  errorSection.classList.add('hidden');
+  resultsSection.classList.add('hidden');
+  stepList.innerHTML = '';
+
+  try {
+    const resp = await fetch('/api/decide', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
+      body: JSON.stringify({ question, options, criteria }),
+    });
+    if (!resp.ok) { const err = await resp.json().catch(() => ({})); throw new Error(err.error || 'Request failed'); }
+
+    const ct = resp.headers.get('content-type') || '';
+    if (ct.includes('text/event-stream')) {
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+        for (const line of lines) {
+          const t = line.trim();
+          if (!t.startsWith('data: ')) continue;
+          try {
+            const data = JSON.parse(t.slice(6));
+            if (data.step) {
+              progressText.textContent = data.detail || data.step;
+              const el = document.createElement('div');
+              el.className = 'step-done flex items-center gap-2 text-xs font-mono';
+              el.innerHTML = `<span class="text-amber-500">&#10003;</span><span class="text-surface-200/30">${esc(data.detail || data.step)}</span>`;
+              stepList.appendChild(el);
+            } else if (data.run_id) {
+              progressSection.classList.add('hidden');
+              renderResults(data);
+            } else if (data.error) { throw new Error(data.error); }
+          } catch (pe) { if (pe.message !== 'Unexpected end of JSON input') throw pe; }
+        }
+      }
+    } else {
+      const data = await resp.json();
+      progressSection.classList.add('hidden');
+      renderResults(data);
+    }
+  } catch (err) {
+    progressSection.classList.add('hidden');
+    errorSection.classList.remove('hidden');
+    errorText.textContent = err.message || 'Something went wrong.';
+  }
+});
+
+/* ── Render results ── */
+function renderResults(data) {
+  resultsSection.classList.remove('hidden');
+  resultsSection.innerHTML = '';
+
+  const confMap = {
+    high:     { bg:'bg-green-500/10', border:'border-green-500/20', text:'text-green-400', dot:'bg-green-500' },
+    moderate: { bg:'bg-amber-500/10', border:'border-amber-500/20', text:'text-amber-400', dot:'bg-amber-500' },
+    low:      { bg:'bg-red-500/10', border:'border-red-500/20', text:'text-red-400', dot:'bg-red-500' },
+  };
+  const conf = confMap[data.confidence_level] || confMap.moderate;
+
+  // Winner
+  resultsSection.innerHTML += `
+    <div class="rounded-2xl border border-amber-500/15 bg-amber-500/[0.04] p-8 text-center winner-glow reveal">
+      <div class="font-mono text-xs text-amber-500/50 uppercase tracking-widest mb-3">Recommended</div>
+      <h2 class="font-display text-3xl font-bold text-surface-100">${esc(data.winner)}</h2>
+      <p class="text-surface-200/50 mt-3 max-w-md mx-auto text-sm leading-relaxed">${esc(data.why_winner_won)}</p>
+      <div class="flex items-center justify-center gap-3 mt-5 flex-wrap">
+        <span class="text-xs border rounded-full px-3 py-1 font-mono ${conf.bg} ${conf.border} ${conf.text}">
+          <span class="inline-block w-1.5 h-1.5 rounded-full ${conf.dot} mr-1"></span>${data.confidence_score.toFixed(0)}% confidence
+        </span>
+        <span class="text-xs border border-white/5 rounded-full px-3 py-1 text-surface-200/30 font-mono">
+          ${data.judges_agree ? 'unanimous' : 'split'} &middot; ${data.judge_count} judges
+        </span>
+      </div>
+    </div>`;
+
+  // Ranked options
+  let cards = '<div class="reveal reveal-d1"><h3 class="font-mono text-xs uppercase tracking-widest text-surface-200/30 mb-3">Ranked options</h3><div class="space-y-2">';
+  data.ranked_options.forEach((opt, idx) => {
+    const isWin = opt.rank === 1;
+    const pct = Math.round(opt.final_score * 10);
+    const borderClass = isWin ? 'border-amber-500/20 winner-glow' : 'border-white/5';
+    const rankEl = isWin
+      ? '<span class="text-amber-400 font-mono text-sm font-bold">01</span>'
+      : `<span class="text-surface-200/20 font-mono text-sm">${String(opt.rank).padStart(2,'0')}</span>`;
+
+    let dims = '';
+    Object.entries(opt.dimension_scores).forEach(([dim, score]) => {
+      if (dim === 'overall') return;
+      const label = dim.replace(/_/g,' ');
+      dims += `<div><span class="text-surface-200/25">${esc(label)}</span><span class="ml-1 font-mono text-surface-200/50">${score.toFixed(1)}</span></div>`;
+    });
+
+    let pros = opt.strengths.map(s => `<div class="text-green-400/70 text-xs">+ ${esc(s)}</div>`).join('');
+    let cons = opt.weaknesses.map(w => `<div class="text-red-400/60 text-xs">- ${esc(w)}</div>`).join('');
+
+    cards += `
+      <div class="rounded-xl border ${borderClass} bg-white/[0.02] p-4">
+        <div class="flex items-center gap-4">
+          <div class="w-8 shrink-0 text-center">${rankEl}</div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-sm text-surface-100 truncate">${esc(opt.option)}</div>
+            <div class="flex items-center gap-2 mt-1.5">
+              <div class="flex-1 h-1 bg-white/5 rounded-full overflow-hidden"><div class="h-full rounded-full score-fill ${isWin ? 'bg-amber-500' : 'bg-surface-200/20'}" style="width:${pct}%"></div></div>
+              <span class="font-mono text-xs ${isWin ? 'text-amber-400' : 'text-surface-200/40'}">${opt.final_score.toFixed(1)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-x-4 gap-y-0.5 mt-3 text-xs">${dims}</div>
+        ${(pros || cons) ? `<div class="mt-3 pt-3 border-t border-white/5 space-y-0.5">${pros}${cons}</div>` : ''}
+      </div>`;
+  });
+  cards += '</div></div>';
+  resultsSection.innerHTML += cards;
+
+  // Share + meta
+  const shareUrl = location.origin + '/result/' + data.run_id;
+  resultsSection.innerHTML += `
+    <div class="flex flex-col items-center gap-3 pt-4 reveal reveal-d2">
+      <button id="shareBtn" class="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/8 bg-white/[0.03] text-xs font-mono text-surface-200/40 hover:text-surface-100 hover:border-amber-500/20 transition">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-2M16 3l4 4m0 0l-4 4m4-4H10"/></svg>
+        Share result
+      </button>
+      <p class="text-xs text-surface-200/15 font-mono">${(data.latency_ms/1000).toFixed(1)}s &middot; $${data.total_cost_usd.toFixed(4)} &middot; ${data.run_id}</p>
+      <button onclick="location.reload()" class="text-xs text-amber-500/50 font-mono hover:text-amber-400 transition mt-1">New decision &rarr;</button>
+    </div>`;
+
+  document.getElementById('shareBtn')?.addEventListener('click', function() {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      this.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Copied!';
+      setTimeout(() => { this.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-2M16 3l4 4m0 0l-4 4m4-4H10"/></svg>Share result'; }, 2000);
+    });
+  });
+
+  resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+</script>
 {% endblock %}
