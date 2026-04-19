@@ -2,50 +2,49 @@
 {% block title %}{{ result.winner }} -- Decision Analysis{% endblock %}
 {% block meta_desc %}AI analysis: {{ result.question[:120] }}. Winner: {{ result.winner }}.{% endblock %}
 {% block og_title %}{{ result.winner }} -- Best choice: {{ result.question[:80] }}{% endblock %}
-{% block og_desc %}Ranked {{ result.ranked_options|length }} options with {{ result.judge_count }} AI judges. {{ result.confidence_level }} confidence.{% endblock %}
+{% block og_desc %}Ranked {{ result.ranked_options|length }} options with {{ result.judge_count }} independent analysts.{% endblock %}
 
 {% block content %}
-{% set cM = {'high':{'cls':'badge-green','dot':'var(--green)'},'moderate':{'cls':'badge-accent','dot':'var(--accent)'},'low':{'cls':'badge-red','dot':'var(--red)'}} %}
-{% set conf = cM.get(result.confidence_level, cM.moderate) %}
+{% set cM = {'high':{'cls':'bdg-g','dot':'var(--green)'},'moderate':{'cls':'bdg-a','dot':'var(--accent)'},'low':{'cls':'bdg-r','dot':'var(--red)'}} %}
+{% set cf = cM.get(result.confidence_level, cM.moderate) %}
 
-<div style="max-width:720px;margin:0 auto;padding:40px 20px">
-  <div class="fm" style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Decision Analysis</div>
-  <h1 class="fd" style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:28px;line-height:1.4">{{ result.question }}</h1>
+<div style="max-width:680px;margin:0 auto;padding:32px 16px">
+  <div class="fm" style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Decision Analysis</div>
+  <h1 class="fd" style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:24px;line-height:1.4">{{ result.question }}</h1>
 
-  <div class="winner-card reveal" style="padding:28px;text-align:center;margin-bottom:16px">
-    <div class="fm" style="font-size:9px;color:var(--accent);opacity:0.5;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Recommended</div>
+  <div class="wc rv" style="padding:28px;text-align:center;margin-bottom:16px">
+    <div class="fm" style="font-size:9px;color:var(--accent);opacity:0.6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Recommended</div>
     <h2 class="fd" style="font-size:26px;font-weight:700;color:var(--text)">{{ result.winner }}</h2>
-    {% if result.get('why_winner_won') %}<p style="color:var(--text-sec);margin-top:10px;font-size:13px;line-height:1.6;max-width:420px;margin-left:auto;margin-right:auto">{{ result.why_winner_won }}</p>{% endif %}
+    {% if result.get('why_winner_won') %}<p style="color:var(--text2);margin-top:10px;font-size:13px;line-height:1.6;max-width:440px;margin-left:auto;margin-right:auto">{{ result.why_winner_won }}</p>{% endif %}
     <div style="display:flex;justify-content:center;gap:6px;margin-top:14px;flex-wrap:wrap">
-      <span class="badge {{ conf.cls }}"><span style="width:5px;height:5px;border-radius:50%;background:{{ conf.dot }}"></span>{{ result.confidence_score }}% confidence</span>
-      <span class="badge badge-muted">{{ 'Unanimous' if result.judges_agree else 'Split' }} &middot; {{ result.judge_count }} judges</span>
+      <span class="bdg {{ cf.cls }}"><span style="width:5px;height:5px;border-radius:50%;background:{{ cf.dot }}"></span>{{ result.confidence_score }}% confidence</span>
+      <span class="bdg bdg-m">{{ 'Unanimous' if result.judges_agree else 'Split' }} &middot; {{ result.judge_count }} analysts</span>
     </div>
   </div>
 
-  <div class="reveal rv1" style="margin-bottom:24px">
-    <div class="fm" style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Ranked options</div>
+  <div class="rv rv1" style="margin-bottom:24px">
     {% for opt in result.ranked_options %}
     {% set is_w = opt.rank == 1 %}
     {% set pct = (opt.score * 10)|round|int %}
-    <div class="panel" style="margin-bottom:6px;{{ 'border-color:var(--accent-border);box-shadow:0 0 40px -8px rgba(77,208,200,0.06)' if is_w }}">
+    <div style="background:var(--surface);border:1px solid {{ 'var(--accent-border)' if is_w else 'var(--border)' }};border-radius:10px;padding:14px 16px;margin-bottom:6px;{{ 'box-shadow:0 0 40px -10px rgba(77,208,200,0.06)' if is_w else '' }}">
       <div style="display:flex;align-items:center;gap:12px">
-        <span class="fm" style="font-size:12px;{{ 'color:var(--accent);font-weight:700' if is_w else 'color:var(--text-dim)' }};width:20px;text-align:right">{{ '%02d'|format(opt.rank) }}</span>
-        <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;color:var(--text)">{{ opt.option }}</div><div class="sb-wrap" style="margin-top:6px"><div class="sb-fill" style="width:{{ pct }}%;background:{{ 'var(--accent)' if is_w else 'rgba(255,255,255,0.1)' }}"></div></div></div>
-        <span class="fm" style="font-size:12px;{{ 'color:var(--accent)' if is_w else 'color:var(--text-sec)' }};font-weight:600">{{ '%.1f'|format(opt.score) }}</span>
+        <span class="fm" style="font-size:13px;{{ 'color:var(--accent);font-weight:700' if is_w else 'color:var(--text4)' }};width:20px;text-align:right">{{ '%02d'|format(opt.rank) }}</span>
+        <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:var(--text)">{{ opt.option }}</div><div class="sb" style="margin-top:6px"><div class="sf" style="width:{{ pct }}%;background:{{ 'var(--accent)' if is_w else 'rgba(255,255,255,0.1)' }}"></div></div></div>
+        <span class="fm" style="font-size:13px;{{ 'color:var(--accent)' if is_w else 'color:var(--text2)' }};font-weight:600">{{ '%.1f'|format(opt.score) }}</span>
       </div>
       {% if opt.strengths or opt.weaknesses %}
       <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
-        {% for s in opt.strengths %}<div style="font-size:11px;color:rgba(63,185,80,0.85)">+ {{ s }}</div>{% endfor %}
-        {% for w in opt.weaknesses %}<div style="font-size:11px;color:rgba(248,81,73,0.75)">- {{ w }}</div>{% endfor %}
+        {% for s in opt.strengths %}<div style="font-size:11px;color:var(--green);opacity:0.85">+ {{ s }}</div>{% endfor %}
+        {% for w in opt.weaknesses %}<div style="font-size:11px;color:var(--red);opacity:0.8">- {{ w }}</div>{% endfor %}
       </div>
       {% endif %}
     </div>
     {% endfor %}
   </div>
 
-  <div class="reveal rv2" style="text-align:center">
-    <a href="/#tool" style="display:inline-block;padding:10px 24px;background:var(--accent);color:var(--bg);font-weight:700;border-radius:8px;font-size:12px;text-decoration:none;letter-spacing:0.5px;text-transform:uppercase">Make your own decision</a>
-    <p class="fm" style="font-size:9px;color:var(--text-dim);margin-top:10px">{{ result.run_id }} &middot; {{ result.judge_count }} judges</p>
+  <div class="rv rv2" style="text-align:center">
+    <a href="/" style="display:inline-block;padding:10px 24px;background:var(--accent);color:var(--bg);font-weight:700;border-radius:8px;font-size:12px;text-decoration:none;letter-spacing:0.3px">Make your own decision</a>
+    <p class="fm" style="font-size:9px;color:var(--text4);margin-top:10px">{{ result.run_id }} &middot; {{ result.judge_count }} analysts</p>
   </div>
 </div>
 {% endblock %}
