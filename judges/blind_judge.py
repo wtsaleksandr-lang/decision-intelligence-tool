@@ -141,6 +141,7 @@ async def run_judge(
     model_override: str | None = None,
     focus: str = "balanced",
     length: str = "standard",
+    perspective: str = "general",
     attachments: list[str] | None = None,
 ) -> dict:
     """Run a single judge evaluation with retry + fallback.
@@ -155,7 +156,7 @@ async def run_judge(
     if not config:
         return {"error": f"Unknown judge: {judge_name}"}
 
-    system = build_judge_system(dimensions, focus=focus, length=length)
+    system = build_judge_system(dimensions, focus=focus, length=length, perspective=perspective)
     user_prompt = build_judge_prompt(question, anonymized_options, attachments=attachments)
     primary_model = model_override or config["model"]
 

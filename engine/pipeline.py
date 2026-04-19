@@ -1,7 +1,6 @@
 """
-Decision Intelligence Engine — Main Pipeline.
-Orchestrates: input → anonymize → blind judge (parallel) → aggregate → verdict.
-Settings-aware: depth, focus, length, web_search all affect behavior.
+Decision Intelligence Engine — Main Pipeline (v2).
+Improved workflow: extract → validate → judges (diverse perspectives) → aggregate → synthesize.
 """
 
 import asyncio
@@ -11,7 +10,9 @@ import uuid
 
 from engine.types import DecisionInput, DecisionResult, RankedOption, AnalysisSettings
 from engine.verdict import compute_confidence, build_recommendation
-from judges.rubric import build_dimensions
+from engine.validator import validate_extraction, apply_fixes
+from engine.synthesizer import synthesize_recommendation
+from judges.rubric import build_dimensions, JUDGE_PERSPECTIVE_MAP
 from judges.blind_judge import anonymize_options, run_judge, JUDGE_MODELS
 from judges.aggregator import aggregate_decision_results
 from tracking.cost_tracking import CostTracker
@@ -55,7 +56,18 @@ async def run_decision_pipeline(
     input_data: DecisionInput,
     on_step: callable = None,
 ) -> DecisionResult:
-    """Run the full decision evaluation pipeline with settings support."""
+    """Run the full decision evaluation pipeline (v2).
+
+    Workflow:
+    1. Validate extraction quality
+    2. Apply fixes if needed
+    3. Build dimensions from criteria
+    4. Anonymize + shuffle options
+    5. Run judges in parallel (each with a different perspective)
+    6. Aggregate scores
+    7. Synthesize recommendation (AI-written, not just picked from judges)
+    8. Compute confidence
+    """
 
     run_id = str(uuid.uuid4())[:8]
     pipeline_start = time.time()
@@ -72,15 +84,33 @@ async def run_decision_pipeline(
     model_overrides = depth_cfg["models"]
     judge_timeout = depth_cfg["timeout"]
 
-    # Step 1: Build scoring dimensions
+    # ─── Step 1: Validate extraction ───
+    emit("validating", "Validating input quality...")
+    validation = await validate_extraction(
+        input_data.question,
+        input_data.options,
+        input_data.criteria,
+    )
+
+    question = input_data.question
+    options = list(input_data.options)
+    criteria = list(input_data.criteria)
+
+    if not validation.get("valid") and validation.get("suggested_fixes"):
+        emit("validating", "Refining extracted structure...")
+        question, options, criteria = apply_fixes(
+            question, options, criteria, validation["suggested_fixes"]
+        )
+
+    # ─── Step 2: Build scoring dimensions ───
     emit("dimensions", "Building evaluation criteria...")
-    dimensions = build_dimensions(input_data.criteria)
+    dimensions = build_dimensions(criteria)
 
-    # Step 2: Anonymize options
+    # ─── Step 3: Anonymize options ───
     emit("anonymize", "Shuffling options to prevent bias...")
-    anonymized, key_map = anonymize_options(input_data.options)
+    anonymized, key_map = anonymize_options(options)
 
-    # Step 3: Run judges
+    # ─── Step 4: Run judges with diverse perspectives ───
     analyst_word = "analyst" if max_judges == 1 else "analysts"
     emit("judging", f"Running {max_judges} independent {analyst_word}...")
 
@@ -98,18 +128,20 @@ async def run_decision_pipeline(
             continue
 
         model_override = model_overrides.get(judge_name, config["model"])
+        perspective = JUDGE_PERSPECTIVE_MAP.get(judge_name, "general")
 
         judge_tasks.append(
             run_judge(
                 judge_name=judge_name,
                 api_key=api_key,
-                question=input_data.question,
+                question=question,
                 anonymized_options=anonymized,
                 dimensions=dimensions,
                 timeout=judge_timeout,
                 model_override=model_override,
                 focus=settings.focus,
                 length=settings.length,
+                perspective=perspective,
                 attachments=input_data.attachments or None,
             )
         )
@@ -136,16 +168,16 @@ async def run_decision_pipeline(
                 output_chars=len(str(result)),
             )
 
-    # Step 4: Aggregate
+    # ─── Step 5: Aggregate ───
     emit("aggregating", "Aggregating analyst scores...")
     aggregated = aggregate_decision_results(
-        question=input_data.question,
+        question=question,
         judge_results=processed_results,
         key_map=key_map,
         dimensions=dimensions,
     )
 
-    # Step 5: Build ranked options
+    # ─── Step 6: Build ranked options ───
     ranked_options = []
     for option_text, data in aggregated["options"].items():
         ranked_options.append(RankedOption(
@@ -162,19 +194,38 @@ async def run_decision_pipeline(
     for i, opt in enumerate(ranked_options):
         opt.rank = i + 1
 
-    # Step 6: Confidence
-    emit("verdict", "Computing confidence and recommendation...")
+    # ─── Step 7: Synthesize recommendation ───
+    emit("synthesizing", "Writing recommendation...")
+    synthesized = await synthesize_recommendation(
+        question=question,
+        winner=aggregated["winner"],
+        ranked_options=[
+            {"option": o.option, "rank": o.rank, "score": o.final_score}
+            for o in ranked_options
+        ],
+        judge_explanations=aggregated.get("explanations", []),
+        judges_agree=aggregated["judges_agree"],
+        judge_count=aggregated["judge_count"],
+    )
+
+    # Fall back to old verdict logic if synthesizer fails
+    if synthesized:
+        why_winner_won = synthesized
+    else:
+        why_winner_won = build_recommendation(aggregated, ranked_options)
+
+    # ─── Step 8: Confidence ───
+    emit("confidence", "Computing confidence...")
     confidence_score, confidence_level = compute_confidence(
         judge_count=aggregated["judge_count"],
         judges_agree=aggregated["judges_agree"],
         ranked_options=ranked_options,
     )
 
-    why_winner_won = build_recommendation(aggregated, ranked_options)
     latency_ms = int((time.time() - pipeline_start) * 1000)
 
     result = DecisionResult(
-        question=input_data.question,
+        question=question,
         ranked_options=ranked_options,
         winner=aggregated["winner"],
         why_winner_won=why_winner_won,
@@ -191,15 +242,16 @@ async def run_decision_pipeline(
     emit("saving", "Saving results...")
     save_decision({
         "run_id": run_id,
-        "question": input_data.question,
-        "options": input_data.options,
-        "criteria": input_data.criteria,
+        "question": question,
+        "options": options,
+        "criteria": criteria,
         "settings": {
             "depth": settings.depth,
             "focus": settings.focus,
             "length": settings.length,
             "web_search": settings.web_search,
         },
+        "validation": validation,
         "winner": result.winner,
         "confidence": confidence_level,
         "confidence_score": confidence_score,

@@ -92,7 +92,38 @@ LENGTH_INSTRUCTIONS = {
 }
 
 
-JUDGE_SYSTEM_PROMPT = """You are a sharp decision analyst. Evaluate options blindly and decisively.
+# ─── Judge perspective lenses ───
+
+JUDGE_PERSPECTIVES = {
+    "general": (
+        "You are a sharp decision analyst. Evaluate options blindly and decisively. "
+        "Give a balanced, well-rounded assessment across all dimensions."
+    ),
+    "skeptic": (
+        "You are a risk analyst and devil's advocate. Evaluate options blindly. "
+        "Your job is to find what could go WRONG with each option. "
+        "Actively look for hidden costs, unrealistic assumptions, deal-breakers, and worst-case scenarios. "
+        "Be harder on risk_level scores than a general analyst would be. "
+        "If an option sounds too good to be true, score it lower."
+    ),
+    "pragmatist": (
+        "You are a pragmatic execution advisor. Evaluate options blindly. "
+        "Your job is to assess what can actually be DONE, not what sounds best in theory. "
+        "Focus on feasibility, implementation effort, time-to-value, and resource requirements. "
+        "Be harder on practicality scores than a general analyst would be. "
+        "Prefer options that deliver results with less complexity."
+    ),
+}
+
+# Map judge names to perspectives for diversity
+JUDGE_PERSPECTIVE_MAP = {
+    "judge_openai": "general",
+    "judge_anthropic": "skeptic",
+    "judge_google": "pragmatist",
+}
+
+
+JUDGE_SYSTEM_PROMPT = """{perspective}
 
 Options are labeled Option A, Option B, etc. They were randomly shuffled — do NOT assume ordering.
 
@@ -129,8 +160,9 @@ def build_judge_system(
     dimensions: list[dict],
     focus: str = "balanced",
     length: str = "standard",
+    perspective: str = "general",
 ) -> str:
-    """Build the system prompt for judge models with focus/length modes."""
+    """Build the system prompt for judge models with focus/length/perspective modes."""
     dim_text = "\n".join(
         f"- {d['label']}: {d['description']} ({d['scale']})"
         for d in dimensions
@@ -138,8 +170,10 @@ def build_judge_system(
     dim_keys = "\n      ".join(f'"{d["name"]}": "<int>",' for d in dimensions)
     focus_instruction = FOCUS_INSTRUCTIONS.get(focus, FOCUS_INSTRUCTIONS["balanced"])
     length_instruction = LENGTH_INSTRUCTIONS.get(length, LENGTH_INSTRUCTIONS["standard"])
+    perspective_text = JUDGE_PERSPECTIVES.get(perspective, JUDGE_PERSPECTIVES["general"])
 
     return JUDGE_SYSTEM_PROMPT.format(
+        perspective=perspective_text,
         dimensions=dim_text,
         dim_keys=dim_keys,
         focus_instruction=focus_instruction,
