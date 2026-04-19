@@ -22,13 +22,13 @@ _PROVIDER_CLASSES: dict[str, type[BaseProvider]] = {
 
 circuit_breaker = CircuitBreaker(threshold=3)
 
-# API key env var names
-_API_KEY_MAP = {
-    "openai": "OPENAI_API_KEY",
-    "anthropic": "ANTHROPIC_API_KEY",
-    "google": "GOOGLE_API_KEY",
-    "deepseek": "DEEPSEEK_API_KEY",
-    "xai": "XAI_API_KEY",
+# API key env var names (supports aliases from ai-orchestrator)
+_API_KEY_ALIASES = {
+    "openai": ["OPENAI_API_KEY", "GPT_API_KEY"],
+    "anthropic": ["ANTHROPIC_API_KEY", "CLAUDE_API_KEY"],
+    "google": ["GOOGLE_API_KEY", "GEMINI_API_KEY"],
+    "deepseek": ["DEEPSEEK_API_KEY"],
+    "xai": ["XAI_API_KEY", "GROK_API_KEY"],
 }
 
 # Model → provider name
@@ -44,8 +44,12 @@ _MODEL_PROVIDER: dict[str, str] = {
 
 
 def get_api_key(provider_name: str) -> str | None:
-    env_var = _API_KEY_MAP.get(provider_name)
-    return os.environ.get(env_var) if env_var else None
+    aliases = _API_KEY_ALIASES.get(provider_name, [])
+    for env_var in aliases:
+        val = os.environ.get(env_var)
+        if val:
+            return val
+    return None
 
 
 def get_provider(model_name: str, timeout: int = 300) -> BaseProvider | None:

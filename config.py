@@ -23,20 +23,31 @@ class Settings:
     judge_timeout: int = 300
 
     @staticmethod
+    def _get_key(*env_names) -> str | None:
+        for name in env_names:
+            val = os.environ.get(name)
+            if val:
+                return val
+        return None
+
+    @staticmethod
     def has_any_api_key() -> bool:
         """Check if at least one judge API key is configured."""
-        keys = ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GOOGLE_API_KEY"]
-        return any(os.environ.get(k) for k in keys)
+        return bool(
+            Settings._get_key("OPENAI_API_KEY", "GPT_API_KEY")
+            or Settings._get_key("ANTHROPIC_API_KEY", "CLAUDE_API_KEY")
+            or Settings._get_key("GOOGLE_API_KEY", "GEMINI_API_KEY")
+        )
 
     @staticmethod
     def available_judges() -> list[str]:
         """List which judge providers have API keys configured."""
         judges = []
-        if os.environ.get("OPENAI_API_KEY"):
+        if Settings._get_key("OPENAI_API_KEY", "GPT_API_KEY"):
             judges.append("OpenAI (GPT-4o)")
-        if os.environ.get("ANTHROPIC_API_KEY"):
+        if Settings._get_key("ANTHROPIC_API_KEY", "CLAUDE_API_KEY"):
             judges.append("Anthropic (Claude)")
-        if os.environ.get("GOOGLE_API_KEY"):
+        if Settings._get_key("GOOGLE_API_KEY", "GEMINI_API_KEY"):
             judges.append("Google (Gemini)")
         return judges
 

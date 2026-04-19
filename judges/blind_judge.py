@@ -46,7 +46,7 @@ JUDGE_MODELS = {
     "judge_openai": {
         "url": "https://api.openai.com/v1/chat/completions",
         "model": "gpt-4o",
-        "env_key": "OPENAI_API_KEY",
+        "env_keys": ["OPENAI_API_KEY", "GPT_API_KEY"],
         "header_fn": lambda key: {"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
         "body_fn": lambda model, system, prompt: {
             "model": model,
@@ -59,7 +59,7 @@ JUDGE_MODELS = {
     "judge_anthropic": {
         "url": "https://api.anthropic.com/v1/messages",
         "model": "claude-sonnet-4-6",
-        "env_key": "ANTHROPIC_API_KEY",
+        "env_keys": ["ANTHROPIC_API_KEY", "CLAUDE_API_KEY"],
         "header_fn": lambda key: {
             "x-api-key": key, "anthropic-version": "2023-06-01", "Content-Type": "application/json",
         },
@@ -76,7 +76,7 @@ JUDGE_MODELS = {
             f"models/{model}:generateContent?key={key}"
         ),
         "model": "gemini-2.5-flash",
-        "env_key": "GOOGLE_API_KEY",
+        "env_keys": ["GOOGLE_API_KEY", "GEMINI_API_KEY"],
         "header_fn": lambda key: {"Content-Type": "application/json"},
         "body_fn": lambda model, system, prompt: {
             "contents": [{"role": "user", "parts": [{"text": system + "\n\n" + prompt}]}],

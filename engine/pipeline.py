@@ -56,7 +56,11 @@ async def run_decision_pipeline(
     judge_tasks = []
     judge_names = []
     for judge_name, config in JUDGE_MODELS.items():
-        api_key = os.environ.get(config["env_key"])
+        api_key = None
+        for env_key in config["env_keys"]:
+            api_key = os.environ.get(env_key)
+            if api_key:
+                break
         if not api_key:
             continue
         model_override = cost_profile.get(judge_name)
