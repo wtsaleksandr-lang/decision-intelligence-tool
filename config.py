@@ -10,7 +10,7 @@ class Settings:
 
     # Server
     host: str = "0.0.0.0"
-    port: int = int(os.environ.get("PORT", "8000"))
+    port: int = int(os.environ.get("PORT", "5000"))
     debug: bool = os.environ.get("DEBUG", "").lower() == "true"
 
     # Cost profile: cheap | balanced | full

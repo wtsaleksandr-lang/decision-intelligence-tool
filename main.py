@@ -43,7 +43,7 @@ class DecisionRequest(BaseModel):
 
 @app.get("/", response_class=HTMLResponse)
 async def landing_page(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 
 @app.get("/decide")
@@ -57,8 +57,8 @@ async def decide_redirect():
 async def result_page(request: Request, run_id: str):
     decision = get_decision_by_run_id(run_id)
     if not decision:
-        return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
-    return templates.TemplateResponse("result.html", {"request": request, "result": decision})
+        return templates.TemplateResponse(request, "404.html", status_code=404)
+    return templates.TemplateResponse(request, "result.html", {"result": decision})
 
 
 # ─── API: Health ───
