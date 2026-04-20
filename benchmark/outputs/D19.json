@@ -1,0 +1,148 @@
+{
+  "prompt_id": "D19",
+  "question": "Move to NYC ($3500/mo rent, best career opportunities) vs stay remote in Austin ($1800/mo, good quality of life) vs relocate to Lisbon ($1200/mo, adventure)?",
+  "winner": "Stay remote in Austin",
+  "why_winner_won": "Stay remote in Austin is the best option due to its balance of affordability, quality of life, and low execution risk while maintaining strong career opportunities. Analysts unanimously agree that this choice preserves financial stability and social connections, making it the most practical and sustainable path forward.",
+  "judges_agree": true,
+  "judge_count": 3,
+  "confidence": "high",
+  "confidence_score": 92,
+  "cost_usd": 0.0029957,
+  "latency_ms": 29824,
+  "run_id": "c4a17af7",
+  "ranked_options": [
+    {
+      "option": "Stay remote in Austin",
+      "rank": 1,
+      "score": 8.0,
+      "strengths": [
+        "Strong work-life balance with lower living costs.",
+        "Unmatched practicality, low risk, and balanced quality of life with solid career prospects.",
+        "Best balance of savings, established social network, and low execution risk."
+      ],
+      "weaknesses": [
+        "Lacks the 'best' career opportunities or the adventure of other options.",
+        "Remote ceiling limits top-tier career acceleration and high-leverage networking opportunities.",
+        "Limited career advancement compared to NYC."
+      ],
+      "dimension_scores": {
+        "career_growth": 7.0,
+        "cost_of_living": 8.5,
+        "quality_of_life": 8.0,
+        "social_network": 8.0,
+        "practicality": 9.5,
+        "risk_level": 8.5,
+        "roi_potential": 6.5,
+        "overall_fit": 8.0,
+        "overall": 8.0
+      },
+      "rank_points": 9
+    },
+    {
+      "option": "Relocate to Lisbon",
+      "rank": 2,
+      "score": 6.5,
+      "strengths": [
+        "Affordable living with a vibrant culture and lifestyle.",
+        "Lowest cost of living at $1200/mo with genuine lifestyle upside and EU access.",
+        "Unbeatable cost of living combined with a high quality of life and adventure."
+      ],
+      "weaknesses": [
+        "Significant relocation effort, visa complexities, and potential career growth limitations.",
+        "Career opportunities may not match those in NYC.",
+        "Visa complexity, timezone misalignment with US employers, and rebuilding social network from zero."
+      ],
+      "dimension_scores": {
+        "career_growth": 5.0,
+        "cost_of_living": 9.0,
+        "quality_of_life": 9.0,
+        "social_network": 6.5,
+        "practicality": 4.0,
+        "risk_level": 5.0,
+        "roi_potential": 7.0,
+        "overall_fit": 6.5,
+        "overall": 6.5
+      },
+      "rank_points": 4
+    },
+    {
+      "option": "Move to NYC",
+      "rank": 3,
+      "score": 5.94,
+      "strengths": [
+        "Unmatched career density, investor access, and industry networking in a single market.",
+        "Unmatched career opportunities in a major city.",
+        "Unparalleled career growth and networking opportunities in a global hub."
+      ],
+      "weaknesses": [
+        "Extremely high cost of living and significant financial strain and risk.",
+        "High cost of living significantly impacts financial stability.",
+        "$3500/mo rent plus NYC taxes/expenses could easily hit $6k+/mo total burn, punishing any income disruption."
+      ],
+      "dimension_scores": {
+        "career_growth": 9.5,
+        "cost_of_living": 2.0,
+        "quality_of_life": 5.5,
+        "social_network": 8.0,
+        "practicality": 4.0,
+        "risk_level": 3.5,
+        "roi_potential": 8.5,
+        "overall_fit": 6.5,
+        "overall": 5.94
+      },
+      "rank_points": 5
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 4.1961669921875e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.1948027610778809
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.1948118209838867
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.1948223114013672
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.1948401927947998
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 28.21571946144104
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 28.21580958366394
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 29.82402515411377
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 29.824044466018677
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 29.82461404800415
+    }
+  ]
+}

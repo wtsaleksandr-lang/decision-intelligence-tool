@@ -1,0 +1,148 @@
+{
+  "prompt_id": "D13",
+  "question": "Stay at current job ($120k, boring but stable) vs join a startup ($90k + equity) vs freelance ($150k variable)?",
+  "winner": "Stay at current job ($120k)",
+  "why_winner_won": "Stay at your current job ($120k) is the best option due to its stability and reliable income, which significantly outweighs the risks associated with the startup and freelance paths. All analysts agree that the potential downsides of the startup's equity and the variable income from freelancing make them impractical choices. While the startup and freelance options may seem appealing in terms of growth or income, they carry substantial risks that could jeopardize your financial security.",
+  "judges_agree": true,
+  "judge_count": 3,
+  "confidence": "high",
+  "confidence_score": 92,
+  "cost_usd": 0.0030445,
+  "latency_ms": 22868,
+  "run_id": "102be201",
+  "ranked_options": [
+    {
+      "option": "Stay at current job ($120k)",
+      "rank": 1,
+      "score": 7.12,
+      "strengths": [
+        "Maximum stability with guaranteed benefits, predictable paycheck, and zero execution risk.",
+        "Stable income with low risk and high practicality.",
+        "Unmatched stability and immediate execution with zero effort."
+      ],
+      "weaknesses": [
+        "Stagnant at $120k with admitted boredom; minimal career growth or skill development.",
+        "Limited growth potential and likely low job satisfaction.",
+        "Limited growth potential and excitement."
+      ],
+      "dimension_scores": {
+        "income_stability": 9.33,
+        "growth_potential": 3.33,
+        "work-life_balance": 7.67,
+        "risk_tolerance": 8.33,
+        "practicality": 9.67,
+        "risk_level": 9.0,
+        "roi_potential": 2.67,
+        "overall_fit": 7.0,
+        "overall": 7.12
+      },
+      "rank_points": 9
+    },
+    {
+      "option": "Join startup ($90k + equity)",
+      "rank": 2,
+      "score": 5.25,
+      "strengths": [
+        "Offers potentially transformative financial and career growth.",
+        "High growth potential with equity opportunities.",
+        "Highest growth potential and equity upside; accelerated learning in high-stakes environment."
+      ],
+      "weaknesses": [
+        "25% pay cut, long hours typical of startups, and equity often worthless if company fails.",
+        "Income is lower and stability is uncertain.",
+        "Extremely high risk with significant work-life balance sacrifice."
+      ],
+      "dimension_scores": {
+        "income_stability": 3.33,
+        "growth_potential": 9.33,
+        "work-life_balance": 3.33,
+        "risk_tolerance": 3.33,
+        "practicality": 6.0,
+        "risk_level": 2.67,
+        "roi_potential": 8.33,
+        "overall_fit": 5.67,
+        "overall": 5.25
+      },
+      "rank_points": 5
+    },
+    {
+      "option": "Go freelance ($150k variable)",
+      "rank": 3,
+      "score": 5.25,
+      "strengths": [
+        "High earning potential with flexible hours.",
+        "Offers ultimate autonomy and uncapped earning potential.",
+        "Highest income ceiling ($150k) with unlimited upside and autonomy."
+      ],
+      "weaknesses": [
+        "High initial effort and significant income instability.",
+        "Income can be highly variable and unpredictable.",
+        "Income variability creates cash flow risk; no benefits, health insurance, or steady paycheck buffer."
+      ],
+      "dimension_scores": {
+        "income_stability": 3.0,
+        "growth_potential": 8.33,
+        "work-life_balance": 5.33,
+        "risk_tolerance": 4.33,
+        "practicality": 4.33,
+        "risk_level": 2.33,
+        "roi_potential": 8.67,
+        "overall_fit": 5.67,
+        "overall": 5.25
+      },
+      "rank_points": 4
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 1.71661376953125e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.0022313594818115
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.0022404193878174
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.0022656917572021
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.002305269241333
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 20.352365732192993
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 20.352454662322998
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 22.867712259292603
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 22.86773991584778
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 22.86838173866272
+    }
+  ]
+}

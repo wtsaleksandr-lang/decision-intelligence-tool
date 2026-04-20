@@ -1,0 +1,145 @@
+{
+  "prompt_id": "D14",
+  "question": "Best diet approach for sustainable weight loss: calorie counting, intermittent fasting, or Mediterranean diet?",
+  "winner": "Mediterranean diet",
+  "why_winner_won": "The Mediterranean diet is the best approach for sustainable weight loss due to its high effectiveness and ease of adherence, scoring 8.4/10. It aligns well with social eating and does not require tracking, making it more sustainable in the long run compared to intermittent fasting and calorie counting. While intermittent fasting is a close runner-up for its simplicity, it lacks the long-term adherence support that the Mediterranean diet offers.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "moderate",
+  "confidence_score": 63,
+  "cost_usd": 0.0028004999999999996,
+  "latency_ms": 26068,
+  "run_id": "888a6259",
+  "ranked_options": [
+    {
+      "option": "Mediterranean diet",
+      "rank": 1,
+      "score": 8.43,
+      "strengths": [
+        "Offers a balanced, enjoyable approach to eating.",
+        "Promotes a holistic, nutrient-rich eating pattern for long-term health and sustainable weight management.",
+        "Backed by decades of research for long-term health, weight maintenance, and cardiovascular benefits."
+      ],
+      "weaknesses": [
+        "No strict caloric rules means slow initial weight loss, frustrating results-focused dieters early on.",
+        "Requires access to diverse, healthy foods.",
+        "Requires significant changes in cooking habits and grocery shopping, potentially increasing effort and cost."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.5,
+        "sustainability": 9.0,
+        "ease_of_following": 7.5,
+        "practicality": 7.0,
+        "risk_level": 9.0,
+        "roi_potential": 9.0,
+        "overall_fit": 9.0,
+        "overall": 8.43
+      },
+      "rank_points": 8
+    },
+    {
+      "option": "Intermittent fasting (16:8)",
+      "rank": 2,
+      "score": 7.71,
+      "strengths": [
+        "Extremely simple rules and no food tracking make it highly practical and sustainable.",
+        "Simple time-based rule removes daily food decisions, reducing cognitive load significantly.",
+        "Promotes weight loss without strict food restrictions."
+      ],
+      "weaknesses": [
+        "Initial hunger and adjustment period can be challenging for some individuals.",
+        "May lead to overeating during eating windows.",
+        "Hunger during fasting windows causes binge eating risk and social meal inflexibility."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "sustainability": 7.5,
+        "ease_of_following": 7.5,
+        "practicality": 8.0,
+        "risk_level": 7.0,
+        "roi_potential": 8.0,
+        "overall_fit": 8.0,
+        "overall": 7.71
+      },
+      "rank_points": 7
+    },
+    {
+      "option": "Calorie counting (CICO)",
+      "rank": 3,
+      "score": 6.14,
+      "strengths": [
+        "Provides precise control over energy balance, guaranteeing weight loss if followed accurately.",
+        "Provides clear tracking of caloric intake.",
+        "Precise caloric control gives maximum short-term weight loss accuracy and measurable results."
+      ],
+      "weaknesses": [
+        "High mental load and constant tracking make long-term adherence difficult for many.",
+        "Can be tedious and hard to maintain long-term.",
+        "Constant tracking causes diet fatigue, obsessive tendencies, and high dropout rates long-term."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "sustainability": 5.5,
+        "ease_of_following": 4.5,
+        "practicality": 5.0,
+        "risk_level": 6.0,
+        "roi_potential": 7.5,
+        "overall_fit": 6.5,
+        "overall": 6.14
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 2.0503997802734375e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.0462286472320557
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.0462687015533447
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.0462923049926758
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.0463299751281738
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 23.740100622177124
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 23.74018669128418
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 26.067507028579712
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 26.067536115646362
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 26.068103551864624
+    }
+  ]
+}

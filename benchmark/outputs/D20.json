@@ -1,0 +1,148 @@
+{
+  "prompt_id": "D20",
+  "question": "Should we build our own analytics dashboard, buy Mixpanel, or use open-source PostHog?",
+  "winner": "PostHog (self-hosted, free)",
+  "why_winner_won": "Choose PostHog for your analytics dashboard due to its cost-effectiveness and full data ownership, making it a sustainable choice for long-term analytics needs. While there are differing opinions on the practicality of Mixpanel, the significant ongoing costs and potential vendor lock-in make it less favorable. Be prepared for the resource commitment required to self-host PostHog, but the benefits outweigh the challenges.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "low",
+  "confidence_score": 45,
+  "cost_usd": 0.002551475,
+  "latency_ms": 23954,
+  "run_id": "b860cd4a",
+  "ranked_options": [
+    {
+      "option": "PostHog (self-hosted, free)",
+      "rank": 1,
+      "score": 7.17,
+      "strengths": [
+        "Offers full data ownership and deep customization with open-source flexibility.",
+        "Cost-effective with strong data ownership.",
+        "Zero software costs with complete data ownership and full customization control."
+      ],
+      "weaknesses": [
+        "Self-hosting demands significant DevOps resources and introduces operational complexity.",
+        "Requires infrastructure maintenance, DevOps expertise, and ongoing server management overhead.",
+        "Implementation can be complex and time-consuming."
+      ],
+      "dimension_scores": {
+        "cost": 8.0,
+        "customization": 8.33,
+        "time_to_implement": 5.0,
+        "data_ownership": 10.0,
+        "practicality": 5.33,
+        "risk_level": 6.0,
+        "roi_potential": 7.67,
+        "overall_fit": 7.0,
+        "overall": 7.17
+      },
+      "rank_points": 8
+    },
+    {
+      "option": "Mixpanel ($400/mo)",
+      "rank": 2,
+      "score": 7.04,
+      "strengths": [
+        "Live in days with enterprise support, proven UI/UX, and minimal operational overhead.",
+        "Quick implementation with reliable features.",
+        "Delivers fast time-to-value with robust features and minimal operational overhead."
+      ],
+      "weaknesses": [
+        "Ongoing subscription costs can add up.",
+        "Vendor lock-in, data residency on Mixpanel servers, $4,800/year recurring mandatory spend.",
+        "Data ownership is external, and customization is limited to platform capabilities."
+      ],
+      "dimension_scores": {
+        "cost": 5.33,
+        "customization": 6.33,
+        "time_to_implement": 8.67,
+        "data_ownership": 4.67,
+        "practicality": 8.67,
+        "risk_level": 6.67,
+        "roi_potential": 8.33,
+        "overall_fit": 7.67,
+        "overall": 7.04
+      },
+      "rank_points": 7
+    },
+    {
+      "option": "Build custom analytics",
+      "rank": 3,
+      "score": 4.38,
+      "strengths": [
+        "Fully customizable to specific needs.",
+        "Perfect customization to exact specifications with complete data control.",
+        "Provides ultimate customization and complete control over the entire stack."
+      ],
+      "weaknesses": [
+        "6-12 months to MVP, ongoing maintenance costs $150k+/year, engineering time siphoned from product.",
+        "Extremely high cost, long implementation time, and significant risk of project failure.",
+        "High cost and long implementation time."
+      ],
+      "dimension_scores": {
+        "cost": 2.0,
+        "customization": 10.0,
+        "time_to_implement": 1.67,
+        "data_ownership": 10.0,
+        "practicality": 2.33,
+        "risk_level": 2.33,
+        "roi_potential": 4.0,
+        "overall_fit": 2.67,
+        "overall": 4.38
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 1.7642974853515625e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.1498134136199951
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.1498217582702637
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.149832010269165
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.1498615741729736
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 21.681962728500366
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 21.68204951286316
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 23.953995943069458
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 23.954025506973267
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 23.954768657684326
+    }
+  ]
+}

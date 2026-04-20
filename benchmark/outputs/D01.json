@@ -1,0 +1,171 @@
+{
+  "prompt_id": "D01",
+  "question": "Which CRM should a 10-person sales team adopt?",
+  "winner": "HubSpot",
+  "why_winner_won": "Choose HubSpot for your 10-person sales team due to its superior ease of use, strong integrations, and overall fit for small teams, making it a practical choice for your needs. While Pipedrive also received a high score, it lacks the depth of integration and future flexibility that HubSpot offers. Be mindful of the potential for higher costs with Salesforce, which is not suitable for a team of your size.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "low",
+  "confidence_score": 44,
+  "cost_usd": 0.0027977,
+  "latency_ms": 25009,
+  "run_id": "99ed4443",
+  "ranked_options": [
+    {
+      "option": "HubSpot",
+      "rank": 1,
+      "score": 7.52,
+      "strengths": [
+        "User-friendly with a strong free tier.",
+        "User-friendly interface with a comprehensive suite of sales and marketing tools.",
+        "Best balance of usability, price, and features for small sales teams."
+      ],
+      "weaknesses": [
+        "Pricing can escalate quickly, potentially becoming costly for advanced features.",
+        "Limited advanced features compared to competitors.",
+        "Marketing-heavy positioning; CRM core weaker than sales-focused competitors."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 8.33,
+        "price": 6.33,
+        "integrations": 7.67,
+        "practicality": 8.0,
+        "risk_level": 7.0,
+        "roi_potential": 7.33,
+        "overall_fit": 8.0,
+        "overall": 7.52
+      },
+      "rank_points": 10
+    },
+    {
+      "option": "Pipedrive",
+      "rank": 2,
+      "score": 7.52,
+      "strengths": [
+        "Easiest-to-use interface; lowest onboarding friction for sales teams.",
+        "Exceptionally intuitive visual pipeline management, highly practical and cost-effective.",
+        "Simple interface with effective sales pipeline management."
+      ],
+      "weaknesses": [
+        "Weakest integration ecosystem; limited customization for growing teams.",
+        "Less robust for complex marketing automation or broader business operations.",
+        "Fewer integrations compared to top competitors."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 8.67,
+        "price": 7.33,
+        "integrations": 6.0,
+        "practicality": 8.33,
+        "risk_level": 7.33,
+        "roi_potential": 7.0,
+        "overall_fit": 8.0,
+        "overall": 7.52
+      },
+      "rank_points": 9
+    },
+    {
+      "option": "Close.io",
+      "rank": 3,
+      "score": 7.1,
+      "strengths": [
+        "Highly efficient, sales-focused CRM with integrated communication tools for productivity.",
+        "Fast, intuitive interface with strong calling features and competitive pricing.",
+        "Good for communication-focused sales teams."
+      ],
+      "weaknesses": [
+        "Smaller integration library limits workflow automation compared to larger platforms.",
+        "Integrations are less extensive than larger platforms, potentially limiting ecosystem flexibility.",
+        "Less comprehensive than other CRM options."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 8.0,
+        "price": 6.67,
+        "integrations": 6.0,
+        "practicality": 7.67,
+        "risk_level": 7.0,
+        "roi_potential": 7.0,
+        "overall_fit": 7.33,
+        "overall": 7.1
+      },
+      "rank_points": 7
+    },
+    {
+      "option": "Salesforce",
+      "rank": 4,
+      "score": 5.38,
+      "strengths": [
+        "Unmatched customization and scalability for enterprise-level growth.",
+        "Unmatched ecosystem integrations and enterprise-grade scalability.",
+        "Highly customizable with extensive integrations."
+      ],
+      "weaknesses": [
+        "Overly complex and expensive for a small 10-person sales team.",
+        "Prohibitively expensive and complex for 10-person teams; steep learning curve.",
+        "High cost and complexity for a small team."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 5.0,
+        "price": 3.0,
+        "integrations": 9.0,
+        "practicality": 4.0,
+        "risk_level": 4.0,
+        "roi_potential": 7.67,
+        "overall_fit": 5.0,
+        "overall": 5.38
+      },
+      "rank_points": 4
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 7.009506225585938e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 2.423717498779297
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 2.423734426498413
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 2.4237987995147705
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 2.4238908290863037
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 22.152647972106934
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 22.152839422225952
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 25.007813692092896
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 25.007871627807617
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 25.009093761444092
+    }
+  ]
+}

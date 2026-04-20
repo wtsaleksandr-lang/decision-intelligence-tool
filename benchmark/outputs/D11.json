@@ -1,0 +1,148 @@
+{
+  "prompt_id": "D11",
+  "question": "PostgreSQL vs MongoDB vs PlanetScale for a multi-tenant SaaS application?",
+  "winner": "PlanetScale (MySQL)",
+  "why_winner_won": "Choose PlanetScale for your multi-tenant SaaS application due to its exceptional scalability, low operational overhead, and features like branching workflows and zero-downtime schema changes that directly address the challenges of multi-tenancy. While MongoDB Atlas offers solid managed services, its costs can become unpredictable, and self-managed PostgreSQL presents significant operational complexities that can hinder development. PlanetScale stands out as the most practical and efficient choice for your needs.",
+  "judges_agree": true,
+  "judge_count": 3,
+  "confidence": "high",
+  "confidence_score": 83,
+  "cost_usd": 0.002902025,
+  "latency_ms": 25800,
+  "run_id": "e0d9d4a0",
+  "ranked_options": [
+    {
+      "option": "PlanetScale (MySQL)",
+      "rank": 1,
+      "score": 8.31,
+      "strengths": [
+        "Exceptional scalability with low operational overhead.",
+        "Branching, non-blocking schema changes, and built-in sharding are purpose-built for multi-tenant SaaS.",
+        "Provides highly scalable, managed MySQL with developer-friendly branching and minimal operational burden."
+      ],
+      "weaknesses": [
+        "Limited query flexibility compared to PostgreSQL.",
+        "No foreign key constraint enforcement at the database level is a real data integrity risk teams underestimate.",
+        "Introduces vendor lock-in and requires adapting to Vitess-specific MySQL constraints and features."
+      ],
+      "dimension_scores": {
+        "query_flexibility": 7.0,
+        "scalability": 9.5,
+        "operational_overhead": 8.5,
+        "cost": 7.5,
+        "practicality": 9.0,
+        "risk_level": 7.5,
+        "roi_potential": 9.0,
+        "overall_fit": 8.5,
+        "overall": 8.31
+      },
+      "rank_points": 9
+    },
+    {
+      "option": "MongoDB Atlas",
+      "rank": 2,
+      "score": 7.44,
+      "strengths": [
+        "Excellent scalability for diverse data structures.",
+        "Managed Atlas handles ops burden and scales horizontally with minimal configuration changes.",
+        "Excellent managed service for document data, offering high scalability and low operational overhead."
+      ],
+      "weaknesses": [
+        "Higher costs can accumulate with usage.",
+        "Document model might require careful design for complex relational queries or strong ACID transaction needs.",
+        "Atlas pricing balloons fast at scale; multi-tenant workloads with spiky usage get expensive unpredictably."
+      ],
+      "dimension_scores": {
+        "query_flexibility": 7.0,
+        "scalability": 8.5,
+        "operational_overhead": 7.5,
+        "cost": 6.0,
+        "practicality": 8.0,
+        "risk_level": 6.5,
+        "roi_potential": 8.5,
+        "overall_fit": 7.5,
+        "overall": 7.44
+      },
+      "rank_points": 6
+    },
+    {
+      "option": "PostgreSQL (self-managed)",
+      "rank": 3,
+      "score": 5.0,
+      "strengths": [
+        "Offers ultimate control and powerful, flexible SQL capabilities for diverse data needs.",
+        "Strong query capabilities with complex relationships.",
+        "Best query flexibility with full SQL, JSONB, and advanced indexing for complex tenant queries."
+      ],
+      "weaknesses": [
+        "Requires immense operational effort and specialized expertise, leading to extremely high total cost of ownership.",
+        "High operational overhead and complexity in management.",
+        "Self-managed means your team owns backups, failover, upgrades, and scaling — a brutal hidden cost."
+      ],
+      "dimension_scores": {
+        "query_flexibility": 8.5,
+        "scalability": 5.5,
+        "operational_overhead": 3.5,
+        "cost": 5.0,
+        "practicality": 3.5,
+        "risk_level": 3.5,
+        "roi_potential": 6.0,
+        "overall_fit": 4.5,
+        "overall": 5.0
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 3.457069396972656e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 0.964946985244751
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 0.9649560451507568
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 0.9649791717529297
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 0.9650282859802246
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 23.683457374572754
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 23.683541297912598
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 25.800041913986206
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 25.80005431175232
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 25.800673484802246
+    }
+  ]
+}

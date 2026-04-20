@@ -1,0 +1,145 @@
+{
+  "prompt_id": "D08",
+  "question": "30-year fixed at 6.5% vs 5/1 ARM at 5.8% vs 15-year fixed at 5.9% for a $400k home purchase?",
+  "winner": "15-year fixed at 5.9%",
+  "why_winner_won": "The 15-year fixed at 5.9% is the best choice due to its significant long-term savings on interest, eliminating rate risk and providing a clear path to homeownership. While some analysts noted the higher monthly payment as a potential drawback, the overall financial benefits far outweigh this concern, especially given the potential pitfalls of the 5/1 ARM's rate volatility.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "moderate",
+  "confidence_score": 55,
+  "cost_usd": 0.002721125,
+  "latency_ms": 31472,
+  "run_id": "b1b4f925",
+  "ranked_options": [
+    {
+      "option": "15-year fixed at 5.9%",
+      "rank": 1,
+      "score": 6.95,
+      "strengths": [
+        "Significantly minimizes total interest paid and builds equity fastest.",
+        "Saves roughly $180k+ in total interest vs 30-year fixed, builds equity rapidly.",
+        "Lowest total interest paid over the loan term."
+      ],
+      "weaknesses": [
+        "Monthly payment ~$3,355 vs ~$2,528 for 30-year — a $827/month cash flow hit.",
+        "Highest monthly payment demands significant immediate cash flow, impacting feasibility.",
+        "Higher monthly payments compared to other options."
+      ],
+      "dimension_scores": {
+        "monthly_payment": 3.67,
+        "total_interest_paid": 9.33,
+        "risk_level": 8.33,
+        "flexibility": 4.67,
+        "practicality": 6.67,
+        "roi_potential": 8.33,
+        "overall_fit": 7.67,
+        "overall": 6.95
+      },
+      "rank_points": 8
+    },
+    {
+      "option": "30-year fixed at 6.5%",
+      "rank": 2,
+      "score": 6.62,
+      "strengths": [
+        "Provides maximum payment stability and predictability for three decades.",
+        "Stable payments with no risk of rate changes.",
+        "Lowest monthly payment ~$2,528 and maximum cash flow flexibility for 30 years."
+      ],
+      "weaknesses": [
+        "Pays roughly $510k in total interest over life of loan — nearly 1.3x the original principal.",
+        "Incurs the highest total interest cost over the loan's lifetime.",
+        "Higher total interest paid over the life of the loan."
+      ],
+      "dimension_scores": {
+        "monthly_payment": 6.67,
+        "total_interest_paid": 3.0,
+        "risk_level": 8.67,
+        "flexibility": 7.67,
+        "practicality": 9.0,
+        "roi_potential": 4.33,
+        "overall_fit": 7.0,
+        "overall": 6.62
+      },
+      "rank_points": 6
+    },
+    {
+      "option": "5/1 ARM at 5.8%",
+      "rank": 3,
+      "score": 5.71,
+      "strengths": [
+        "Lowest initial rate at 5.8% saves ~$170/month vs 30-year for first 5 years.",
+        "Lower initial monthly payments with potential for savings.",
+        "Offers the lowest initial monthly payment, providing immediate cash flow relief."
+      ],
+      "weaknesses": [
+        "Significant and unpredictable payment increases are highly probable after five years.",
+        "After year 5, rate can reset sharply upward — worst case 10%+ if rates spike, adding $800+/month.",
+        "Interest rate can increase after five years, adding risk."
+      ],
+      "dimension_scores": {
+        "monthly_payment": 8.33,
+        "total_interest_paid": 5.0,
+        "risk_level": 3.33,
+        "flexibility": 6.67,
+        "practicality": 6.0,
+        "roi_potential": 5.67,
+        "overall_fit": 5.0,
+        "overall": 5.71
+      },
+      "rank_points": 4
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 1.7642974853515625e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 0.8931488990783691
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 0.8931751251220703
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 0.8932065963745117
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 0.893223762512207
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 29.813817024230957
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 29.813897371292114
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 31.471508979797363
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 31.471543550491333
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 31.472063779830933
+    }
+  ]
+}

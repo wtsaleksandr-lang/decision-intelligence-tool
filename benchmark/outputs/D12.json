@@ -1,0 +1,148 @@
+{
+  "prompt_id": "D12",
+  "question": "Best training plan for a beginner who wants to lose weight and build muscle?",
+  "winner": "3-day full body lifting program",
+  "why_winner_won": "The best training plan for a beginner looking to lose weight and build muscle is the 3-day full body lifting program. It effectively balances intensity and recovery, making it practical and sustainable for beginners, which is crucial for long-term success. Unlike the alternatives, this program minimizes the risk of injury and burnout, ensuring consistent progress.",
+  "judges_agree": true,
+  "judge_count": 3,
+  "confidence": "high",
+  "confidence_score": 92,
+  "cost_usd": 0.00264795,
+  "latency_ms": 24421,
+  "run_id": "99ea59b9",
+  "ranked_options": [
+    {
+      "option": "3-day full body lifting program",
+      "rank": 1,
+      "score": 8.69,
+      "strengths": [
+        "Proven beginner framework hitting all muscles with adequate recovery built in.",
+        "Highly sustainable and effective for both goals with manageable commitment.",
+        "Balanced approach for muscle building and weight loss."
+      ],
+      "weaknesses": [
+        "Less specific muscle targeting than advanced splits, but ideal for beginners.",
+        "Progress may feel slower than HIIT in early weeks due to lower caloric burn per session.",
+        "May not be as intense for immediate weight loss."
+      ],
+      "dimension_scores": {
+        "effectiveness": 9.0,
+        "time_commitment": 8.0,
+        "sustainability": 8.5,
+        "injury_risk": 8.0,
+        "practicality": 9.0,
+        "risk_level": 8.5,
+        "roi_potential": 9.0,
+        "overall_fit": 9.5,
+        "overall": 8.69
+      },
+      "rank_points": 9
+    },
+    {
+      "option": "Daily 30-minute HIIT sessions",
+      "rank": 2,
+      "score": 5.12,
+      "strengths": [
+        "Excellent for rapid initial calorie burn and weight loss focus.",
+        "Highly effective for quick weight loss.",
+        "Short sessions are easy to schedule and provide immediate caloric burn."
+      ],
+      "weaknesses": [
+        "Daily HIIT for a beginner is a burnout and overuse injury disaster waiting to happen.",
+        "Potential for injury with high-intensity workouts.",
+        "Daily high intensity is unsustainable and high injury risk for beginners."
+      ],
+      "dimension_scores": {
+        "effectiveness": 6.5,
+        "time_commitment": 5.5,
+        "sustainability": 4.0,
+        "injury_risk": 4.0,
+        "practicality": 5.0,
+        "risk_level": 4.5,
+        "roi_potential": 6.0,
+        "overall_fit": 5.5,
+        "overall": 5.12
+      },
+      "rank_points": 4
+    },
+    {
+      "option": "5-day push/pull/legs split",
+      "rank": 3,
+      "score": 4.75,
+      "strengths": [
+        "Promotes muscle growth through targeted training.",
+        "Optimal for muscle hypertrophy with dedicated muscle group focus.",
+        "Optimized muscle group frequency can drive solid hypertrophy and strength gains."
+      ],
+      "weaknesses": [
+        "Extremely high time commitment and complexity for a beginner to sustain.",
+        "Requires more time and commitment than beginners may manage.",
+        "5-day commitment is unrealistic for most beginners and leads to early dropout."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "time_commitment": 3.0,
+        "sustainability": 3.5,
+        "injury_risk": 4.5,
+        "practicality": 4.0,
+        "risk_level": 4.5,
+        "roi_potential": 5.5,
+        "overall_fit": 5.0,
+        "overall": 4.75
+      },
+      "rank_points": 5
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 3.8623809814453125e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 0.9775183200836182
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 0.9775428771972656
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 0.9775528907775879
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 0.9775698184967041
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 22.860586404800415
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 22.860687255859375
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 24.420898914337158
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 24.42092537879944
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 24.421533823013306
+    }
+  ]
+}
