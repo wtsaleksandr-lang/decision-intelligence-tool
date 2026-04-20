@@ -191,16 +191,20 @@ def build_judge_prompt(
     """Build the user prompt for judge models."""
     parts = [f"## Decision Question\n{question}\n"]
 
-    # Add domain context hints for product/consumer decisions
+    # Add domain context for product/consumer decisions
     q_lower = question.lower()
-    consumer_signals = ["buy", "laptop", "car", "phone", "mortgage", "subscription", "plan", "price", "cost", "$"]
+    consumer_signals = ["buy", "laptop", "car", "phone", "mortgage", "subscription", "streaming", "price", "cost", "$", "under $", "budget"]
     if any(s in q_lower for s in consumer_signals):
         parts.append(
-            "## Context\n"
-            "This is a real-world product/consumer decision. Use your knowledge of actual market prices, "
-            "specifications, user reviews, and real-world performance when scoring. "
-            "Do NOT treat options as abstract labels — evaluate based on what these products/services "
-            "actually deliver in practice.\n"
+            "## IMPORTANT: Real-World Product Evaluation\n"
+            "These are REAL products/services with known specifications, pricing, and user reviews.\n"
+            "You MUST evaluate based on actual real-world data:\n"
+            "- Use actual market prices, not guesses\n"
+            "- Reference real specs (e.g., battery range in miles, CPU benchmarks, interest rates)\n"
+            "- Consider actual user satisfaction and common complaints\n"
+            "- Factor in real-world reliability data and known issues\n"
+            "- Score based on CONCRETE differences, not abstract impressions\n"
+            "- If one option is clearly cheaper/faster/better-reviewed, the scores MUST reflect that gap\n\n"
         )
 
     if attachments:

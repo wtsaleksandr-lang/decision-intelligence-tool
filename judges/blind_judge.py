@@ -87,11 +87,11 @@ JUDGE_MODELS = {
 }
 
 
-# Fallback models for each judge (cheaper/faster alternatives)
-JUDGE_FALLBACKS = {
-    "judge_openai": "gpt-4o-mini",
-    "judge_anthropic": "claude-haiku-4-5-20251001",
-    "judge_google": "gemini-2.0-flash",
+# Fallback chains: if primary fails, try these in order (escalate UP, not sideways)
+JUDGE_FALLBACK_CHAINS = {
+    "judge_openai": ["gpt-4o-mini", "gpt-4o"],
+    "judge_anthropic": ["claude-haiku-4-5-20251001", "claude-sonnet-4-6"],
+    "judge_google": ["gemini-2.0-flash", "gemini-2.5-flash"],
 }
 
 MAX_RETRIES = 1
@@ -165,14 +165,17 @@ async def run_judge(
     if "error" not in result:
         return result
 
-    # Attempt 2: retry primary model
+    # Attempt 2: retry primary model (transient failures)
     result = await _call_judge_once(config, api_key, primary_model, system, user_prompt, timeout)
     if "error" not in result:
         return result
 
-    # Attempt 3: fallback model
-    fallback_model = JUDGE_FALLBACKS.get(judge_name)
-    if fallback_model and fallback_model != primary_model:
+    # Attempt 3+: walk the fallback chain (try every model we haven't tried)
+    tried = {primary_model}
+    for fallback_model in JUDGE_FALLBACK_CHAINS.get(judge_name, []):
+        if fallback_model in tried:
+            continue
+        tried.add(fallback_model)
         result = await _call_judge_once(config, api_key, fallback_model, system, user_prompt, timeout)
         if "error" not in result:
             result["_used_fallback"] = fallback_model

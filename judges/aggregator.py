@@ -4,6 +4,30 @@ Ported from ai-orchestrator evaluation/aggregator.py — adapted for option rank
 """
 
 
+def _resolve_label(label: str, key_map: dict[str, str]) -> str:
+    """Resolve an anonymized label to the original option text.
+    Handles exact match, case-insensitive match, and partial match.
+    """
+    # Exact match
+    if label in key_map:
+        return key_map[label]
+
+    # Case-insensitive
+    label_lower = label.lower().strip()
+    for k, v in key_map.items():
+        if k.lower().strip() == label_lower:
+            return v
+
+    # Partial match (e.g., "A" matches "Option A")
+    for k, v in key_map.items():
+        if label_lower in k.lower() or k.lower() in label_lower:
+            return v
+
+    # If label looks like "Option X" pattern, it's an unresolved anonymized label — return it
+    # but flag it so we know
+    return label
+
+
 def aggregate_decision_results(
     question: str,
     judge_results: list[dict],
@@ -46,7 +70,7 @@ def aggregate_decision_results(
             explanations.append(explanation)
 
         for label, scores in evals.items():
-            option_text = label_to_option.get(label, label)
+            option_text = _resolve_label(label, label_to_option)
             if option_text not in option_scores:
                 option_scores[option_text] = {d: [] for d in dim_names}
                 option_rank_points[option_text] = []
@@ -65,7 +89,7 @@ def aggregate_decision_results(
 
         # Rank points: 1st place = N, 2nd = N-1, etc.
         for rank_pos, label in enumerate(ranking):
-            option_text = label_to_option.get(label, label)
+            option_text = _resolve_label(label, label_to_option)
             if option_text not in option_rank_points:
                 option_rank_points[option_text] = []
             option_rank_points[option_text].append(len(ranking) - rank_pos)
