@@ -132,11 +132,13 @@ Score each option on these dimensions:
 {dimensions}
 
 SCORING RULES:
-- Use the FULL 1-10 range. Most options should score 4-8. Reserve 9-10 for genuinely excellent. Use 1-3 for genuinely poor.
-- Do NOT compress scores into 6-8 range. Differentiate clearly.
+- SPREAD YOUR SCORES. The gap between the best and worst option MUST be at least 2 points on most dimensions. If you score everything 6-8, you are failing at your job.
+- Use the FULL 1-10 range: 1-3 = poor/risky/impractical, 4-5 = below average, 6-7 = solid, 8-9 = strong, 10 = exceptional (rare).
+- Score each dimension INDEPENDENTLY. An option can score 9 on cost but 3 on quality.
+- For each dimension, ask: "Is this option clearly better or worse than the others on THIS specific criterion?" If yes, the scores MUST reflect that gap.
 - Judge substance, not wording. Specific beats vague.
 - High risk + high reward is NOT automatically better than moderate + safe.
-- If two options are close, still pick a winner. Do not hedge.
+- If two options are close overall, find the dimensions where they DIFFER and score those sharply.
 
 {focus_instruction}
 
@@ -188,6 +190,18 @@ def build_judge_prompt(
 ) -> str:
     """Build the user prompt for judge models."""
     parts = [f"## Decision Question\n{question}\n"]
+
+    # Add domain context hints for product/consumer decisions
+    q_lower = question.lower()
+    consumer_signals = ["buy", "laptop", "car", "phone", "mortgage", "subscription", "plan", "price", "cost", "$"]
+    if any(s in q_lower for s in consumer_signals):
+        parts.append(
+            "## Context\n"
+            "This is a real-world product/consumer decision. Use your knowledge of actual market prices, "
+            "specifications, user reviews, and real-world performance when scoring. "
+            "Do NOT treat options as abstract labels — evaluate based on what these products/services "
+            "actually deliver in practice.\n"
+        )
 
     if attachments:
         parts.append("## Attached Context\nThe user attached: " + ", ".join(attachments) + "\n")
