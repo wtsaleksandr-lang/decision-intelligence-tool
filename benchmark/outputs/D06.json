@@ -1,0 +1,167 @@
+{
+  "prompt_id": "D06",
+  "question": "Best laptop under $1500 for remote software development?",
+  "winner": "MacBook Air M3 15-inch",
+  "why_winner_won": "The MacBook Air M3 15-inch is the best laptop under $1500 for remote software development due to its exceptional performance, reliability, and outstanding battery life, making it ideal for developers who value a seamless experience. While the ThinkPad X1 Carbon Gen 12 is a close runner-up, it sacrifices screen size and offers less overall performance. Keep in mind that the MacBook's macOS may not suit all developers, particularly those who prefer Linux or Windows environments.",
+  "judges_agree": false,
+  "judge_count": 2,
+  "confidence": "low",
+  "confidence_score": 37,
+  "cost_usd": 0.003121975,
+  "latency_ms": 50329,
+  "run_id": "e8723945",
+  "ranked_options": [
+    {
+      "option": "MacBook Air M3 15-inch",
+      "rank": 1,
+      "score": 8.12,
+      "strengths": [
+        "Exceptional performance, battery life, build quality, and established ecosystem reliability.",
+        "Excellent keyboard and user-friendly macOS experience."
+      ],
+      "weaknesses": [
+        "macOS ecosystem lock-in limits flexibility; software development tools require workarounds.",
+        "Limited performance for heavy software development tasks."
+      ],
+      "dimension_scores": {
+        "performance": 7.0,
+        "build_quality": 9.0,
+        "value_for_money": 8.0,
+        "keyboard_quality": 9.0,
+        "practicality": 9.0,
+        "risk_level": 9.0,
+        "roi_potential": 6.0,
+        "overall_fit": 8.0,
+        "overall": 8.12
+      },
+      "rank_points": 6
+    },
+    {
+      "option": "ThinkPad X1 Carbon Gen 12",
+      "rank": 2,
+      "score": 8.0,
+      "strengths": [
+        "Outstanding performance and durability for development tasks.",
+        "Best keyboard, proven Linux/Windows stability, excellent build quality, strong value."
+      ],
+      "weaknesses": [
+        "Higher cost with less value for money.",
+        "Smaller 14-inch screen may feel cramped for remote development work."
+      ],
+      "dimension_scores": {
+        "performance": 9.0,
+        "build_quality": 9.0,
+        "value_for_money": 6.0,
+        "keyboard_quality": 8.0,
+        "practicality": 8.0,
+        "risk_level": 7.0,
+        "roi_potential": 8.0,
+        "overall_fit": 9.0,
+        "overall": 8.0
+      },
+      "rank_points": 7
+    },
+    {
+      "option": "Framework Laptop 16",
+      "rank": 3,
+      "score": 7.75,
+      "strengths": [
+        "Modular design allows for easy upgrades and repairs.",
+        "Modular, repairable design with upgrade path and strong Linux support."
+      ],
+      "weaknesses": [
+        "Premium pricing, limited real-world performance data, battery life concerns, unproven longevity.",
+        "Higher price point compared to some competitors."
+      ],
+      "dimension_scores": {
+        "performance": 8.0,
+        "build_quality": 9.0,
+        "value_for_money": 7.0,
+        "keyboard_quality": 8.0,
+        "practicality": 7.0,
+        "risk_level": 8.0,
+        "roi_potential": 7.0,
+        "overall_fit": 8.0,
+        "overall": 7.75
+      },
+      "rank_points": 4
+    },
+    {
+      "option": "Dell XPS 15",
+      "rank": 4,
+      "score": 7.5,
+      "strengths": [
+        "Strong performance and 15-inch screen size suitable for development work.",
+        "Strong performance with a sleek design."
+      ],
+      "weaknesses": [
+        "Thermal management issues, unreliable build quality, premium pricing without clear value advantage.",
+        "Less battery life compared to competitors."
+      ],
+      "dimension_scores": {
+        "performance": 8.0,
+        "build_quality": 8.0,
+        "value_for_money": 7.0,
+        "keyboard_quality": 7.0,
+        "practicality": 8.0,
+        "risk_level": 8.0,
+        "roi_potential": 7.0,
+        "overall_fit": 7.0,
+        "overall": 7.5
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 4.696846008300781e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 0.9721148014068604
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 0.972137451171875
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 0.9721481800079346
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 0.9721853733062744
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 46.54278111457825
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 46.542874813079834
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 50.32837128639221
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 50.328412771224976
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 50.329004764556885
+    }
+  ]
+}

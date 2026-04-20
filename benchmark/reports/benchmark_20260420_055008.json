@@ -1,0 +1,369 @@
+{
+  "timestamp": "2026-04-20T05:50:08.924020+00:00",
+  "prompts_total": 20,
+  "prompts_successful": 20,
+  "eval_results": {
+    "D01": {
+      "prompt_id": "D01",
+      "winner": "Pipedrive",
+      "confidence": "low",
+      "avg_overall": 7.0,
+      "avg_scores": {
+        "winner_accuracy": 8.0,
+        "reasoning_quality": 7.0,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 7.5,
+        "confidence_calibration": 6.0,
+        "decisiveness": 7.5
+      },
+      "verdicts": [
+        "The confidence level is low despite a clear and well-reasoned recommendation for Pipedrive.",
+        "The scores for the top three options are clustered too narrowly (7.1-7.6) to justify a clear winner, and the strengths/weaknesses read as repetitive near-duplicates across the three judges rather than synthesized, distinct insights."
+      ]
+    },
+    "D02": {
+      "prompt_id": "D02",
+      "winner": "Cold email outreach",
+      "confidence": "moderate",
+      "avg_overall": 7.5,
+      "avg_scores": {
+        "winner_accuracy": 7.5,
+        "reasoning_quality": 7.5,
+        "score_differentiation": 7.0,
+        "strength_weakness_quality": 8.0,
+        "confidence_calibration": 6.5,
+        "decisiveness": 8.5
+      },
+      "verdicts": [
+        "The confidence level is too low given the clear reasoning and differentiation in scores.",
+        "The strengths and weaknesses contain significant redundancy (repeating nearly identical points across judges), and the score spread is narrow (5.4–7.0), understating the real differences between options given the heavily weighted cost efficiency and speed criteria."
+      ]
+    },
+    "D03": {
+      "prompt_id": "D03",
+      "winner": "Flat monthly subscription",
+      "confidence": "moderate",
+      "avg_overall": 7.0,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 6.5,
+        "score_differentiation": 7.5,
+        "strength_weakness_quality": 7.5,
+        "confidence_calibration": 6.0,
+        "decisiveness": 8.0
+      },
+      "verdicts": [
+        "The confidence level is misleadingly low given the clear differentiation in scores and decisive recommendation.",
+        "The winner choice is debatable — per-seat licensing is arguably better for 50 enterprise clients given its superior scalability score and revenue predictability, and the reasoning doesn't sufficiently justify why flat subscription beats it on the weighted criteria."
+      ]
+    },
+    "D04": {
+      "prompt_id": "D04",
+      "winner": "Senior full-stack engineer ($150k)",
+      "confidence": "moderate",
+      "avg_overall": 5.5,
+      "avg_scores": {
+        "winner_accuracy": 6.0,
+        "reasoning_quality": 5.0,
+        "score_differentiation": 6.0,
+        "strength_weakness_quality": 5.0,
+        "confidence_calibration": 5.5,
+        "decisiveness": 7.0
+      },
+      "verdicts": [
+        "The reasoning lacks depth and specificity, particularly in addressing the criteria of speed and long-term value.",
+        "The analysis contradicts itself by recommending the highest-cost option ($150k) as the winner when Cost is the highest-weighted criterion (9), without adequately explaining why cost leadership is overridden, and the reasoning is generic rather than grounded in the specific weighted criteria."
+      ]
+    },
+    "D05": {
+      "prompt_id": "D05",
+      "winner": "Flexport",
+      "confidence": "high",
+      "avg_overall": 7.5,
+      "avg_scores": {
+        "winner_accuracy": 8.5,
+        "reasoning_quality": 7.5,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 7.5,
+        "confidence_calibration": 7.5,
+        "decisiveness": 8.5
+      },
+      "verdicts": [
+        "The biggest quality issue is the relatively narrow score differentiation, which could better reflect the differences between options.",
+        "Score differentiation is relatively narrow (5.7-7.6 range) given the criteria weighting, and some strengths/weaknesses repeat across the three judge perspectives rather than providing distinct analytical insights."
+      ]
+    },
+    "D06": {
+      "prompt_id": "D06",
+      "winner": "MacBook Air M3 15-inch",
+      "confidence": "low",
+      "avg_overall": 5.0,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 5.5,
+        "score_differentiation": 4.0,
+        "strength_weakness_quality": 5.0,
+        "confidence_calibration": 4.0,
+        "decisiveness": 6.5
+      },
+      "verdicts": [
+        "The confidence level is low despite a clear recommendation, and the reasoning lacks depth and specificity.",
+        "The scores are clustered in an extremely narrow 7.5-8.1 range with almost no meaningful differentiation, making the analysis nearly useless for distinguishing between options, and the low confidence (37%) contradicts the tool still committing to a winner while also flagging internal disagreement."
+      ]
+    },
+    "D07": {
+      "prompt_id": "D07",
+      "winner": "Hyundai Ioniq 5",
+      "confidence": "moderate",
+      "avg_overall": 5.5,
+      "avg_scores": {
+        "winner_accuracy": 6.0,
+        "reasoning_quality": 5.5,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 5.5,
+        "confidence_calibration": 5.0,
+        "decisiveness": 7.0
+      },
+      "verdicts": [
+        "The confidence level is misleading given the moderate agreement and close scores.",
+        "The analysis has a critical quality failure: Option C is never identified by name (it's clearly the Ford Mustang Mach-E), making the output appear incomplete and unprofessional, while the reasoning is generic, internally inconsistent (recommending Ioniq 5 for 'value' while Tesla 'exceeds budget' but Ioniq 5 strengths don't clearly differentiate it), and the recommendation hedges with budget caveats without providing concrete range data to support the highest-weighted criterion."
+      ]
+    },
+    "D08": {
+      "prompt_id": "D08",
+      "winner": "30-year fixed at 6.5%",
+      "confidence": "low",
+      "avg_overall": 5.0,
+      "avg_scores": {
+        "winner_accuracy": 4.5,
+        "reasoning_quality": 5.5,
+        "score_differentiation": 3.5,
+        "strength_weakness_quality": 6.0,
+        "confidence_calibration": 5.5,
+        "decisiveness": 7.0
+      },
+      "verdicts": [
+        "The scores are too close to differentiate meaningfully between the options, undermining the decisiveness of the recommendation.",
+        "The winner selection is questionable — the 30-year fixed at 6.5% wins despite having the worst total interest cost and a score tied with the 15-year fixed, while the criteria heavily weight total interest (7) and risk (8), which should favor the 15-year fixed over the highest-rate option."
+      ]
+    },
+    "D09": {
+      "prompt_id": "D09",
+      "winner": "YouTube Premium Family ($23/mo)",
+      "confidence": "low",
+      "avg_overall": 6.5,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 7.0,
+        "score_differentiation": 7.0,
+        "strength_weakness_quality": 7.0,
+        "confidence_calibration": 6.5,
+        "decisiveness": 7.0
+      },
+      "verdicts": [
+        "The confidence level is misleadingly low given the clear differentiation in scores and decisive recommendation.",
+        "The recommendation hedges by suggesting 'you may want to consider alternatives' despite picking a winner, undermining decisiveness, and the strengths/weaknesses are too generic to provide actionable insight (e.g., 'Combines multiple services' could apply to any bundle)."
+      ]
+    },
+    "D10": {
+      "prompt_id": "D10",
+      "winner": "Vercel + Supabase",
+      "confidence": "high",
+      "avg_overall": 8.5,
+      "avg_scores": {
+        "winner_accuracy": 9.0,
+        "reasoning_quality": 8.0,
+        "score_differentiation": 8.5,
+        "strength_weakness_quality": 7.5,
+        "confidence_calibration": 8.5,
+        "decisiveness": 9.5
+      },
+      "verdicts": [
+        "The analysis is strong overall, but the biggest issue is the slightly overstated confidence given the close scores between Vercel + Supabase and Railway.",
+        "Strengths and weaknesses contain some redundancy across judges (e.g., vendor lock-in mentioned twice for Vercel+Supabase) and lack specificity in places, reading more like aggregated boilerplate than actionable insights."
+      ]
+    },
+    "D11": {
+      "prompt_id": "D11",
+      "winner": "PlanetScale (MySQL)",
+      "confidence": "low",
+      "avg_overall": 6.5,
+      "avg_scores": {
+        "winner_accuracy": 6.0,
+        "reasoning_quality": 6.5,
+        "score_differentiation": 7.5,
+        "strength_weakness_quality": 6.5,
+        "confidence_calibration": 6.0,
+        "decisiveness": 7.5
+      },
+      "verdicts": [
+        "The confidence level is misleadingly low given the clear score differentiation and decisive recommendation.",
+        "The winner selection is questionable given that PlanetScale barely edges MongoDB (8.2 vs 8.1) despite MongoDB having a clear query flexibility advantage — the heaviest weighted criterion — and the recommendation text contradicts itself by acknowledging PlanetScale's query limitations while still crowning it the winner without adequately justifying how it wins on the highest-weighted criteria."
+      ]
+    },
+    "D12": {
+      "prompt_id": "D12",
+      "winner": "3-day full body lifting program",
+      "confidence": "high",
+      "avg_overall": 8.5,
+      "avg_scores": {
+        "winner_accuracy": 9.0,
+        "reasoning_quality": 7.5,
+        "score_differentiation": 8.5,
+        "strength_weakness_quality": 8.0,
+        "confidence_calibration": 7.5,
+        "decisiveness": 9.0
+      },
+      "verdicts": [
+        "The biggest quality issue is the lack of judge agreement, which slightly undermines the confidence level.",
+        "The reasoning is solid and the winner is well-justified, but the strengths/weaknesses contain some redundancy across judges and could be more specific to the weighted criteria (e.g., explicitly linking sustainability score to beginner dropout rates or injury risk to specific movement patterns)."
+      ]
+    },
+    "D13": {
+      "prompt_id": "D13",
+      "winner": "Stay at current job ($120k)",
+      "confidence": "high",
+      "avg_overall": 7.0,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 7.0,
+        "score_differentiation": 7.0,
+        "strength_weakness_quality": 8.0,
+        "confidence_calibration": 5.5,
+        "decisiveness": 8.0
+      },
+      "verdicts": [
+        "The biggest quality issue is the confidence calibration, as the judges did not agree, which suggests less certainty than the high confidence level implies.",
+        "The confidence calibration is misleading — 82% high confidence with judge disagreement and criteria heavily weighted toward growth potential (weight 9) and risk tolerance suggests the startup or freelance option could reasonably win, yet the analysis doesn't adequately reconcile why the lower-growth, lower-income option prevails against the highest-weighted criterion."
+      ]
+    },
+    "D14": {
+      "prompt_id": "D14",
+      "winner": "Mediterranean diet",
+      "confidence": "high",
+      "avg_overall": 8.0,
+      "avg_scores": {
+        "winner_accuracy": 9.0,
+        "reasoning_quality": 7.5,
+        "score_differentiation": 8.5,
+        "strength_weakness_quality": 7.0,
+        "confidence_calibration": 8.0,
+        "decisiveness": 9.0
+      },
+      "verdicts": [
+        "The biggest quality issue is the reasoning could be more detailed in explaining why the Mediterranean diet excels in each specific criterion.",
+        "Strengths and weaknesses are somewhat generic and repetitive (e.g., sustainability mentioned multiple times for Mediterranean, calorie counting's tedium stated twice in different words), missing specific, actionable insights that would make the analysis truly useful."
+      ]
+    },
+    "D15": {
+      "prompt_id": "D15",
+      "winner": "Minimal icon + clean text",
+      "confidence": "high",
+      "avg_overall": 7.0,
+      "avg_scores": {
+        "winner_accuracy": 8.5,
+        "reasoning_quality": 6.5,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 6.5,
+        "confidence_calibration": 7.0,
+        "decisiveness": 9.0
+      },
+      "verdicts": [
+        "The biggest quality issue is the relatively narrow score differentiation, which could be more pronounced to reflect clearer distinctions between options.",
+        "The strengths and weaknesses are largely generic and interchangeable (e.g., 'high versatility,' 'professional appeal') without tying analysis specifically to fintech startup needs or the weighted criteria, making the reasoning feel like filler rather than substantive insight."
+      ]
+    },
+    "D16": {
+      "prompt_id": "D16",
+      "winner": "Short video series (TikTok/Reels)",
+      "confidence": "low",
+      "avg_overall": 6.0,
+      "avg_scores": {
+        "winner_accuracy": 7.5,
+        "reasoning_quality": 6.0,
+        "score_differentiation": 5.0,
+        "strength_weakness_quality": 6.0,
+        "confidence_calibration": 5.0,
+        "decisiveness": 7.5
+      },
+      "verdicts": [
+        "The confidence level is misleadingly low given the clear differentiation in strengths and weaknesses.",
+        "The scores are clustered in an extremely narrow range (6.6-7.2) with only 0.6 points separating all three options, making the differentiation nearly meaningless, while the strengths and weaknesses are generic and repetitive rather than specific and actionable."
+      ]
+    },
+    "D17": {
+      "prompt_id": "D17",
+      "winner": "Option C",
+      "confidence": "moderate",
+      "avg_overall": 5.0,
+      "avg_scores": {
+        "winner_accuracy": 4.0,
+        "reasoning_quality": 5.5,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 6.5,
+        "confidence_calibration": 5.0,
+        "decisiveness": 7.0
+      },
+      "verdicts": [
+        "The biggest quality issue is the mismatch between the recommended winner and the reasoning provided, which suggests Stripe but lists Option C as the winner.",
+        "The tool recommends 'Option C' (labeled as Stripe in the text) but the options list clearly shows Stripe as Option A, Adyen as Option B, and PayPal as Option C, meaning the tool incorrectly labels PayPal as the winner while describing Stripe's attributes — a fundamental labeling error that undermines the entire analysis."
+      ]
+    },
+    "D18": {
+      "prompt_id": "D18",
+      "winner": "6-week polished MVP (fewer features, solid UX)",
+      "confidence": "moderate",
+      "avg_overall": 7.0,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 7.0,
+        "score_differentiation": 7.5,
+        "strength_weakness_quality": 7.5,
+        "confidence_calibration": 7.0,
+        "decisiveness": 8.0
+      },
+      "verdicts": [
+        "The biggest quality issue is the moderate confidence level despite a clear and well-reasoned recommendation for the 6-week polished MVP.",
+        "The winner selection is questionable given that Speed to market (weight 10) and Learning speed (weight 8) are the two highest-weighted criteria, which should strongly favor the 2-week MVP, yet the tool chose the 6-week option without adequately reconciling this tension in its reasoning."
+      ]
+    },
+    "D19": {
+      "prompt_id": "D19",
+      "winner": "Stay remote in Austin",
+      "confidence": "high",
+      "avg_overall": 6.5,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 7.0,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 7.5,
+        "confidence_calibration": 5.5,
+        "decisiveness": 7.5
+      },
+      "verdicts": [
+        "The confidence level is slightly high given the judges' disagreement and the close scores between options.",
+        "The analysis is undermined by poor score differentiation (all three options cluster between 6.0-7.4) and a confidence mismatch — declaring 'high confidence' while simultaneously noting judge disagreement and only 70% certainty for a winner whose margin over NYC is a mere 1.2 points, while Career Growth (weight 9) clearly favors NYC, making the Austin selection questionable given the stated criteria weights."
+      ]
+    },
+    "D20": {
+      "prompt_id": "D20",
+      "winner": "Mixpanel ($400/mo)",
+      "confidence": "low",
+      "avg_overall": 5.0,
+      "avg_scores": {
+        "winner_accuracy": 4.5,
+        "reasoning_quality": 5.5,
+        "score_differentiation": 5.0,
+        "strength_weakness_quality": 6.0,
+        "confidence_calibration": 5.5,
+        "decisiveness": 6.5
+      },
+      "verdicts": [
+        "The biggest quality issue is the low confidence level despite a clear recommendation, indicating uncertainty in the analysis.",
+        "The winner is questionable given that Time to implement (weight 9) and Cost (weight 8) are the top two criteria — PostHog is free and deployable quickly, making Mixpanel's win over PostHog by only 0.4 points logically suspect and the recommendation poorly justified against the stated criteria weights."
+      ]
+    }
+  },
+  "total_cost_usd": 0.042791424999999994,
+  "avg_latency_ms": 24452.25
+}

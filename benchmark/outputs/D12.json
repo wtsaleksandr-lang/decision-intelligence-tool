@@ -1,0 +1,148 @@
+{
+  "prompt_id": "D12",
+  "question": "Best training plan for a beginner who wants to lose weight and build muscle?",
+  "winner": "3-day full body lifting program",
+  "why_winner_won": "The best training plan for a beginner looking to lose weight and build muscle is the 3-day full body lifting program. It strikes an ideal balance between frequency, volume, and recovery, making it sustainable and effective for achieving both goals without risking burnout or injury. While some analysts favored other options, the consensus highlights this program's superior practicality and long-term viability.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "high",
+  "confidence_score": 82,
+  "cost_usd": 0.0026781,
+  "latency_ms": 18453,
+  "run_id": "391b5e4a",
+  "ranked_options": [
+    {
+      "option": "3-day full body lifting program",
+      "rank": 1,
+      "score": 8.12,
+      "strengths": [
+        "Balanced approach for beginners with manageable frequency.",
+        "Builds foundational strength and muscle efficiently with manageable time commitment.",
+        "Optimal frequency for beginners: enough volume without overtraining or burnout."
+      ],
+      "weaknesses": [
+        "May not provide enough volume for muscle building.",
+        "Less muscle isolation than splits; requires compound lift proficiency to maximize.",
+        "May require gym access or specific home equipment for optimal progression."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "time_commitment": 8.33,
+        "sustainability": 7.67,
+        "injury_risk": 7.67,
+        "practicality": 9.0,
+        "risk_level": 8.0,
+        "roi_potential": 8.0,
+        "overall_fit": 8.33,
+        "overall": 8.12
+      },
+      "rank_points": 8
+    },
+    {
+      "option": "Daily 30-minute HIIT sessions",
+      "rank": 2,
+      "score": 5.92,
+      "strengths": [
+        "Time-efficient cardio; high daily adherence and low barrier to entry.",
+        "Highly effective for calorie burning and improving cardiovascular fitness quickly.",
+        "Highly effective for weight loss with short time commitment."
+      ],
+      "weaknesses": [
+        "High injury risk and limited effectiveness for significant muscle building.",
+        "Lacks muscle-building focus compared to lifting programs.",
+        "Minimal muscle building; high injury risk (joints, overuse); unsustainable intensity for daily execution."
+      ],
+      "dimension_scores": {
+        "effectiveness": 6.67,
+        "time_commitment": 8.33,
+        "sustainability": 5.0,
+        "injury_risk": 4.33,
+        "practicality": 8.0,
+        "risk_level": 4.0,
+        "roi_potential": 6.0,
+        "overall_fit": 5.0,
+        "overall": 5.92
+      },
+      "rank_points": 6
+    },
+    {
+      "option": "5-day push/pull/legs split",
+      "rank": 3,
+      "score": 5.37,
+      "strengths": [
+        "Allows for high volume per muscle group, potentially maximizing muscle growth for advanced lifters.",
+        "Higher potential for muscle growth with targeted workouts.",
+        "High-frequency muscle group training supports hypertrophy and specialization."
+      ],
+      "weaknesses": [
+        "5-day commitment unsustainable for beginners; excessive volume causes fatigue and injury risk.",
+        "Requires more time and commitment, which may overwhelm beginners.",
+        "Excessive time commitment and high risk of burnout for a beginner."
+      ],
+      "dimension_scores": {
+        "effectiveness": 7.33,
+        "time_commitment": 4.33,
+        "sustainability": 4.33,
+        "injury_risk": 5.33,
+        "practicality": 5.0,
+        "risk_level": 4.67,
+        "roi_potential": 7.0,
+        "overall_fit": 5.0,
+        "overall": 5.37
+      },
+      "rank_points": 4
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 3.9577484130859375e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.0581989288330078
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.0582115650177002
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.0582239627838135
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.0582597255706787
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 16.38893175125122
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 16.38905429840088
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 18.453061819076538
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 18.453091382980347
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 18.453821420669556
+    }
+  ]
+}

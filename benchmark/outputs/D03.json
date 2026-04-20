@@ -1,0 +1,171 @@
+{
+  "prompt_id": "D03",
+  "question": "What pricing model works best for a B2B SaaS with 50 enterprise clients?",
+  "winner": "Flat monthly subscription",
+  "why_winner_won": "The best pricing model for a B2B SaaS with 50 enterprise clients is the flat monthly subscription. This model excels in revenue predictability and ease of implementation, making it ideal for enterprise clients who prioritize stability. While some analysts favored per-seat licensing for its scalability, the flat monthly subscription's advantages in predictability outweigh its limitations.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "moderate",
+  "confidence_score": 54,
+  "cost_usd": 0.0031290000000000003,
+  "latency_ms": 21253,
+  "run_id": "49655d03",
+  "ranked_options": [
+    {
+      "option": "Flat monthly subscription",
+      "rank": 1,
+      "score": 7.62,
+      "strengths": [
+        "Simple and easy for clients to understand.",
+        "Easiest to implement, sell, and forecast; aligns with enterprise budget cycles.",
+        "Extremely simple to implement and offers highly predictable, stable monthly recurring revenue."
+      ],
+      "weaknesses": [
+        "Limited flexibility in pricing adjustments.",
+        "Leaves significant revenue on table; customers with high usage subsidize light users.",
+        "Significantly limits revenue growth from existing clients as their usage or team size expands."
+      ],
+      "dimension_scores": {
+        "revenue_predictability": 9.0,
+        "customer_acquisition": 7.33,
+        "scalability": 6.67,
+        "practicality": 9.0,
+        "risk_level": 7.67,
+        "roi_potential": 6.0,
+        "overall_fit": 7.67,
+        "overall": 7.62
+      },
+      "rank_points": 11
+    },
+    {
+      "option": "Per-seat licensing",
+      "rank": 2,
+      "score": 7.24,
+      "strengths": [
+        "Predictable revenue based on client size.",
+        "Predictable, linear revenue tied directly to customer growth within accounts.",
+        "Balances revenue predictability, scalability, and enterprise client understanding effectively."
+      ],
+      "weaknesses": [
+        "Triggers budget scrutiny and seat-counting politics at enterprise procurement level.",
+        "May deter smaller clients due to costs.",
+        "Requires active user management and can face initial adoption hurdles for large teams."
+      ],
+      "dimension_scores": {
+        "revenue_predictability": 8.0,
+        "customer_acquisition": 6.0,
+        "scalability": 7.33,
+        "practicality": 7.67,
+        "risk_level": 6.33,
+        "roi_potential": 7.33,
+        "overall_fit": 8.0,
+        "overall": 7.24
+      },
+      "rank_points": 10
+    },
+    {
+      "option": "Usage-based pricing",
+      "rank": 3,
+      "score": 6.05,
+      "strengths": [
+        "Maximum upside potential; rewards product adoption and customer success scaling.",
+        "Aligns cost with usage, appealing to clients.",
+        "Maximizes revenue potential by directly aligning cost with value and client usage."
+      ],
+      "weaknesses": [
+        "Unpredictable revenue destroys budget planning; customers fear surprise bills and reduce usage.",
+        "Revenue can be unpredictable and variable.",
+        "High implementation complexity, significant revenue unpredictability, and potential for client bill shock."
+      ],
+      "dimension_scores": {
+        "revenue_predictability": 4.33,
+        "customer_acquisition": 6.67,
+        "scalability": 9.33,
+        "practicality": 4.33,
+        "risk_level": 3.33,
+        "roi_potential": 8.67,
+        "overall_fit": 5.67,
+        "overall": 6.05
+      },
+      "rank_points": 6
+    },
+    {
+      "option": "Freemium with paid tiers",
+      "rank": 4,
+      "score": 4.81,
+      "strengths": [
+        "Lowers initial friction for new enterprise prospects evaluating the product.",
+        "Excellent for top-of-funnel customer acquisition and broad market reach.",
+        "Attracts a wide range of potential users."
+      ],
+      "weaknesses": [
+        "High risk of low conversion to paid tiers.",
+        "Enterprise clients expect paid models; freemium signals immaturity and devalues offering.",
+        "Poor fit for enterprise sales, high operational complexity, and very low revenue predictability."
+      ],
+      "dimension_scores": {
+        "revenue_predictability": 3.33,
+        "customer_acquisition": 7.0,
+        "scalability": 6.0,
+        "practicality": 4.33,
+        "risk_level": 3.0,
+        "roi_potential": 6.33,
+        "overall_fit": 3.67,
+        "overall": 4.81
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 1.71661376953125e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.0941293239593506
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.0941383838653564
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.0941493511199951
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.0941951274871826
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 19.473509311676025
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 19.473628997802734
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 21.252622365951538
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 21.252636671066284
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 21.25325083732605
+    }
+  ]
+}

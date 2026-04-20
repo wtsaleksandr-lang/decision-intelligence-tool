@@ -1,0 +1,147 @@
+{
+  "prompt_id": "D16",
+  "question": "Best content format for a product launch: long-form blog post, short video series, or Twitter thread campaign?",
+  "winner": "Short video series (TikTok/Reels)",
+  "why_winner_won": "Choose the short video series (TikTok/Reels) for your product launch, as it offers superior engagement and shareability, crucial for capturing audience attention. While the Twitter/X thread campaign is a close second, it lacks the same level of visual impact and engagement potential. Be prepared for the resource demands that come with producing high-quality video content.",
+  "judges_agree": false,
+  "judge_count": 2,
+  "confidence": "low",
+  "confidence_score": 38,
+  "cost_usd": 0.00106335,
+  "latency_ms": 20568,
+  "run_id": "c832f5e4",
+  "ranked_options": [
+    {
+      "option": "Short video series (TikTok/Reels)",
+      "rank": 1,
+      "score": 7.25,
+      "strengths": [
+        "Unmatched potential for viral reach and immediate product buzz.",
+        "High engagement and shareability on social media platforms."
+      ],
+      "weaknesses": [
+        "Demands significant specialized production effort and carries high performance risk.",
+        "Requires significant production effort and resources."
+      ],
+      "dimension_scores": {
+        "reach": 8.5,
+        "engagement": 9.0,
+        "production_effort": 4.0,
+        "shareability": 9.5,
+        "practicality": 5.0,
+        "risk_level": 5.5,
+        "roi_potential": 8.5,
+        "overall_fit": 8.0,
+        "overall": 7.25
+      },
+      "rank_points": 5
+    },
+    {
+      "option": "Twitter/X thread campaign",
+      "rank": 2,
+      "score": 7.06,
+      "strengths": [
+        "Highly practical, quick to deploy, and effective for structured information delivery.",
+        "Easy to produce and can reach a broad audience quickly."
+      ],
+      "weaknesses": [
+        "Organic reach is primarily limited to existing followers and direct shares.",
+        "Lower engagement compared to video formats."
+      ],
+      "dimension_scores": {
+        "reach": 6.5,
+        "engagement": 7.0,
+        "production_effort": 6.0,
+        "shareability": 7.5,
+        "practicality": 8.5,
+        "risk_level": 7.0,
+        "roi_potential": 6.5,
+        "overall_fit": 7.5,
+        "overall": 7.06
+      },
+      "rank_points": 4
+    },
+    {
+      "option": "Long-form blog post with SEO",
+      "rank": 3,
+      "score": 6.56,
+      "strengths": [
+        "Strong long-term SEO benefits and detailed content.",
+        "Provides comprehensive information and builds long-term organic search authority."
+      ],
+      "weaknesses": [
+        "Slow time-to-value and limited immediate buzz for a product launch.",
+        "Less immediate engagement and shareability."
+      ],
+      "dimension_scores": {
+        "reach": 6.5,
+        "engagement": 5.5,
+        "production_effort": 7.0,
+        "shareability": 5.0,
+        "practicality": 6.5,
+        "risk_level": 8.5,
+        "roi_potential": 7.0,
+        "overall_fit": 6.5,
+        "overall": 6.56
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 3.552436828613281e-05
+    },
+    {
+      "step": "validating",
+      "detail": "Refining extracted structure...",
+      "time": 2.061009645462036
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 2.061025619506836
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 2.061034679412842
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 2.0610458850860596
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 2.0610921382904053
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 18.08273959159851
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 18.082831621170044
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 20.567419052124023
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 20.56744647026062
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 20.56805109977722
+    }
+  ]
+}
