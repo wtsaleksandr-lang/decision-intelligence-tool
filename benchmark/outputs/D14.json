@@ -1,0 +1,139 @@
+{
+  "prompt_id": "D14",
+  "question": "Best diet approach for sustainable weight loss: calorie counting, intermittent fasting, or Mediterranean diet?",
+  "winner": "Mediterranean diet",
+  "why_winner_won": "The Mediterranean diet is the best approach for sustainable weight loss due to its comprehensive health benefits and effectiveness in promoting long-term lifestyle changes. While some analysts favor intermittent fasting for its simplicity, the Mediterranean diet offers a more balanced and enjoyable way to achieve weight loss while improving overall health. Be prepared for the initial adjustments required to fully embrace this dietary pattern.",
+  "judges_agree": false,
+  "judge_count": 2,
+  "confidence": "moderate",
+  "confidence_score": 50,
+  "cost_usd": 0.0010699,
+  "latency_ms": 19941,
+  "run_id": "b3197ec2",
+  "ranked_options": [
+    {
+      "option": "Mediterranean diet",
+      "rank": 1,
+      "score": 8.29,
+      "strengths": [
+        "Promotes healthy eating patterns and lifestyle changes.",
+        "Highly sustainable, promotes overall health and enjoyable eating patterns."
+      ],
+      "weaknesses": [
+        "Weight loss can be slower and less direct than more restrictive approaches.",
+        "Requires access to specific foods and ingredients."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "sustainability": 9.5,
+        "ease_of_following": 7.0,
+        "practicality": 7.0,
+        "risk_level": 9.5,
+        "roi_potential": 8.5,
+        "overall_fit": 8.5,
+        "overall": 8.29
+      },
+      "rank_points": 5
+    },
+    {
+      "option": "Intermittent fasting (16:8)",
+      "rank": 2,
+      "score": 7.93,
+      "strengths": [
+        "Extremely simple rule set, making consistent adherence highly feasible.",
+        "Flexible eating schedule can fit various lifestyles."
+      ],
+      "weaknesses": [
+        "May not suit everyone’s eating habits or social situations.",
+        "Initial hunger pangs can be challenging for some individuals to overcome."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "sustainability": 7.5,
+        "ease_of_following": 7.5,
+        "practicality": 8.0,
+        "risk_level": 8.0,
+        "roi_potential": 8.0,
+        "overall_fit": 8.5,
+        "overall": 7.93
+      },
+      "rank_points": 5
+    },
+    {
+      "option": "Calorie counting (CICO)",
+      "rank": 3,
+      "score": 5.71,
+      "strengths": [
+        "Provides clear structure for tracking food intake.",
+        "Provides precise, data-driven control over energy intake for weight loss."
+      ],
+      "weaknesses": [
+        "The relentless daily tracking is exceptionally difficult to sustain long-term.",
+        "Can be tedious and difficult to maintain long-term."
+      ],
+      "dimension_scores": {
+        "effectiveness": 8.0,
+        "sustainability": 4.5,
+        "ease_of_following": 4.5,
+        "practicality": 4.5,
+        "risk_level": 6.0,
+        "roi_potential": 6.5,
+        "overall_fit": 6.0,
+        "overall": 5.71
+      },
+      "rank_points": 2
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 3.743171691894531e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 0.9962983131408691
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 0.9963068962097168
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 0.9963347911834717
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 0.9963653087615967
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 18.43519639968872
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 18.43527102470398
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 19.940982818603516
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 19.941012144088745
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 19.941776275634766
+    }
+  ]
+}

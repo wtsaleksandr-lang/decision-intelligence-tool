@@ -1,0 +1,142 @@
+{
+  "prompt_id": "D04",
+  "question": "Should a 3-person startup hire a senior full-stack engineer, a junior engineer + AI tools, or outsource to an agency?",
+  "winner": "Senior full-stack engineer ($150k)",
+  "why_winner_won": "Hire the senior full-stack engineer for $150k. This option provides the critical technical leadership and execution necessary for a 3-person startup, ensuring long-term value and ownership of the product. While there was some disagreement among analysts, the consensus highlights the importance of having an experienced engineer to drive development effectively.",
+  "judges_agree": false,
+  "judge_count": 2,
+  "confidence": "moderate",
+  "confidence_score": 50,
+  "cost_usd": 0.0010827,
+  "latency_ms": 22598,
+  "run_id": "f8b256b5",
+  "ranked_options": [
+    {
+      "option": "Senior full-stack engineer ($150k)",
+      "rank": 1,
+      "score": 7.06,
+      "strengths": [
+        "Expertise ensures high-quality development and strategic direction.",
+        "Provides immediate technical leadership, high-quality output, and rapid execution."
+      ],
+      "weaknesses": [
+        "Highest financial commitment, and finding the right senior talent is challenging.",
+        "High salary demands significant budget commitment."
+      ],
+      "dimension_scores": {
+        "code_quality": 9.0,
+        "cost": 3.5,
+        "speed_of_delivery": 7.5,
+        "long-term_value": 9.0,
+        "practicality": 6.5,
+        "risk_level": 4.5,
+        "roi_potential": 8.5,
+        "overall_fit": 8.0,
+        "overall": 7.06
+      },
+      "rank_points": 5
+    },
+    {
+      "option": "Development agency ($120k/year)",
+      "rank": 2,
+      "score": 6.19,
+      "strengths": [
+        "High-quality output from experienced professionals.",
+        "Can quickly deliver specific features without internal hiring burden."
+      ],
+      "weaknesses": [
+        "Lacks internal knowledge building and can lead to vendor dependency.",
+        "Higher cost limits budget flexibility for the startup."
+      ],
+      "dimension_scores": {
+        "code_quality": 7.0,
+        "cost": 6.0,
+        "speed_of_delivery": 7.5,
+        "long-term_value": 5.5,
+        "practicality": 6.0,
+        "risk_level": 5.5,
+        "roi_potential": 6.0,
+        "overall_fit": 6.0,
+        "overall": 6.19
+      },
+      "rank_points": 3
+    },
+    {
+      "option": "Junior engineer + AI tools ($80k)",
+      "rank": 3,
+      "score": 5.94,
+      "strengths": [
+        "Cost-effective solution with AI tools enhances productivity.",
+        "Lowest cost option, allowing budget for other critical startup areas."
+      ],
+      "weaknesses": [
+        "Junior engineer may lack experience for complex tasks.",
+        "Requires significant mentorship, which a 3-person startup likely cannot provide."
+      ],
+      "dimension_scores": {
+        "code_quality": 5.5,
+        "cost": 8.5,
+        "speed_of_delivery": 5.5,
+        "long-term_value": 6.0,
+        "practicality": 5.5,
+        "risk_level": 5.0,
+        "roi_potential": 6.0,
+        "overall_fit": 5.5,
+        "overall": 5.94
+      },
+      "rank_points": 4
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 2.5510787963867188e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.1354081630706787
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.135448932647705
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.135474681854248
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.1354942321777344
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 20.83122205734253
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 20.83131504058838
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 22.597649574279785
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 22.59769320487976
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 22.59829616546631
+    }
+  ]
+}

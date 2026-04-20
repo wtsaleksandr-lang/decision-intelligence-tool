@@ -1,0 +1,145 @@
+{
+  "prompt_id": "D02",
+  "question": "Which marketing strategy should a bootstrapped SaaS pursue this quarter?",
+  "winner": "Cold email outreach",
+  "why_winner_won": "Cold email outreach is the recommended marketing strategy for this quarter due to its high speed-to-results and cost efficiency, making it ideal for a bootstrapped SaaS. While there is some support for content marketing and SEO, analysts agree that it lacks the immediate impact needed for short-term growth. Be mindful of crafting targeted messages to maximize engagement and response rates.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "moderate",
+  "confidence_score": 63,
+  "cost_usd": 0.0025190499999999997,
+  "latency_ms": 14871,
+  "run_id": "5cecca40",
+  "ranked_options": [
+    {
+      "option": "Cold email outreach",
+      "rank": 1,
+      "score": 7.19,
+      "strengths": [
+        "Fast pipeline generation with near-zero budget; immediate feedback on product-market fit.",
+        "Delivers immediate lead generation and direct sales opportunities with low cost.",
+        "Quick to implement and can yield immediate leads."
+      ],
+      "weaknesses": [
+        "Requires continuous effort and careful targeting to avoid spam issues.",
+        "Unsustainable long-term; high burnout risk, poor brand building, and degrading response rates.",
+        "Limited long-term brand building potential."
+      ],
+      "dimension_scores": {
+        "cost_efficiency": 8.33,
+        "speed_to_results": 8.0,
+        "long-term_value": 5.0,
+        "practicality": 8.33,
+        "risk_level": 6.0,
+        "roi_potential": 7.0,
+        "overall_fit": 7.67,
+        "overall": 7.19
+      },
+      "rank_points": 7
+    },
+    {
+      "option": "Content marketing + SEO",
+      "rank": 2,
+      "score": 6.86,
+      "strengths": [
+        "Builds sustainable, long-term organic traffic and brand authority.",
+        "High potential for organic growth and authority building.",
+        "Builds compounding organic traffic and brand authority with minimal ongoing spend."
+      ],
+      "weaknesses": [
+        "Results take time to materialize.",
+        "Results take 3-6 months; requires consistent writing/technical SEO discipline to succeed.",
+        "Extremely slow to deliver tangible results within a single quarter."
+      ],
+      "dimension_scores": {
+        "cost_efficiency": 7.67,
+        "speed_to_results": 3.33,
+        "long-term_value": 9.0,
+        "practicality": 6.0,
+        "risk_level": 7.33,
+        "roi_potential": 7.67,
+        "overall_fit": 7.0,
+        "overall": 6.86
+      },
+      "rank_points": 8
+    },
+    {
+      "option": "Paid ads (Google + Meta)",
+      "rank": 3,
+      "score": 4.62,
+      "strengths": [
+        "Fastest way to drive immediate traffic and test messaging at scale.",
+        "Immediate visibility and reach to target audiences.",
+        "Provides immediate traffic and rapid testing of market messaging."
+      ],
+      "weaknesses": [
+        "High financial risk and significant budget required for effective execution.",
+        "Bootstrapped budgets burn out in 2-3 months without profitability; no retained customer equity.",
+        "High costs with uncertain ROI and sustainability."
+      ],
+      "dimension_scores": {
+        "cost_efficiency": 3.0,
+        "speed_to_results": 8.33,
+        "long-term_value": 3.67,
+        "practicality": 5.33,
+        "risk_level": 3.33,
+        "roi_potential": 5.0,
+        "overall_fit": 3.67,
+        "overall": 4.62
+      },
+      "rank_points": 3
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 4.57763671875e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.330714225769043
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.3307242393493652
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.3307547569274902
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.330791711807251
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 13.165534973144531
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 13.165729761123657
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 14.87041711807251
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 14.870450019836426
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 14.871180295944214
+    }
+  ]
+}

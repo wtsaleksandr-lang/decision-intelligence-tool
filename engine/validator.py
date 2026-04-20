@@ -77,20 +77,22 @@ Criteria: {json.dumps(criteria)}"""
 
 
 def apply_fixes(question: str, options: list[str], criteria: list[dict], fixes: dict) -> tuple[str, list[str], list[dict]]:
-    """Apply suggested fixes from validator to the input data."""
+    """Apply CONSERVATIVE fixes from validator.
+
+    CRITICAL: Never add options the user didn't mention.
+    Only fix criteria (add relevant ones, remove irrelevant ones) and question clarity.
+    """
     if not fixes:
         return question, options, criteria
 
-    # Rewrite question if suggested
+    # Rewrite question only if it's a minor clarity improvement
     if fixes.get("rewrite_question"):
         question = fixes["rewrite_question"]
 
-    # Add missing options
-    for opt in fixes.get("add_options", []):
-        if opt not in options and len(options) < 10:
-            options.append(opt)
+    # NEVER add options — the user specified what they want to compare.
+    # Adding options the user didn't mention produces wrong winners.
 
-    # Remove bad options
+    # Remove bad options only if clearly invalid (very conservative)
     for opt in fixes.get("remove_options", []):
         if opt in options and len(options) > 2:
             options.remove(opt)

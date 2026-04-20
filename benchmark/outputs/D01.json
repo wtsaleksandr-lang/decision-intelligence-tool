@@ -1,0 +1,171 @@
+{
+  "prompt_id": "D01",
+  "question": "Which CRM should a 10-person sales team adopt?",
+  "winner": "Pipedrive",
+  "why_winner_won": "Pipedrive is the recommended CRM for a 10-person sales team due to its exceptional ease of use, quick setup, and cost-effectiveness, which facilitate immediate adoption and ROI. While HubSpot offers strong features, it introduces unnecessary complexity and costs for a purely sales-focused team. Analysts noted a close competition, but Pipedrive's simplicity and focus on sales make it the superior choice.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "moderate",
+  "confidence_score": 53,
+  "cost_usd": 0.0028800500000000003,
+  "latency_ms": 21343,
+  "run_id": "3b04b131",
+  "ranked_options": [
+    {
+      "option": "Pipedrive",
+      "rank": 1,
+      "score": 7.67,
+      "strengths": [
+        "Highly intuitive, visual pipeline management drives immediate sales productivity.",
+        "Intuitive pipeline-first design, affordable, quick 10-person deployment.",
+        "User-friendly interface that simplifies the sales process."
+      ],
+      "weaknesses": [
+        "Limited integrations compared to larger CRMs.",
+        "Limited advanced customization; may require migration as team scales significantly.",
+        "Might lack advanced marketing automation or deep customization for future needs."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 8.33,
+        "price": 7.33,
+        "integrations": 6.67,
+        "practicality": 8.33,
+        "risk_level": 7.67,
+        "roi_potential": 7.0,
+        "overall_fit": 8.33,
+        "overall": 7.67
+      },
+      "rank_points": 11
+    },
+    {
+      "option": "HubSpot",
+      "rank": 2,
+      "score": 7.57,
+      "strengths": [
+        "Excellent free CRM tier and integrated marketing/service capabilities.",
+        "Highly intuitive with excellent free tier options.",
+        "Balanced ease, pricing, integrations; CRM plus marketing tools in one platform."
+      ],
+      "weaknesses": [
+        "Advanced features may require higher pricing tiers.",
+        "Paid tiers become expensive, potentially pushing beyond a 10-person team's budget.",
+        "Marketing overhead distracts pure sales teams; pricier than Pipedrive for core CRM."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 8.0,
+        "price": 6.0,
+        "integrations": 8.0,
+        "practicality": 8.0,
+        "risk_level": 7.0,
+        "roi_potential": 8.0,
+        "overall_fit": 8.0,
+        "overall": 7.57
+      },
+      "rank_points": 9
+    },
+    {
+      "option": "Close.io",
+      "rank": 3,
+      "score": 6.62,
+      "strengths": [
+        "Focuses on communication and follow-ups effectively.",
+        "Affordable, sales-focused, built for small teams; fast onboarding.",
+        "Built-in calling and email tools significantly boost sales team productivity."
+      ],
+      "weaknesses": [
+        "Less emphasis on broader marketing or service functions compared to others.",
+        "Limited features compared to competitors.",
+        "Fewer integrations and limited ecosystem; growth ceiling lower than competitors."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 7.0,
+        "price": 6.67,
+        "integrations": 6.0,
+        "practicality": 7.33,
+        "risk_level": 6.33,
+        "roi_potential": 6.67,
+        "overall_fit": 6.33,
+        "overall": 6.62
+      },
+      "rank_points": 6
+    },
+    {
+      "option": "Salesforce",
+      "rank": 4,
+      "score": 5.29,
+      "strengths": [
+        "Extensive integrations with various tools and platforms.",
+        "Unmatched integrations and long-term scalability for growing teams.",
+        "Unmatched scalability and integration ecosystem for future growth."
+      ],
+      "weaknesses": [
+        "Overly complex and expensive for a small, agile sales team.",
+        "High cost may be a barrier for smaller teams.",
+        "Expensive, steep learning curve, overkill for 10-person team now."
+      ],
+      "dimension_scores": {
+        "ease_of_use": 5.0,
+        "price": 2.67,
+        "integrations": 9.33,
+        "practicality": 4.0,
+        "risk_level": 4.0,
+        "roi_potential": 7.33,
+        "overall_fit": 4.67,
+        "overall": 5.29
+      },
+      "rank_points": 4
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 4.4345855712890625e-05
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 1.3118627071380615
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 1.3119001388549805
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 1.3119397163391113
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 1.3119606971740723
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 19.618735313415527
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 19.618866682052612
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 21.34260106086731
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 21.342626094818115
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 21.343186855316162
+    }
+  ]
+}

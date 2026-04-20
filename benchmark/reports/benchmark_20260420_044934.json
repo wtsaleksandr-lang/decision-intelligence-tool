@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-20T04:49:34.398099+00:00",
+  "prompts_total": 3,
+  "prompts_successful": 3,
+  "eval_results": {
+    "D01": {
+      "prompt_id": "D01",
+      "winner": "Close.io",
+      "confidence": "low",
+      "avg_overall": 6.0,
+      "avg_scores": {
+        "winner_accuracy": 6.0,
+        "reasoning_quality": 6.0,
+        "score_differentiation": 6.0,
+        "strength_weakness_quality": 6.5,
+        "confidence_calibration": 6.0,
+        "decisiveness": 6.5
+      },
+      "verdicts": [
+        "The biggest quality issue is the low confidence level despite a clear recommendation, which undermines the decisiveness of the analysis.",
+        "The scores for the top three options are nearly identical (7.7-7.8), making the winner selection essentially arbitrary and undermining the usefulness of the analysis, while the recommendation itself hedges by noting the tie and flagging budget concerns rather than committing clearly."
+      ]
+    },
+    "D06": {
+      "prompt_id": "D06",
+      "winner": "MacBook Air M3 15-inch",
+      "confidence": "moderate",
+      "avg_overall": 5.5,
+      "avg_scores": {
+        "winner_accuracy": 7.0,
+        "reasoning_quality": 5.5,
+        "score_differentiation": 5.5,
+        "strength_weakness_quality": 6.0,
+        "confidence_calibration": 5.0,
+        "decisiveness": 6.5
+      },
+      "verdicts": [
+        "The confidence level is misleading given the close scores and lack of agreement among judges.",
+        "The reasoning quality is weak and generic, with duplicate strength/weakness entries that appear copy-pasted from different judges, and the recommendation hedges rather than clearly explaining why the MacBook Air won on the specific weighted criteria."
+      ]
+    },
+    "D12": {
+      "prompt_id": "D12",
+      "winner": "Bodyweight training program",
+      "confidence": "moderate",
+      "avg_overall": 3.0,
+      "avg_scores": {
+        "winner_accuracy": 1.5,
+        "reasoning_quality": 2.5,
+        "score_differentiation": 6.5,
+        "strength_weakness_quality": 3.5,
+        "confidence_calibration": 2.5,
+        "decisiveness": 5.0
+      },
+      "verdicts": [
+        "The biggest issue is the tool recommended an option not listed in the original decision, which undermines the entire analysis.",
+        "The tool recommended a 'Bodyweight training program' that wasn't even one of the three options presented in the original question, making the winner selection fundamentally invalid."
+      ]
+    }
+  },
+  "total_cost_usd": 0.003692325,
+  "avg_latency_ms": 31528.666666666668
+}

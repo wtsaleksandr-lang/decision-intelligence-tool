@@ -1,0 +1,156 @@
+{
+  "prompt_id": "D16",
+  "question": "Best content format for a product launch: long-form blog post, short video series, or Twitter thread campaign?",
+  "winner": "Twitter/X thread campaign",
+  "why_winner_won": "Choose the Twitter/X thread campaign for your product launch due to its high engagement and immediate impact, making it ideal for generating buzz and shareability. While there are differing opinions, the consensus highlights that threads can effectively capture attention during critical launch windows, outperforming both the short video series and long-form blog post in terms of reach and engagement. Be mindful of the need for continuous promotion to maintain visibility in Twitter's algorithm.",
+  "judges_agree": false,
+  "judge_count": 3,
+  "confidence": "moderate",
+  "confidence_score": 55,
+  "cost_usd": 0.0027089,
+  "latency_ms": 24307,
+  "run_id": "cad40b23",
+  "ranked_options": [
+    {
+      "option": "Twitter/X thread campaign",
+      "rank": 1,
+      "score": 7.61,
+      "strengths": [
+        "High practicality and low cost for immediate launch buzz and audience engagement.",
+        "Fast execution with engaged niche audience; immediate credibility among early adopters.",
+        "Low production cost and easy to execute quickly."
+      ],
+      "weaknesses": [
+        "Limited reach beyond Twitter; threads underperform algorithmically compared to video content.",
+        "Shorter shelf life and reach can be limited without strong initial traction.",
+        "Limited reach and engagement compared to other formats."
+      ],
+      "dimension_scores": {
+        "reach": 6.5,
+        "engagement": 7.5,
+        "production_effort": 7.0,
+        "shareability": 7.5,
+        "cost": 9.0,
+        "practicality": 9.0,
+        "risk_level": 7.5,
+        "roi_potential": 7.0,
+        "overall_fit": 7.5,
+        "overall": 7.61
+      },
+      "rank_points": 5
+    },
+    {
+      "option": "Short video series (TikTok/Reels)",
+      "rank": 2,
+      "score": 7.39,
+      "strengths": [
+        "Highest engagement and viral potential with minimal production complexity.",
+        "High engagement and shareability on social media platforms.",
+        "Offers unparalleled viral reach and high engagement potential for a product launch."
+      ],
+      "weaknesses": [
+        "Requires consistent posting discipline; algorithm dependency creates unpredictable reach.",
+        "Demands significant production skills and time, with high risk of low impact.",
+        "Requires consistent production and may not suit all audiences."
+      ],
+      "dimension_scores": {
+        "reach": 8.5,
+        "engagement": 9.0,
+        "production_effort": 4.5,
+        "shareability": 9.5,
+        "cost": 7.0,
+        "practicality": 5.5,
+        "risk_level": 5.0,
+        "roi_potential": 9.0,
+        "overall_fit": 8.5,
+        "overall": 7.39
+      },
+      "rank_points": 7
+    },
+    {
+      "option": "Long-form blog post with SEO",
+      "rank": 3,
+      "score": 6.56,
+      "strengths": [
+        "Lowest cost, highest practicality, builds lasting SEO equity for product discovery.",
+        "Builds long-term organic traffic and provides comprehensive product information.",
+        "Strong SEO benefits can drive long-term traffic."
+      ],
+      "weaknesses": [
+        "Slower to generate immediate launch buzz and requires significant writing effort.",
+        "Lower immediate engagement compared to video formats.",
+        "Poor launch-day engagement; organic search traffic arrives months later, missing momentum."
+      ],
+      "dimension_scores": {
+        "reach": 6.5,
+        "engagement": 5.5,
+        "production_effort": 6.0,
+        "shareability": 5.5,
+        "cost": 7.0,
+        "practicality": 7.0,
+        "risk_level": 8.0,
+        "roi_potential": 7.0,
+        "overall_fit": 6.5,
+        "overall": 6.56
+      },
+      "rank_points": 6
+    }
+  ],
+  "steps": [
+    {
+      "step": "validating",
+      "detail": "Validating input quality...",
+      "time": 4.6253204345703125e-05
+    },
+    {
+      "step": "validating",
+      "detail": "Refining extracted structure...",
+      "time": 2.253396511077881
+    },
+    {
+      "step": "dimensions",
+      "detail": "Building evaluation criteria...",
+      "time": 2.2534172534942627
+    },
+    {
+      "step": "anonymize",
+      "detail": "Shuffling options to prevent bias...",
+      "time": 2.2534396648406982
+    },
+    {
+      "step": "judging",
+      "detail": "Running 3 independent analysts...",
+      "time": 2.2534661293029785
+    },
+    {
+      "step": "judging",
+      "detail": "Waiting for 3 analysts...",
+      "time": 2.2534830570220947
+    },
+    {
+      "step": "aggregating",
+      "detail": "Aggregating analyst scores...",
+      "time": 22.088103532791138
+    },
+    {
+      "step": "synthesizing",
+      "detail": "Writing recommendation...",
+      "time": 22.088260173797607
+    },
+    {
+      "step": "confidence",
+      "detail": "Computing confidence...",
+      "time": 24.30712366104126
+    },
+    {
+      "step": "saving",
+      "detail": "Saving results...",
+      "time": 24.307137727737427
+    },
+    {
+      "step": "done",
+      "detail": "Analysis complete.",
+      "time": 24.30778670310974
+    }
+  ]
+}
